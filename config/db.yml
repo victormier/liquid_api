@@ -1,0 +1,5 @@
+# Sequel Database Configuration
+
+development: "postgres://victor@localhost/roda_graphql"
+test: "postgres://victor@localhost/roda_graphql"
+production: "postgres://victor@localhost/roda_graphql"
