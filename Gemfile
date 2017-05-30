@@ -17,6 +17,7 @@ gem 'sequel'
 gem 'sequel-seed'
 gem 'pg'
 gem 'colorize'
+gem 'activerecord'
 
 # Protection :)
 gem 'rack-protection'
