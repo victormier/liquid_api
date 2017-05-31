@@ -18,6 +18,7 @@ gem 'sequel-seed'
 gem 'pg'
 gem 'colorize'
 gem 'activerecord'
+gem 'active_record_migrations' #, "~> 5.0.2.1"
 
 # Protection :)
 gem 'rack-protection'
