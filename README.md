@@ -13,7 +13,9 @@ rake db:migrate
 bundle exec rackup -p 3000
 ```
 
-### Running the console (like `rails console` for rack)
+### Running the console
+
+Like `rails console` for rack
 
 ```bash
 racksh
