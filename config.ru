@@ -51,8 +51,7 @@ logger.formatter = proc do |severity, datetime, progname, msg|
   end
 end
 
-DB << "SET CLIENT_ENCODING TO 'UTF8';"
-DB.loggers << logger if logger
+ActiveRecord::Base.logger = logger if logger
 
 require './roda_graphql'
 run RodaGraphql

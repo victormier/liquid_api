@@ -1,73 +1,40 @@
-# Roda Graphql Server
+# MVP2 API
 
-### Setup and Running locally
+### Getting started
 
 ```bash
-git clone repo
-cd to folder
-bundle install
-# make sure postgres is installed
-createdb roda_graphql
-bundle exec rake db:migrate
-bundle exec rake db:seed
-# run the server
-bundle exec rackup -p 3000
-# Visit http://localhost:3000
+rake db:create
+rake db:migrate
 ```
 
-[Visit browser](http://localhost:3000)
+### Running the server
+
+```bash
+bundle exec rackup -p 3000
+```
+
+### Running the console
+
+Like `rails console` for rack
+
+```bash
+racksh
+```
+
+### Generating migrations
+
+We use the [active_record_migrations](https://github.com/rosenfeld/active_record_migrations) gem for rails-like active record migrations.
+
+```
+rake "db:new_migration[CreateUser, name birth:date]"
+```
+
+
 
 # Features
 * Graphql API
 * CSRF and SESSION
 * TOKEN AUTH
 
-### Supported API Queries
-```
-{
-  all_posts {
-    id,
-    title,
-    body,
-    user {
-      id,
-      first_name
-    }
-    comments {
-      id,
-      body
-      user {
-        id,
-        first_name
-      }
-    }
-
-  }
- }
-```
-
-```
-{
-  post(id: 2) {
-    id,
-    title,
-    body,
-    user {
-      id,
-      first_name
-    }
-    comments {
-      id,
-      body
-      user {
-        id,
-        first_name
-      }
-    }
-
-  }
- }
- ```
-
 ### DB
-* Postgresql (with ruby Sequel ORM)
+* Postgresql (with ActiveRecord)

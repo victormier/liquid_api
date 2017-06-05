@@ -1,3 +1,3 @@
-class Category < Sequel::Model
-  many_to_one :post
+class Category < ActiveRecord::Base
+  belongs_to :post
 end

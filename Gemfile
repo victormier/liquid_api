@@ -13,10 +13,10 @@ gem 'dotenv'
 gem 'graphql'
 
 # Database Stack
-gem 'sequel'
-gem 'sequel-seed'
 gem 'pg'
 gem 'colorize'
+gem 'activerecord'
+gem 'active_record_migrations' #, "~> 5.0.2.1"
 
 # Protection :)
 gem 'rack-protection'
@@ -24,3 +24,6 @@ gem 'rack-cors', require: 'rack/cors'
 
 # Token :)
 gem 'rack-jwt'
+
+# Utilities
+gem 'racksh'

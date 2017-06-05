@@ -1,5 +1,5 @@
-class Post < Sequel::Model
-  many_to_one :user
-  one_to_many :comments
-  one_to_many :categories
+class Post < ActiveRecord::Base
+  belongs_to :user
+  has_many :comments
+  has_many :categories
 end

@@ -1,4 +1,4 @@
-class Comment < Sequel::Model
-  many_to_one :post
-  many_to_one :user
+class Comment < ActiveRecord::Base
+  belongs_to :post
+  belongs_to :user
 end
