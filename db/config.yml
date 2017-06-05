@@ -1,0 +1,32 @@
+# development:
+#   adapter: postgresql
+#   database: my_db
+#   encoding: utf8
+#   host: localhost
+#   port: 5432
+#   username: victor
+#   password:
+# test:
+#   adapter: sqlite3
+#   database: db/test.sqlite3
+#   pool: 5
+#   timeout: 5000
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: mvp2_api_development
+
+test:
+  <<: *default
+  database: mvp2_api_test
+
+production:
+  <<: *default
+  database: mvp2_api_production
+  username: mvp2_api
+  password: <%= ENV['MVP2_API_DATABASE_PASSWORD'] %>

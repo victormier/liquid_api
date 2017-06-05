@@ -1,6 +1,7 @@
-require "yaml"
-require "dotenv"
-Dotenv.load
-settings = YAML::load_file("config/db.yml")
-# Sequel Configuration
-DB = Sequel.connect(settings[ENV['ENVIRONMENT']])
+require 'yaml'
+require 'erb'
+
+database_configuration = YAML.load(ERB.new(File.read("db/config.yml")).result)
+
+ActiveRecord::Base.configurations = database_configuration
+ActiveRecord::Base.establish_connection(ENV['ENVIRONMENT'])
