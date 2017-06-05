@@ -56,6 +56,9 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    racksh (1.0.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -93,6 +96,7 @@ DEPENDENCIES
   rack-cors
   rack-jwt
   rack-protection
+  racksh
   rake
   roda
   sequel

@@ -26,3 +26,6 @@ gem 'rack-cors', require: 'rack/cors'
 
 # Token :)
 gem 'rack-jwt'
+
+# Utilities
+gem 'racksh'
