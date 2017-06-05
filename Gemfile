@@ -13,8 +13,6 @@ gem 'dotenv'
 gem 'graphql'
 
 # Database Stack
-gem 'sequel'
-gem 'sequel-seed'
 gem 'pg'
 gem 'colorize'
 gem 'activerecord'
