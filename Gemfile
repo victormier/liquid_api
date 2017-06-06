@@ -27,3 +27,13 @@ gem 'rack-jwt'
 
 # Utilities
 gem 'racksh'
+
+group :test, :development do
+  gem 'pry'
+end
+
+# Testing
+group :test do
+  gem 'rspec'
+  gem 'rack-test'
+end
