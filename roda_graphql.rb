@@ -10,7 +10,7 @@ class RodaGraphql < Roda
   use Rack::JWT::Auth, {secret: ENV['RACK_COOKIE_SECRET'], exclude: %w(/assets), options: { algorithm: 'HS256' }}
 
   plugin :environments
-  self.environment = ENV['ENVIRONMENT']
+  self.environment = ENV['RACK_ENV']
 
   plugin :flash
   plugin :json
