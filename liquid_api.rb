@@ -15,6 +15,7 @@ class LiquidApi < Roda
   plugin :view_options
   plugin :assets
   plugin :multi_route
+  plugin :symbol_status
 
   require './assets/assets'
 
