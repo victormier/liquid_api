@@ -27,6 +27,7 @@ gem 'rack-jwt'
 
 # Utilities
 gem 'racksh'
+gem 'bcrypt'
 
 group :test, :development do
   gem 'pry'

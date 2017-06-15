@@ -4,7 +4,8 @@ RSpec.describe User do
   subject {
     described_class.new(first_name: "John",
                         last_name: "Doe",
-                        email: "johndoe@example.com")
+                        email: "johndoe@example.com",
+                        password: "password")
   }
 
   it "allows creation of a user" do
