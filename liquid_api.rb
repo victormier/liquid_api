@@ -2,11 +2,7 @@ require './api/schema'
 
 Dotenv.load
 
-class RodaGraphql < Roda
-  use Rack::Session::Cookie, key: ENV['RACK_COOKIE_KEY'], secret: ENV['RACK_COOKIE_SECRET']
-  use Rack::Protection, except: :http_origin
-  use Rack::Protection::RemoteReferrer
-  use PassAuthToken
+class LiquidApi < Roda
   use Rack::JWT::Auth, {secret: ENV['RACK_COOKIE_SECRET'], exclude: %w(/assets), options: { algorithm: 'HS256' }}
 
   plugin :environments
@@ -23,5 +19,5 @@ class RodaGraphql < Roda
   require './assets/assets'
 
   require './api/routes/main.rb'
-  Dir['./routes/*.rb'].each{|f| require f}
+  (Dir['./api/routes/*.rb'] - ['./api/routes/main.rb']).each{|f| require f}
 end

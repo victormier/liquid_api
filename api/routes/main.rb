@@ -1,4 +1,4 @@
-class RodaGraphql
+class LiquidApi
   route do |r|
     r.root do
       data = {user_id: 1}

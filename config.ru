@@ -48,5 +48,5 @@ use Rack::Cors do
   end
 end
 
-require './roda_graphql'
-run RodaGraphql
+require './liquid_api'
+run LiquidApi
