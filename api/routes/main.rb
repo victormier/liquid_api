@@ -1,13 +1,19 @@
 class LiquidApi
+  include AuthenticationHelpers
+
   route do |r|
-    r.root do
-      data = {user_id: 1}
-      token = Rack::JWT::Token.encode(data, ENV['RACK_JWT_SECRET'], 'HS256')
-      set_layout_locals token: token
-      view("graphiql")
+    if LiquidApi.development?
+      r.root do
+        data = {user_id: User.first.try(:id) || 1}
+        token = Rack::JWT::Token.encode(data, ENV['RACK_JWT_SECRET'], 'HS256')
+        set_layout_locals token: token
+        view("graphiql")
+      end
     end
 
     r.on "graphql" do
+      authenticate!
+
       r.post do
         params = JSON.parse(request.body.read)
         result = Schema.execute(

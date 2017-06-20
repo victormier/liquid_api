@@ -3,7 +3,7 @@ require './api/schema'
 Dotenv.load
 
 class LiquidApi < Roda
-  use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: %w(/assets /login), options: { algorithm: 'HS256' }}
+  use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: %w(/login), options: { algorithm: 'HS256' }}
 
   plugin :environments
   self.environment = ENV['RACK_ENV']

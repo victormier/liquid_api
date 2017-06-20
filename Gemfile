@@ -18,11 +18,11 @@ gem 'colorize'
 gem 'activerecord'
 gem 'active_record_migrations' #, "~> 5.0.2.1"
 
-# Protection :)
+# Protection
 gem 'rack-protection'
 gem 'rack-cors', require: 'rack/cors'
 
-# Token :)
+# Token
 gem 'rack-jwt'
 
 # Utilities
