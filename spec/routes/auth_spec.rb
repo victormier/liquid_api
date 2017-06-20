@@ -25,6 +25,17 @@ RSpec.describe "/login" do
     expect(JSON.parse(last_response.body).keys).to include("auth_token")
   end
 
+  it "allows case insensitive logging in" do
+    params = {
+      email: "johnDOe@ExAMple.com",
+      password: "password"
+    }
+    post "/login", params.to_json
+
+    expect(last_response.ok?).to be true
+    expect(JSON.parse(last_response.body).keys).to include("auth_token")
+  end
+
   it "returns :unauthorized with non existing user" do
     params = {
       email: "false@example.com",

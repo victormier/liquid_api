@@ -1,7 +1,7 @@
 LiquidApi.route("login") do |r|
   r.post do
     params = JSON.parse(request.body.read)
-    @user = User.find_by(email: params["email"])
+    @user = User.find_by(email: params["email"].downcase)
     if @user && @user.authenticate(params["password"])
       # generate token
       data = { user_id: @user.id }
