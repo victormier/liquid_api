@@ -38,4 +38,5 @@ group :test do
   gem 'rspec'
   gem 'rack-test'
   gem 'database_cleaner'
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 end
