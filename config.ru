@@ -9,7 +9,7 @@ Dotenv.load
 
 # Require files
 require "find"
-%w{config/initializers api/types api/models middlewares lib}.each do |load_path|
+%w{config/initializers api/types api/models middlewares lib api/forms}.each do |load_path|
   Find.find(load_path) { |f|
     require f unless f.match(/\/\..+$/) || File.directory?(f)
   }

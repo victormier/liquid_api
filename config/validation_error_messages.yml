@@ -1,0 +1,3 @@
+en:
+  errors:
+    unique?: "is already taken"

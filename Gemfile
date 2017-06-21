@@ -15,8 +15,12 @@ gem 'graphql'
 # Database Stack
 gem 'pg'
 gem 'colorize'
+
+# Models/ORM
 gem 'activerecord'
 gem 'active_record_migrations' #, "~> 5.0.2.1"
+gem 'dry-validation'
+gem 'reform'
 
 # Protection
 gem 'rack-protection'
