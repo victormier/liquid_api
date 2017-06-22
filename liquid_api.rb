@@ -16,6 +16,7 @@ class LiquidApi < Roda
   plugin :assets
   plugin :multi_route
   plugin :symbol_status
+  plugin :mailer, content_type: 'text/html'
 
   require './assets/assets'
 

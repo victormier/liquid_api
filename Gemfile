@@ -22,12 +22,13 @@ gem 'active_record_migrations' #, "~> 5.0.2.1"
 gem 'dry-validation'
 gem 'reform'
 
-# Protection
+# Security
 gem 'rack-protection'
 gem 'rack-cors', require: 'rack/cors'
-
-# Token
 gem 'rack-jwt'
+
+# Email
+gem 'mail'
 
 # Utilities
 gem 'racksh'
