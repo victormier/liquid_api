@@ -9,11 +9,7 @@ class RegisterUser
       if @form.save
         user = @form.model
         # Send a confirmation email
-        user.confirmation_token = SecureRandom.hex(10)
-        user.confirmation_sent_at = Time.now.utc
-        user.save!
-        # To Do: Use a background job for sending emails
-        LiquidApi.sendmail("/emails/users/email_confirmation", user.id)
+        SendEmailConfirmationEmail.new(user).call
         true
       else
         # this shouldn't be a validation error

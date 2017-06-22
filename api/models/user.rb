@@ -4,8 +4,17 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :posts
 
-  validates_presence_of :email
-  validates_uniqueness_of :email, case_sensitive: false
-  validates_format_of :email, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
-  validates_presence_of :password_digest
+  def confirmation_token_valid?
+    (confirmation_sent_at + 30.days) > Time.now.utc
+  end
+
+  def mark_as_confirmed!
+    self.confirmation_token = nil
+    self.confirmed_at = Time.now.utc
+    save!
+  end
+
+  def confirmed?
+    !confirmed_at.nil?
+  end
 end
