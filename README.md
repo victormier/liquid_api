@@ -21,6 +21,18 @@ Like `rails console` for rack
 racksh
 ```
 
+### Debugging emails
+
+Emails in development are delivered to mailcatcher. Mailcatcher should be install as an independent gem:
+
+```bash
+gem install mailcatcher
+mailcatcher
+```
+
+Mailcatcher will catch all emails which can be viewed in `http://localhost:1080/`. Just run `mailcatcher` in a console to start the mail server as a daemon.
+
+
 ### Generating migrations
 
 We use the [active_record_migrations](https://github.com/rosenfeld/active_record_migrations) gem for rails-like active record migrations.

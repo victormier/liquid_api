@@ -6,8 +6,7 @@ LiquidApi.route("emails") do |r|
       @user = User.find(user_id)
       to @user.email
       subject "Liquid email confirmation"
-      set_layout_locals user: @user
-      render "emails/users/email_confirmation"
+      render "emails/users/confirm_email"
     end
   end
 end

@@ -13,7 +13,6 @@ LiquidApi.route("users") do |r|
       end
     end
 
-    set_layout_locals user: @user
     render "users/email_confirmation", locals: { email_sent: email_sent }
   end
 end
