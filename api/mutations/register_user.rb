@@ -4,13 +4,10 @@ module Mutations
     description "Registers a user"
     type UserType
 
-    argument :email, !types.String
-    argument :password, !types.String
-    argument :first_name, types.String
-    argument :last_name, types.String
+    argument :user, UserInputType
 
     resolve GraphqlRescueFrom.new(LiquidApi::MutationInvalid, ->(t, args, c) {
-      service = Services::RegisterUser.new(args.to_h)
+      service = Services::RegisterUser.new(args[:user].to_h)
 
       if service.call
         service.model

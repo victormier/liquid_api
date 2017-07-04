@@ -16,9 +16,10 @@ class LiquidApi
 
       r.post do
         params = JSON.parse(request.body.read)
+        variables = JSON.parse(params["variables"]) if params["variables"]
         result = Schema.execute(
           params["query"],
-          variables: params["variables"]
+          variables: variables
         )
 
         response['Content-Type'] = 'application/json; charset=utf-8'
