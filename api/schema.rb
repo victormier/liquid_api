@@ -26,4 +26,7 @@ MutationRoot = GraphQL::ObjectType.define do
   field :registerUser, field: Mutations::RegisterUser
 end
 
-Schema = GraphQL::Schema.new(query: QueryRoot, mutation: MutationRoot)
+Schema = GraphQL::Schema.define do
+  query QueryRoot
+  mutation MutationRoot
+end
