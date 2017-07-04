@@ -1,9 +1,18 @@
-require './api/schema'
-
+require "find"
 Dotenv.load
 
 class LiquidApi < Roda
-  use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: %w(/login /users/confirm_email), options: { algorithm: 'HS256' }}
+  # Require files
+  require './api/exceptions'
+  %w{config/initializers lib api/types api/mutations api/models middlewares api/forms api/services}.each do |load_path|
+    Find.find(load_path) { |f|
+      require f unless f.match(/\/\..+$/) || File.directory?(f)
+    }
+  end
+  require './api/schema'
+
+  use PassAuthToken if ENV['RACK_ENV'] == "development"
+  use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: %w(/assets /login /users/confirm_email), options: { algorithm: 'HS256' }}
 
   plugin :environments
   self.environment = ENV['RACK_ENV'].to_sym
