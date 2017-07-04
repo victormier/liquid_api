@@ -47,5 +47,11 @@ RSpec.describe UserForm do
       expect(subject.errors[:email]).to include("is already taken")
     end
 
+    it "validates presence of password" do
+      subject.validate(@params.merge({ password: nil }))
+
+      expect(subject.valid?).to be false
+      expect(subject.errors[:password]).to include("must be filled")
+    end
   end
 end

@@ -14,6 +14,7 @@ class UserForm < Reform::Form
     end
 
     required(:email).filled(unique?: :email, format?: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/)
+    required(:password).filled
   end
 
   def email=(value)
