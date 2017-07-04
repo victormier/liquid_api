@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe "/users" do
   let(:user) do
-    service = RegisterUser.new({ first_name: "John",
+    service = Services::RegisterUser.new({ first_name: "John",
                      last_name: "Doe",
                      email: "johndoe@example.com",
                      password: "password" })

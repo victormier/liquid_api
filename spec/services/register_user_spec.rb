@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe RegisterUser do
+RSpec.describe Services::RegisterUser do
   let(:user) {
     User.create(email: "johndoe@example.com",
                         password: "password")
@@ -11,7 +11,7 @@ RSpec.describe RegisterUser do
       email: "johndoe@example.com",
       password: "password" }
   }
-  subject { RegisterUser.new(params)  }
+  subject { Services::RegisterUser.new(params)  }
 
   it "creates a new user with valid params" do
     expect{ subject.call }.to change{ User.count }.by(1)
@@ -28,10 +28,10 @@ RSpec.describe RegisterUser do
     expect(Mail::TestMailer.deliveries.last.to).to include params[:email]
   end
 
-  it "returns false if params not valid" do
+  it "raises an exception if params not valid" do
     params[:email] = nil
-    subject = RegisterUser.new(params)
-    expect(subject.call).to be_falsey
+    subject = Services::RegisterUser.new(params)
+    expect{ subject.call }.to raise_exception(LiquidApi::MutationInvalid)
     expect(subject.form.errors).to_not be_empty
   end
 
