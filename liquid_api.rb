@@ -6,7 +6,7 @@ class LiquidApi < Roda
   use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: %w(/login /users/confirm_email), options: { algorithm: 'HS256' }}
 
   plugin :environments
-  self.environment = ENV['RACK_ENV']
+  self.environment = ENV['RACK_ENV'].to_sym
 
   plugin :flash
   plugin :json
