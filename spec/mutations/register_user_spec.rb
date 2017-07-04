@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe "RegisterUserMutation" do
+RSpec.describe "RegisterUser Mutation" do
   let(:register_user_field) { Schema.types["Mutation"].fields["registerUser"] }
   let(:args) { { "email": "johndoe@example.com", "password": "password" } }
 
