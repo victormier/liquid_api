@@ -1,4 +1,4 @@
-# MVP2 API
+# Liquid API
 
 ### Getting started
 
