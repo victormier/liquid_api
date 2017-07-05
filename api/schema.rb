@@ -1,4 +1,4 @@
-QueryType = GraphQL::ObjectType.define do
+QueryRoot = GraphQL::ObjectType.define do
   name "Query"
   description "The query root of this schema"
 
@@ -19,4 +19,14 @@ QueryType = GraphQL::ObjectType.define do
   end
 end
 
-Schema = GraphQL::Schema.new(query: QueryType)
+MutationRoot = GraphQL::ObjectType.define do
+  name 'Mutation'
+  description 'The mutation root of this schema'
+
+  field :registerUser, field: Mutations::RegisterUser
+end
+
+Schema = GraphQL::Schema.define do
+  query QueryRoot
+  mutation MutationRoot
+end

@@ -1,0 +1,7 @@
+<% if @user && @user.confirmed? %>
+  <div>Your email has been confirmed!</div>
+<% elsif email_sent %>
+  <div>Confirmation token has expired. We've sent you a new confirmation email. Please, check your inbox.</div>
+<% else %>
+  <div>We're sorry. We couldn't find any user to confirm with that link</div>
+<% end %>

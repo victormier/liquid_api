@@ -1,4 +1,4 @@
-class RodaGraphql < Roda
+class LiquidApi < Roda
   def self.css_files
     [].tap do |css|
       css << "graphiql-0.7.0.css"
