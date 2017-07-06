@@ -1,6 +1,9 @@
 .bundle
 vendor/bundle
 
-# Ignore log files 
+# Ignore log files
 /log/*
 !/log/.keep
+
+# environment variables
+.env
