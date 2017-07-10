@@ -1,16 +1,31 @@
 # Liquid API
 
-### Getting started
+### Running the container
+
+The first time you have to set up a couple things. This will take a while:
 
 ```bash
-rake db:create
-rake db:migrate
+docker-compose up
+docker-compose run web bundle exec rake db:reset
 ```
 
-### Running the server
+Afterwards you just have to type the following to start the server:
 
 ```bash
-bundle exec rackup -p 3000
+docker-compose up
+```
+
+For running commands inside the container:
+
+```bash
+docker-compose run web {COMMAND}
+```
+
+Recomendation: set up a couple aliases for saving up typing time:
+
+```bash
+alias docker-rake=docker-compose run web bundle exec rake
+alias docker-spec=docker-compose run web bundle exec rspec
 ```
 
 ### Running the console
@@ -18,19 +33,14 @@ bundle exec rackup -p 3000
 Like `rails console` for rack
 
 ```bash
-racksh
+docker-compose run web racksh
 ```
 
 ### Debugging emails
 
-Emails in development are delivered to mailcatcher. Mailcatcher should be install as an independent gem:
+Emails in development are delivered to mailcatcher. Mailcatcher runs as an independent service in the docker-compose system.
 
-```bash
-gem install mailcatcher
-mailcatcher
-```
-
-Mailcatcher will catch all emails which can be viewed in `http://localhost:1080/`. Just run `mailcatcher` in a console to start the mail server as a daemon.
+Mailcatcher will catch all emails which can be viewed in `http://localhost:1080/`.
 
 
 ### Generating migrations
@@ -38,7 +48,7 @@ Mailcatcher will catch all emails which can be viewed in `http://localhost:1080/
 We use the [active_record_migrations](https://github.com/rosenfeld/active_record_migrations) gem for rails-like active record migrations.
 
 ```
-rake "db:new_migration[CreateUser, name birth:date]"
+docker-compose run web rake "db:new_migration[CreateUser, name birth:date]"
 ```
 
 
