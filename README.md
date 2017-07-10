@@ -55,7 +55,6 @@ docker-compose run web rake "db:new_migration[CreateUser, name birth:date]"
 
 # Features
 * Graphql API
-* CSRF and SESSION
 * TOKEN AUTH
 
 ### DB
