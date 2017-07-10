@@ -16,17 +16,18 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
+  timeout: 5000
 
 development:
   <<: *default
-  database: mvp2_api_development
+  url: <%= ENV['DATABASE_URL'].gsub('?', '_development?') %>
 
 test:
   <<: *default
-  database: mvp2_api_test
+  url: <%= ENV['DATABASE_URL'].gsub('?', '_development?') %>
 
 production:
   <<: *default
-  database: mvp2_api_production
+  url: <%= ENV['DATABASE_URL'].gsub('?', '_development?') %>
   username: mvp2_api
   password: <%= ENV['MVP2_API_DATABASE_PASSWORD'] %>
