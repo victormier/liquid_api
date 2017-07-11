@@ -1,5 +1,5 @@
 # Use the barebones version of Ruby 2.4.
-FROM ruby:2.4-slim
+FROM ruby:2.3.4-slim
 
 # Optionally set a maintainer name to let people know who made this image.
 MAINTAINER Victor Mier <victor@helloliquid.com>
