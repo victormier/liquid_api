@@ -1,4 +1,4 @@
-class UserForm < Reform::Form
+class UserForm < BaseForm
   property :first_name
   property :last_name
   property :password

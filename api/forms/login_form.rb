@@ -1,4 +1,4 @@
-class LoginForm < Reform::Form
+class LoginForm < BaseForm
   property :email
   property :password
 
