@@ -59,7 +59,14 @@ RSpec.describe "/login" do
   it "returns :unauthorized if no params" do
     post "/login", params = {}.to_json
 
+    expected_body = {
+      'errors' => [
+        'Email must be filled',
+        'Password must be filled'
+      ]
+    }
     expect(last_response.status).to eq Rack::Utils.status_code(:unauthorized)
+    expect(JSON.parse(last_response.body)).to eq expected_body
   end
 end
 
