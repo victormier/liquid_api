@@ -55,6 +55,12 @@ RSpec.describe "/login" do
 
     expect(last_response.status).to eq Rack::Utils.status_code(:unauthorized)
   end
+
+  it "returns :unauthorized if no params" do
+    post "/login", params = {}.to_json
+
+    expect(last_response.status).to eq Rack::Utils.status_code(:unauthorized)
+  end
 end
 
 RSpec.describe "Token authentication" do
