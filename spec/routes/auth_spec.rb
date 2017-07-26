@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe "/login" do
-  before {
-    User.create(email: "johndoe@example.com", password: "password")
-  }
+  let(:user) { User.create(email: "johndoe@example.com", password: "password") }
+  before { user }
 
   def logged_in_auth_token
     post "/login", params = {
@@ -21,8 +20,10 @@ RSpec.describe "/login" do
     }
     post "/login", params.to_json
 
+    json_response = JSON.parse(last_response.body)
     expect(last_response.ok?).to be true
-    expect(JSON.parse(last_response.body).keys).to include("auth_token")
+    expect(json_response.keys).to include("auth_token")
+    expect(json_response["user_id"]).to eq user.id
   end
 
   it "allows case insensitive logging in" do
@@ -32,8 +33,9 @@ RSpec.describe "/login" do
     }
     post "/login", params.to_json
 
+    json_response = JSON.parse(last_response.body)
     expect(last_response.ok?).to be true
-    expect(JSON.parse(last_response.body).keys).to include("auth_token")
+    expect(json_response.keys).to include("auth_token")
   end
 
   it "returns :unauthorized with non existing user" do

@@ -12,7 +12,10 @@ LiquidApi.route("login") do |r|
       data = { user_id: @user.id }
       auth_token = Rack::JWT::Token.encode(data, ENV['RACK_JWT_SECRET'], 'HS256')
       response['Content-Type'] = 'application/json; charset=utf-8'
-      { auth_token: auth_token }.to_json
+      {
+        auth_token: auth_token,
+        user_id: @user.id,
+      }.to_json
     elsif login_form.errors.present?
       response.status = :unauthorized
       { errors: login_form.full_error_messages }.to_json
