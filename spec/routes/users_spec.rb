@@ -30,7 +30,7 @@ RSpec.describe "/users" do
 
       json_response = JSON.parse(last_response.body)
       expect(json_response.keys).to include("errors")
-      expect(json_response["errors"]).to eq("Password confirmation doesn't match password")
+      expect(json_response["errors"]).to eq(["Password confirmation doesn't match password"])
       expect(last_response.status).to eq Rack::Utils.status_code(:unprocessable_entity)
     end
   end
