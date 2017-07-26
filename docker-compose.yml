@@ -29,6 +29,8 @@ services:
       - '3000:3000'
     env_file:
       - .env
+    environment:
+      - MAILCATCHER_URL=mailcatcher
     volumes:
       - .:/usr/src/app
 
