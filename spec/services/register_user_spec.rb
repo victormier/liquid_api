@@ -9,7 +9,8 @@ RSpec.describe Services::RegisterUser do
     { first_name: "John",
       last_name: "Doe",
       email: "johndoe@example.com",
-      password: "password" }
+      password: "password",
+      password_confirmation: "password" }
   }
   subject { Services::RegisterUser.new(params)  }
 

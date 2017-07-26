@@ -5,7 +5,8 @@ RSpec.describe "/users" do
     service = Services::RegisterUser.new({ first_name: "John",
                      last_name: "Doe",
                      email: "johndoe@example.com",
-                     password: "password" })
+                     password: "password",
+                     password_confirmation: "password" })
     expect(service.call).to be true
     expect(service.model.persisted?).to be true
     service.model
