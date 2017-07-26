@@ -11,18 +11,16 @@ class GraphqlRescueFrom
     # - return an instance of `GraphQL::ExecutionError`
     # - or, return nil:
     if errors = err.try(:errors)
-      raise GraphQL::ExecutionError.new(full_message_errors(errors))
+      raise GraphQL::ExecutionError.new(self.class.full_message_errors(errors))
     else
       nil
     end
   end
 
-  private
-
-  def full_message_errors(errors)
+  def self.full_message_errors(errors)
     return errors unless errors.respond_to?(:as_json)
     errors.as_json["errors"].map do |k,v|
-      v.each.map { |message| "#{k.capitalize} #{message}" }.join('. ')
+      v.each.map { |message| "#{k.capitalize.gsub('_', ' ')} #{message}" }.join('. ')
     end.join('; ')
   end
 end

@@ -6,20 +6,13 @@ module Services
     end
 
     def call
-      if @form.validate(@params)
-        if @form.save
-          user = @form.model
-          # Send a confirmation email
-          SendEmailConfirmationEmail.new(user).call
-          true
-        else
-          # this shouldn't be a reform validation error
-          # could be an ActiveRecord validation error or db error
-          # (e.g.: no password from has_secure_password)
-          raise "There was a problem saving the user"
-        end
+      if @form.validate(@params) && @form.save
+        user = @form.model
+        # Send a confirmation email
+        SendEmailConfirmationEmail.new(user).call
+        true
       else
-        raise LiquidApi::MutationInvalid.new(errors: @form.errors)
+        false
       end
     end
 
