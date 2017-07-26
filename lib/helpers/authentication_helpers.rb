@@ -8,7 +8,12 @@ module AuthenticationHelpers
 
   def current_user
     @current_user ||= begin
-      env["jwt.payload"]["user_id"] && User.find(env["jwt.payload"]["user_id"])
+      if env["jwt.payload"]["user_id"]
+        user = User.find(env["jwt.payload"]["user_id"])
+        user.try(:confirmed?) ? user : nil
+      else
+        nil
+      end
     rescue ActiveRecord::RecordNotFound
       nil
     end
