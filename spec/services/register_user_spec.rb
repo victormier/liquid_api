@@ -9,7 +9,8 @@ RSpec.describe Services::RegisterUser do
     { first_name: "John",
       last_name: "Doe",
       email: "johndoe@example.com",
-      password: "password" }
+      password: "password",
+      password_confirmation: "password" }
   }
   subject { Services::RegisterUser.new(params)  }
 
@@ -31,13 +32,13 @@ RSpec.describe Services::RegisterUser do
   it "raises an exception if params not valid" do
     params[:email] = nil
     subject = Services::RegisterUser.new(params)
-    expect{ subject.call }.to raise_exception(LiquidApi::MutationInvalid)
+    expect(subject.call).to be false
     expect(subject.form.errors).to_not be_empty
   end
 
   it "raises an exception if saving the form fails" do
     allow_any_instance_of(UserForm).to receive(:save).and_return(false)
-    expect{ subject.call }.to raise_exception("There was a problem saving the user")
+    expect(subject.call).to be false
   end
 
 end

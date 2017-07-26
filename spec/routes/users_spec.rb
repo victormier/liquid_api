@@ -5,13 +5,37 @@ RSpec.describe "/users" do
     service = Services::RegisterUser.new({ first_name: "John",
                      last_name: "Doe",
                      email: "johndoe@example.com",
-                     password: "password" })
+                     password: "password",
+                     password_confirmation: "password" })
     expect(service.call).to be true
     expect(service.model.persisted?).to be true
     service.model
   end
 
-  context "confirm_email" do
+  context "/create" do
+    let(:params) { { email: "markdoe@example.com", password: "password", password_confirmation: "password" } }
+
+    it "registers a user with valid data" do
+      expect {
+        post "/users", params.to_json
+      }.to change{ User.count }.by(1)
+      expect(last_response.ok?).to be true
+    end
+
+    it "returns errors if form validation fails" do
+      params[:password_confirmation] = "wrongpassword"
+      expect {
+        post "/users", params.to_json
+      }.to change{ User.count }.by(0)
+
+      json_response = JSON.parse(last_response.body)
+      expect(json_response.keys).to include("errors")
+      expect(json_response["errors"]).to eq(["Password confirmation doesn't match password"])
+      expect(last_response.status).to eq Rack::Utils.status_code(:unprocessable_entity)
+    end
+  end
+
+  context "/confirm_email" do
     it "confirms user email" do
       get "/users/confirm_email?confirmation_token=#{user.confirmation_token}"
 

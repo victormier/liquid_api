@@ -7,15 +7,14 @@ LiquidApi.route("login") do |r|
       @user = User.find_by(email: login_form.email)
     end
 
-    if @user && @user.authenticate(login_form.password)
+    if @user && @user.authenticate(login_form.password) && @user.confirmed?
       # generate token
-      data = { user_id: @user.id }
-      auth_token = Rack::JWT::Token.encode(data, ENV['RACK_JWT_SECRET'], 'HS256')
+      response_data = LiquidApiUtils::Authentication.get_auth_token_response(@user)
       response['Content-Type'] = 'application/json; charset=utf-8'
-      {
-        auth_token: auth_token,
-        user_id: @user.id,
-      }.to_json
+      response_data.to_json
+    elsif @user && !@user.confirmed?
+      response.status = :unauthorized
+      { errors: ['Email is not confirmed'] }.to_json
     elsif login_form.errors.present?
       response.status = :unauthorized
       { errors: login_form.full_error_messages }.to_json

@@ -5,7 +5,8 @@ RSpec.describe UserForm do
     @params = { first_name: "John",
                 last_name: "Doe",
                 email: "johndoe@example.com",
-                password: "password" }
+                password: "password",
+                password_confirmation: "password" }
   }
   subject { UserForm.new(User.new)  }
 
@@ -52,6 +53,20 @@ RSpec.describe UserForm do
 
       expect(subject.valid?).to be false
       expect(subject.errors[:password]).to include("must be filled")
+    end
+
+    it "validates presence of password confirmation" do
+      subject.validate(@params.merge({ password_confirmation: nil }))
+
+      expect(subject.valid?).to be false
+      expect(subject.errors[:password_confirmation]).to include("must be filled")
+    end
+
+    it "validates equality of password confirmation to password" do
+      subject.validate(@params.merge({ password_confirmation: nil }))
+
+      expect(subject.valid?).to be false
+      expect(subject.errors[:password_confirmation]).to include("doesn't match password")
     end
   end
 end
