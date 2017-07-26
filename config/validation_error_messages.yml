@@ -1,3 +1,4 @@
 en:
   errors:
     unique?: "is already taken"
+    same_password?: "doesn't match password"
