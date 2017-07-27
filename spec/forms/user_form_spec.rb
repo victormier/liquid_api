@@ -38,7 +38,7 @@ RSpec.describe UserForm do
       expect(user.persisted?).to be true
       subject.validate(params)
       expect(subject.valid?).to be false
-      expect(subject.errors[:email]).to include("is already taken")
+      expect(subject.errors[:email]).to include("must be unique (not already taken)")
     end
 
     it "validates case-insensitive uniqueness of email" do
@@ -47,7 +47,7 @@ RSpec.describe UserForm do
       subject.validate(params.merge({email: params[:email].upcase}))
 
       expect(subject.valid?).to be false
-      expect(subject.errors[:email]).to include("is already taken")
+      expect(subject.errors[:email]).to include("must be unique (not already taken)")
     end
   end
 end
