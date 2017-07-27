@@ -6,7 +6,10 @@ module Services
     end
 
     def call
-      if @form.validate(@params) && @form.save
+      params = @params.merge({
+        password: SecureRandom.hex(10)
+      })
+      if @form.validate(params) && @form.save
         user = @form.model
         # Send a confirmation email
         SendEmailConfirmationEmail.new(user).call
