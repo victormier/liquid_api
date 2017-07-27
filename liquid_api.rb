@@ -2,6 +2,13 @@ require "find"
 Dotenv.load
 
 class LiquidApi < Roda
+  require 'lib/configurable'
+  extend LiquidApiUtils::Configurable
+
+  # Require environment config
+  environment_config_path = "config/environments/#{ENV['RACK_ENV']}"
+  require environment_config_path if File.exists?("#{environment_config_path}.rb")
+
   # Require files
   require './api/exceptions'
   %w{config/initializers lib api/types api/mutations api/models middlewares api/forms api/services}.each do |load_path|
