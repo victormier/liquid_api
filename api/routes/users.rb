@@ -24,6 +24,9 @@ LiquidApi.route("users") do |r|
     if @user
       if @user.confirmation_token_valid?
         @user.mark_as_confirmed!
+        Services::ResetUserPassword.new(@user).call
+        url = "https://#{LiquidApi.configuration.default_host}/users/reset_password?reset_password_token=#{@user.reload.reset_password_token}"
+        response.redirect(url)
       else
         SendEmailConfirmationEmail.new(@user).call
         email_sent = true

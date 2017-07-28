@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
     (confirmation_sent_at + 30.days) > Time.now.utc
   end
 
+  def reset_password_token_valid?
+    (reset_password_token_generated_at + 1.day) > Time.now.utc
+  end
+
   def mark_as_confirmed!
     self.confirmation_token = nil
     self.confirmed_at = Time.now.utc
