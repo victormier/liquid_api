@@ -46,4 +46,5 @@ group :test do
   gem 'rack-test'
   gem 'database_cleaner'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'timecop'
 end

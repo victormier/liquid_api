@@ -156,6 +156,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.5)
+    timecop (0.9.1)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uber (0.1.0)
@@ -187,6 +188,10 @@ DEPENDENCIES
   rspec
   shoulda-matchers!
   tilt
+  timecop
+
+RUBY VERSION
+   ruby 2.3.4p301
 
 BUNDLED WITH
-   1.12.5
+   1.15.1

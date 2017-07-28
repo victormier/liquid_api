@@ -4,6 +4,7 @@ require 'dotenv'
 require 'pry'
 require 'database_cleaner'
 require 'shoulda-matchers'
+require 'timecop'
 
 Dotenv.load
 
