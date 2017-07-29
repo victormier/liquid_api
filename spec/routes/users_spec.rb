@@ -88,7 +88,30 @@ RSpec.describe "/users" do
     end
   end
 
-  context "/users/:id/set_password" do
+  context "/request_reset_password" do
+    it "sets a reset_password_token" do
+      expect(user.reset_password_token).to be nil
+      post "/users/request_reset_password", { email: user.email }.to_json
+      expect(user.reload.reset_password_token).to_not be nil
+    end
+
+    it "submits a reset password email" do
+      user # create user (triggers an email which we don't want to test)
+      expect do
+        post "/users/request_reset_password", { email: user.email }.to_json
+      end.to change{ Mail::TestMailer.deliveries.length }.by(1)
+      expect(Mail::TestMailer.deliveries.last.subject).to eq "Liquid reset password"
+      expect(Mail::TestMailer.deliveries.last.to).to include user.email
+    end
+
+    it "raises ActiveRecord::RecordNotFound if email doesn't exist" do
+      expect do
+        post "/users/request_reset_password", { email: "nonexisting@email.com" }.to_json
+      end.to raise_exception(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  context "/:id/set_password" do
     let(:params) { { password: "12345", password_confirmation: "12345" } }
     before { user.mark_as_confirmed! }
 

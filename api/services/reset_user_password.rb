@@ -5,7 +5,7 @@ module Services
     end
 
     def call
-      # This doesn't actually reset the password
+      # This doesn't actually reset the password, just sets a reset token
       @user.reset_password_token = SecureRandom.hex(10)
       @user.reset_password_token_generated_at = Time.now.utc
       @user.save!
