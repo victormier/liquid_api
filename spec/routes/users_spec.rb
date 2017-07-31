@@ -28,7 +28,6 @@ RSpec.describe "/users" do
         post "/users", params.to_json
       }.to change{ User.count }.by(0)
 
-      json_response = JSON.parse(last_response.body)
       expect(json_response.keys).to include("errors")
       expect(json_response["errors"]).to eq(["Email is in invalid format"])
       expect(last_response.status).to eq Rack::Utils.status_code(:unprocessable_entity)
@@ -119,7 +118,6 @@ RSpec.describe "/users" do
       post "/users/#{user.id}/set_password", params.to_json
 
       expect(last_response.ok?).to be true
-      json_response = JSON.parse(last_response.body)
       expect(json_response.keys).to include "auth_token"
     end
 
@@ -129,7 +127,6 @@ RSpec.describe "/users" do
 
       expect(last_response.ok?).to be false
       expect(last_response.status).to eq Rack::Utils.status_code(:unprocessable_entity)
-      json_response = JSON.parse(last_response.body)
       expect(json_response["errors"]).to include "Email is not confirmed"
     end
 
@@ -139,7 +136,6 @@ RSpec.describe "/users" do
 
       expect(last_response.ok?).to be false
       expect(last_response.status).to eq Rack::Utils.status_code(:unprocessable_entity)
-      json_response = JSON.parse(last_response.body)
       expect(json_response["errors"]).to include "Password confirmation doesn't match password"
     end
 

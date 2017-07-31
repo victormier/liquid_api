@@ -20,7 +20,6 @@ RSpec.describe "/login" do
     }
     post "/login", params.to_json
 
-    json_response = JSON.parse(last_response.body)
     expect(last_response.ok?).to be true
     expect(json_response.keys).to include("auth_token")
     expect(json_response["user_id"]).to eq user.id
@@ -33,7 +32,6 @@ RSpec.describe "/login" do
     }
     post "/login", params.to_json
 
-    json_response = JSON.parse(last_response.body)
     expect(last_response.ok?).to be true
     expect(json_response.keys).to include("auth_token")
   end
