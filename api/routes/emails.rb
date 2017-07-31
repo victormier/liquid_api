@@ -11,7 +11,7 @@ LiquidApi.route("emails") do |r|
 
     r.mail "reset_password", Integer do |user_id|
       @user = User.find(user_id)
-      @reset_password_url = "https://#{LiquidApi.configuration.default_host}/users/reset_password?reset_password_token=#{@user.reset_password_token}"
+      @reset_password_url = "https://#{LiquidApi.configuration.default_api_host}/users/reset_password?reset_password_token=#{@user.reset_password_token}"
       to @user.email
       subject "Liquid reset password"
       render "emails/users/reset_password"

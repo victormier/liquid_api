@@ -8,10 +8,12 @@ module LiquidApiUtils
     end
 
     class Configuration
-      attr_accessor :default_host
+      attr_accessor :default_client_host
+      attr_accessor :default_api_host
 
       def initialize
-        @default_host = 'localhost'
+        @default_client_host = 'localhost:8080'
+        @default_api_host = 'localhost:3000'
       end
     end
   end

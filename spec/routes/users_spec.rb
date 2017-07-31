@@ -51,7 +51,7 @@ RSpec.describe "/users" do
     it "redirects the user to a reset password page" do
       get "/users/confirm_email?confirmation_token=#{user.confirmation_token}"
       expect(last_response.status).to eq Rack::Utils.status_code(:found)
-      expect(last_response.headers["Location"]).to eq "https://localhost:3000/users/reset_password?reset_password_token=#{user.reload.reset_password_token}"
+      expect(last_response.headers["Location"]).to eq "https://#{LiquidApi.configuration.default_client_host}/users/reset_password?reset_password_token=#{user.reload.reset_password_token}"
     end
 
     context "when token has expired" do
