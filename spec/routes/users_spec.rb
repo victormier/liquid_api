@@ -145,4 +145,21 @@ RSpec.describe "/users" do
       }.to raise_exception(ActiveRecord::RecordNotFound)
     end
   end
+
+  context "/from_reset_password_token" do
+    it "returns user info from reset password token" do
+      Services::ResetUserPassword.new(user).call
+      get "/users/from_reset_password_token", params: { reset_password_token: user.reset_password_token }
+
+      expect(last_response.ok?).to be true
+      expect(json_response.keys).to include("user")
+      expect(json_response["user"]).to include("email" => user.email, "id" => user.id)
+    end
+
+    it "raises an exception if reset password not valid" do
+      expect {
+        get "/users/from_reset_password_token", params: { reset_password_token: "123456789" }
+      }.to raise_exception(ActiveRecord::RecordNotFound)
+    end
+  end
 end

@@ -43,6 +43,12 @@ LiquidApi.route("users") do |r|
     render "users/request_reset_password"
   end
 
+  r.get "from_reset_password_token" do
+    params = request.params["params"]
+    @user = User.find_by!(reset_password_token: params["reset_password_token"])
+    { user: { id: @user.id, email: @user.email } }.to_json
+  end
+
   r.on :id do |user_id|
     @user = User.find(user_id)
 
