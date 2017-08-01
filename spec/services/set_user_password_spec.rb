@@ -28,4 +28,10 @@ RSpec.describe Services::SetUserPassword do
     allow_any_instance_of(PasswordForm).to receive(:save).and_return(false)
     expect(subject.call).to be false
   end
+
+  it "returns false if the user email is not confirmed" do
+    allow_any_instance_of(User).to receive(:confirmed?).and_return(false)
+    expect(subject.call).to be false
+    expect(subject.errors).to include "Email is not confirmed"
+  end
 end

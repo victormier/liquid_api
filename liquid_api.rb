@@ -19,6 +19,14 @@ class LiquidApi < Roda
   require './api/schema'
 
   use PassAuthToken if ENV['RACK_ENV'] == "development"
+  EXCLUDE_PATHS = %w(
+    /assets
+    /login
+    /users
+    /users/confirm_email
+    /users/from_reset_password_token
+    /users/:id/set_password
+  )
   use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: %w(/assets /login /users /users/confirm_email), options: { algorithm: 'HS256' }}
 
   plugin :environments

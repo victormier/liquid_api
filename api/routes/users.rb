@@ -1,3 +1,5 @@
+require 'pry'
+
 LiquidApi.route("users") do |r|
   r.is do
     r.post do
@@ -44,8 +46,7 @@ LiquidApi.route("users") do |r|
   end
 
   r.get "from_reset_password_token" do
-    params = request.params["params"]
-    @user = User.find_by!(reset_password_token: params["reset_password_token"])
+    @user = User.find_by!(reset_password_token: request.params["reset_password_token"])
     { user: { id: @user.id, email: @user.email } }.to_json
   end
 
@@ -53,13 +54,13 @@ LiquidApi.route("users") do |r|
     @user = User.find(user_id)
 
     r.post "set_password" do
-      form = PasswordForm.new(@user)
       params = JSON.parse(request.body.read)
+      service = Services::SetUserPassword.new(@user, params)
 
-      if @user.confirmed? && form.validate(params) && form.save
+      if @user.confirmed? && service.call
         LiquidApiUtils::Authentication.get_auth_token_response(@user).to_json
       else
-        errors = @user.confirmed? ? LiquidApiUtils::Errors.full_messages_array(form.errors) : ["Email is not confirmed"]
+        errors = service.errors || ["There was a problem saving the password"]
         response.status = :unprocessable_entity
         { errors: errors }.to_json
       end

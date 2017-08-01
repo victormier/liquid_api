@@ -12,7 +12,7 @@ class PasswordForm < BaseForm
       end
     end
 
-    required(:password).filled(max_size?: 72)
+    required(:password).filled(min_size?: 6, max_size?: 72)
     required(:password_confirmation).filled(:same_password?)
   end
 end

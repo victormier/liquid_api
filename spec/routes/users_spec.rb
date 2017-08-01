@@ -111,7 +111,7 @@ RSpec.describe "/users" do
   end
 
   context "/:id/set_password" do
-    let(:params) { { password: "12345", password_confirmation: "12345" } }
+    let(:params) { { password: "123456", password_confirmation: "123456" } }
     before { user.mark_as_confirmed! }
 
     it "sets a new password for a user" do
@@ -119,6 +119,7 @@ RSpec.describe "/users" do
 
       expect(last_response.ok?).to be true
       expect(json_response.keys).to include "auth_token"
+      expect(json_response.keys).to include "user_id"
     end
 
     it "returns an error if user email is not confirmed" do
@@ -149,7 +150,7 @@ RSpec.describe "/users" do
   context "/from_reset_password_token" do
     it "returns user info from reset password token" do
       Services::ResetUserPassword.new(user).call
-      get "/users/from_reset_password_token", params: { reset_password_token: user.reset_password_token }
+      get "/users/from_reset_password_token", { reset_password_token: user.reset_password_token }
 
       expect(last_response.ok?).to be true
       expect(json_response.keys).to include("user")
@@ -158,7 +159,7 @@ RSpec.describe "/users" do
 
     it "raises an exception if reset password not valid" do
       expect {
-        get "/users/from_reset_password_token", params: { reset_password_token: "123456789" }
+        get "/users/from_reset_password_token", { reset_password_token: "123456789" }
       }.to raise_exception(ActiveRecord::RecordNotFound)
     end
   end

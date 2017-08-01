@@ -7,7 +7,7 @@ module Services
     end
 
     def call
-      if @form.validate(@params) && @form.save
+      if @user.confirmed? && @form.validate(@params) && @form.save
         @user.update_attributes(reset_password_token: nil, reset_password_token_generated_at: nil)
       else
         false
@@ -18,6 +18,14 @@ module Services
 
     def model
       form.model
+    end
+
+    def errors
+      if !@user.confirmed?
+        ["Email is not confirmed"]
+      elsif form.errors.present?
+        LiquidApiUtils::Errors.full_messages_array(@form.errors)
+      end
     end
   end
 end
