@@ -1,9 +1,10 @@
 .bundle
 vendor/bundle
 
-# Ignore log files
+# Ignore log, temp and system files
 /log/*
 !/log/.keep
+.DS_Store
 
 # environment variables
 .env
