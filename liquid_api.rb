@@ -2,6 +2,13 @@ require "find"
 Dotenv.load
 
 class LiquidApi < Roda
+  require 'lib/configurable'
+  extend LiquidApiUtils::Configurable
+
+  # Require environment config
+  environment_config_path = "config/environments/#{ENV['RACK_ENV']}"
+  require environment_config_path if File.exists?("#{environment_config_path}.rb")
+
   # Require files
   require './api/exceptions'
   %w{config/initializers lib api/types api/mutations api/models middlewares api/forms api/services}.each do |load_path|
@@ -12,6 +19,14 @@ class LiquidApi < Roda
   require './api/schema'
 
   use PassAuthToken if ENV['RACK_ENV'] == "development"
+  EXCLUDE_PATHS = %w(
+    /assets
+    /login
+    /users
+    /users/confirm_email
+    /users/from_reset_password_token
+    /users/:id/set_password
+  )
   use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: %w(/assets /login /users /users/confirm_email), options: { algorithm: 'HS256' }}
 
   plugin :environments

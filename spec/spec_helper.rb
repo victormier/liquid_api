@@ -4,6 +4,7 @@ require 'dotenv'
 require 'pry'
 require 'database_cleaner'
 require 'shoulda-matchers'
+require 'timecop'
 
 Dotenv.load
 
@@ -53,5 +54,9 @@ RSpec.configure do |config|
       with.library :active_record
       with.library :active_model
     end
+  end
+
+  def json_response
+    JSON.parse(last_response.body)
   end
 end

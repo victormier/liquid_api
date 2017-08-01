@@ -36,7 +36,7 @@ ActiveRecord::Base.logger = logger if logger
 use Rack::Cors do
   allow do
     origins '*'
-    resource '*', :headers => :any, :methods => [:post]
+    resource '*', :headers => :any, :methods => [:get, :post]
   end
 end
 

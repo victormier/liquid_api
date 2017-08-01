@@ -1,9 +1,8 @@
 class UserForm < BaseForm
   property :first_name
   property :last_name
-  property :password
-  property :password_confirmation
   property :email
+  property :password
 
   validation do
     configure do
@@ -13,15 +12,9 @@ class UserForm < BaseForm
       def unique?(attr, value)
         form.model.class.where.not(id: form.model.id).find_by(attr => value).nil?
       end
-
-      def same_password?(value)
-        value == form.password
-      end
     end
 
     required(:email).filled(unique?: :email, format?: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/)
-    required(:password).filled
-    required(:password_confirmation).filled(:same_password?)
   end
 
   def email=(value)
