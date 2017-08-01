@@ -92,6 +92,7 @@ RSpec.describe "/users" do
       expect(user.reset_password_token).to be nil
       post "/users/request_reset_password", { email: user.email }.to_json
       expect(user.reload.reset_password_token).to_not be nil
+      expect(last_response.ok?).to be true
     end
 
     it "submits a reset password email" do
@@ -103,10 +104,11 @@ RSpec.describe "/users" do
       expect(Mail::TestMailer.deliveries.last.to).to include user.email
     end
 
-    it "raises ActiveRecord::RecordNotFound if email doesn't exist" do
+    it "returns ok even if email doesn't exist" do
       expect do
         post "/users/request_reset_password", { email: "nonexisting@email.com" }.to_json
-      end.to raise_exception(ActiveRecord::RecordNotFound)
+      end.to change{ Mail::TestMailer.deliveries.length }.by(0)
+      expect(last_response.ok?).to be true
     end
   end
 

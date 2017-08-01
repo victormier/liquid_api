@@ -40,9 +40,12 @@ LiquidApi.route("users") do |r|
 
   r.post "request_reset_password" do
     params = JSON.parse(request.body.read)
-    @user = User.find_by!(email: params["email"])
-    Services::SendResetPasswordEmail.new(@user).call
-    render "users/request_reset_password"
+    @user = User.find_by(email: params["email"])
+    if @user
+      Services::SendResetPasswordEmail.new(@user).call
+    end
+    # Return empty response
+    ''
   end
 
   r.get "from_reset_password_token" do
