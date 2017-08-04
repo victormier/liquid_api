@@ -32,6 +32,9 @@ gem 'rack-jwt'
 # Email
 gem 'mail'
 
+# Background jobs
+gem 'sidekiq'
+
 # Utilities
 gem 'racksh'
 gem 'bcrypt'
