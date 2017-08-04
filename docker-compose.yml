@@ -40,17 +40,18 @@ services:
     ports:
       - '1080:1080'
 
-
-  # sidekiq:
-  #   build: .
-  #   command: bundle exec sidekiq -C config/sidekiq.yml
-  #   links:
-  #     - postgres
-  #     - redis
-  #   volumes:
-  #     - .:/liquid_api
-  #   env_file:
-  #     - .env
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq -C config/sidekiq.yml -r ./liquid_api.rb
+    links:
+      - postgres
+      - redis
+    volumes:
+      - .:/liquid_api
+      - .:/usr/src/app
+      - bundle_cache:/bundle
+    env_file:
+      - .env
 
 volumes:
   postgres-data:
