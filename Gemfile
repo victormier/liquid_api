@@ -35,6 +35,7 @@ gem 'mail'
 # Utilities
 gem 'racksh'
 gem 'bcrypt'
+gem 'rest-client'
 
 group :test, :development do
   gem 'pry'

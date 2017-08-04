@@ -55,6 +55,8 @@ GEM
       declarative-option (< 0.2.0)
       representable (>= 2.4.0, <= 3.1.0)
       uber (< 0.2.0)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
     dry-configurable (0.7.0)
       concurrent-ruby (~> 1.0)
@@ -85,6 +87,8 @@ GEM
       dry-types (~> 0.9, >= 0.9.0)
     erubi (1.6.0)
     graphql (1.6.4)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     i18n (0.8.4)
     inflecto (0.0.2)
     jwt (1.5.4)
@@ -98,6 +102,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.2)
+    netrc (0.11.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     pg (0.18.4)
@@ -137,6 +142,10 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     roda (2.15.0)
       rack
     rspec (3.6.0)
@@ -160,6 +169,9 @@ GEM
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uber (0.1.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.4)
 
 PLATFORMS
   ruby
@@ -184,6 +196,7 @@ DEPENDENCIES
   racksh
   rake
   reform
+  rest-client
   roda
   rspec
   shoulda-matchers!
