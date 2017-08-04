@@ -33,6 +33,7 @@ services:
       - MAILCATCHER_URL=mailcatcher
     volumes:
       - .:/usr/src/app
+      - bundle_cache:/bundle
 
   mailcatcher:
     image: schickling/mailcatcher
@@ -54,3 +55,4 @@ services:
 volumes:
   postgres-data:
   redis-data:
+  bundle_cache:
