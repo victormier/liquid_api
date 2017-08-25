@@ -5,4 +5,36 @@ SaltedgeProviderType = GraphQL::ObjectType.define do
   field :id, !types.ID
   field :name, !types.String
   field :country_code, !types.String
+  field :required_fields, types[SaltedgeProviderFieldDescriptionType] do
+    resolve -> (obj, args, _ctx) do
+      obj.saltedge_data['required_fields']
+    end
+  end
+end
+
+SaltedgeProviderFieldDescriptionType = GraphQL::ObjectType.define do
+  name "SaltedgeProviderFieldDescriptionType"
+  description "Input field description for saltedge provider specific fields"
+
+  field :nature, !types.String, hash_key: 'nature'
+  field :name, !types.String, hash_key: 'name'
+  field :position, types.Int, hash_key: 'position'
+  field :localized_name, types.String, hash_key: 'localized_name'
+  field :optional, types.Boolean, hash_key: 'optional'
+  field :field_options, types[SaltedgeFieldOptionsType] do
+    resolve -> (obj, args, _ctx) do
+      obj["field_options"]
+    end
+  end
+end
+
+SaltedgeFieldOptionsType = GraphQL::ObjectType.define do
+  name "SaltedgeFieldOptionsType"
+  description "Options for select fields in saltedge provider specific fields"
+
+  field :name, !types.String, hash_key: 'name'
+  field :english_name, types.String, hash_key: 'english_name'
+  field :localized_name, types.String, hash_key: 'localized_name'
+  field :option_value, !types.String, hash_key: 'option_value'
+  field :selected, types.Boolean, hash_key: 'selected'
 end
