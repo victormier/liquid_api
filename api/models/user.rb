@@ -21,4 +21,8 @@ class User < ActiveRecord::Base
   def confirmed?
     !confirmed_at.nil?
   end
+
+  def is_saltedge_customer?
+    !saltedge_id.nil?
+  end
 end

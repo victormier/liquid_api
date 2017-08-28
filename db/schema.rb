@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170804143454) do
+ActiveRecord::Schema.define(version: 20170827092539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,9 @@ ActiveRecord::Schema.define(version: 20170804143454) do
     t.datetime "confirmation_sent_at"
     t.string "reset_password_token"
     t.datetime "reset_password_token_generated_at"
+    t.string "saltedge_id"
+    t.string "saltedge_custom_identifier"
+    t.string "saltedge_customer_secret"
   end
 
 end
