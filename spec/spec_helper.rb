@@ -5,6 +5,7 @@ require 'pry'
 require 'database_cleaner'
 require 'shoulda-matchers'
 require 'timecop'
+require 'webmock/rspec'
 
 Dotenv.load
 
@@ -20,6 +21,9 @@ RSpec.configure do |config|
 
   # Make sure database has latest schema on test
   ActiveRecord::Migration.maintain_test_schema!
+
+  # Disable external http requests
+  WebMock.disable_net_connect!(allow_localhost: true)
 
   # rspec-expectations config goes here.
   config.expect_with :rspec do |expectations|
