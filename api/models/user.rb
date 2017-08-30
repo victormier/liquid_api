@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :comments
   has_many :posts
+  has_many :saltedge_logins
 
   def confirmation_token_valid?
     (confirmation_sent_at + 30.days) > Time.now.utc
