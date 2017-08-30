@@ -21,7 +21,8 @@ class LiquidApi
         end
         result = Schema.execute(
           params["query"],
-          variables: variables
+          variables: variables,
+          context: { current_user: current_user }
         )
 
         response['Content-Type'] = 'application/json; charset=utf-8'
