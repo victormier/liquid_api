@@ -91,6 +91,8 @@ GEM
       dry-logic (~> 0.4, >= 0.4.0)
       dry-types (~> 0.9, >= 0.9.0)
     erubi (1.6.0)
+    factory_girl (4.8.0)
+      activesupport (>= 3.0.0)
     graphql (1.6.4)
     hashdiff (0.3.6)
     http-cookie (1.0.3)
@@ -202,6 +204,7 @@ DEPENDENCIES
   database_cleaner
   dotenv
   dry-validation
+  factory_girl
   graphql
   mail
   pg
