@@ -8,7 +8,7 @@ module Services
       custom_identifier = "#{@user.id}-#{SecureRandom.hex(5)}"
 
       begin
-        response = SaltedgeClient.new.request(:post, "/customers/", {
+        response = SaltedgeClient.new.request(:post, "/customers", {
           data: {
             identifier: custom_identifier
           }

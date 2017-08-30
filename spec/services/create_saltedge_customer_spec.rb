@@ -8,7 +8,7 @@ RSpec.describe Services::CreateSaltedgeCustomer do
   subject { Services::CreateSaltedgeCustomer.new(user)  }
 
   before do
-    stub_request(:post, "https://www.saltedge.com/api/v3/customers/").
+    stub_request(:post, "https://www.saltedge.com/api/v3/customers").
      to_return(
        body: {
           "data": {
