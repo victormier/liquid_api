@@ -17,12 +17,15 @@ module Services
       end
       # create login on saltedge
       params = {
-        customer_id: @user.saltedge_id,
-        country_code: @saltedge_provider.country_code,
-        provider_code: @saltedge_provider.saltedge_data["code"],
-        daily_refresh: true,
-        credentials: @credentials
+        data: {
+          customer_id: @user.saltedge_id.to_i,
+          country_code: @saltedge_provider.country_code,
+          provider_code: @saltedge_provider.saltedge_data["code"],
+          daily_refresh: true,
+          credentials: @credentials
+        }
       }
+
       response = @saltedge_client.request(:post, "/logins", params)
       # store login on app
       data = JSON.parse(response.body)
