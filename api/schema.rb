@@ -35,6 +35,7 @@ MutationRoot = GraphQL::ObjectType.define do
   description 'The mutation root of this schema'
 
   field :registerUser, field: Mutations::RegisterUser
+  field :createSaltedgeLogin, field: Mutations::CreateSaltedgeLogin
 end
 
 Schema = GraphQL::Schema.define do

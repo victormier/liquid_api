@@ -1,0 +1,19 @@
+{
+  "id": 123,
+  "code": "fakebank_simple_xf",
+  "name": "Fake Bank",
+  "mode": "web",
+  "status": "active",
+  "automatic_fetch": true,
+  "customer_notified_on_sign_in": false,
+  "interactive": false,
+  "instruction": "Please fill in all the fields.",
+  "home_url": "http://example.com",
+  "login_url": "http://example.com/login",
+  "forum_url": "https://forum.saltedge.com/themes/xf/forums/fake/all",
+  "country_code": "XF",
+  "refresh_timeout": 60,
+  "holder_info": ["names", "emails", "phone_numbers"],
+  "created_at": "2017-08-07T12:06:17Z",
+  "updated_at": "2017-08-12T12:06:17Z"
+}
