@@ -15,7 +15,7 @@ class SaltedgeClient
       method:     method,
       url:        BASE_URL + path,
       expires_at: (Time.now + EXPIRATION_TIME).to_i,
-      params:     as_json(params)
+      params:     params.to_json
     }
 
     RestClient::Request.execute(
