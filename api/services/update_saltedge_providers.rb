@@ -20,6 +20,7 @@ module Services
       params = {
         include_provider_fields: true
       }
+      params[:include_fake_providers] = true if LiquidApi.development?
       params[:from_id] = from_id unless from_id.nil?
       response = @saltedge_client.request(:get, "/providers", params)
       parsed_response = JSON.parse(response.body)
@@ -33,7 +34,7 @@ module Services
         attrs = provider_data.select {|k,v| STOREABLE_ATTRIBUTES.include?(k) }
         saltedge_provider.assign_attributes(attrs)
         saltedge_provider.saltedge_data = provider_data
-        saltedge_provider.save
+        saltedge_provider.save if saltedge_provider.changed?
       end
     end
   end
