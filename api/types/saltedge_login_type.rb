@@ -6,4 +6,6 @@ SaltedgeLoginType = GraphQL::ObjectType.define do
   field :saltedge_id, !types.ID
   field :user, -> { UserType }
   field :saltedge_provider, -> { SaltedgeProviderType }
+  field :active, !types.Boolean
+  field :finished_connecting, !types.Boolean
 end
