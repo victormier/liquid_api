@@ -27,6 +27,7 @@ module Services
       }
 
       response = @saltedge_client.request(:post, "/logins", params)
+
       # store login on app
       data = JSON.parse(response.body)
       @saltedge_login = @user.saltedge_logins.create(
