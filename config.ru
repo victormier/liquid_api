@@ -1,7 +1,5 @@
 # Load path and gems/bundler
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
-require 'tilt/erb'
-require 'bundler'
 require 'logger'
 require 'dotenv'
 Bundler.require

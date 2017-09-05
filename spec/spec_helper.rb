@@ -5,6 +5,8 @@ require 'pry'
 require 'database_cleaner'
 require 'shoulda-matchers'
 require 'timecop'
+require 'webmock/rspec'
+require 'factory_girl'
 
 Dotenv.load
 
@@ -20,6 +22,15 @@ RSpec.configure do |config|
 
   # Make sure database has latest schema on test
   ActiveRecord::Migration.maintain_test_schema!
+
+  # Disable external http requests
+  WebMock.disable_net_connect!(allow_localhost: true)
+
+  # Configure Factory Girl
+  config.include FactoryGirl::Syntax::Methods
+  config.before(:suite) do
+    FactoryGirl.find_definitions
+  end
 
   # rspec-expectations config goes here.
   config.expect_with :rspec do |expectations|

@@ -32,9 +32,13 @@ gem 'rack-jwt'
 # Email
 gem 'mail'
 
+# Background jobs
+gem 'sidekiq'
+
 # Utilities
 gem 'racksh'
 gem 'bcrypt'
+gem 'rest-client'
 
 group :test, :development do
   gem 'pry'
@@ -47,4 +51,6 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'timecop'
+  gem 'webmock'
+  gem 'factory_girl'
 end

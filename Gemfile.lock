@@ -37,12 +37,17 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
     bcrypt (3.1.11)
     builder (3.2.3)
     coderay (1.1.1)
     colorize (0.7.7)
     concurrent-ruby (1.0.5)
+    connection_pool (2.2.1)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     database_cleaner (1.6.1)
     declarative (0.0.9)
     declarative-builder (0.1.0)
@@ -55,6 +60,8 @@ GEM
       declarative-option (< 0.2.0)
       representable (>= 2.4.0, <= 3.1.0)
       uber (< 0.2.0)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
     dry-configurable (0.7.0)
       concurrent-ruby (~> 1.0)
@@ -84,7 +91,12 @@ GEM
       dry-logic (~> 0.4, >= 0.4.0)
       dry-types (~> 0.9, >= 0.9.0)
     erubi (1.6.0)
+    factory_girl (4.8.0)
+      activesupport (>= 3.0.0)
     graphql (1.6.4)
+    hashdiff (0.3.6)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     i18n (0.8.4)
     inflecto (0.0.2)
     jwt (1.5.4)
@@ -98,6 +110,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.2)
+    netrc (0.11.0)
     nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     pg (0.18.4)
@@ -105,6 +118,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    public_suffix (3.0.0)
     puma (3.4.0)
     rack (2.0.3)
     rack-cors (0.4.1)
@@ -130,6 +144,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (11.2.2)
+    redis (3.3.3)
     reform (2.2.4)
       disposable (>= 0.4.1)
       representable (>= 2.4.0, < 3.1.0)
@@ -137,6 +152,10 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     roda (2.15.0)
       rack
     rspec (3.6.0)
@@ -152,6 +171,12 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
+    safe_yaml (1.0.4)
+    sidekiq (5.0.4)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (~> 3.3, >= 3.3.3)
     slop (3.6.0)
     thor (0.19.4)
     thread_safe (0.3.6)
@@ -160,6 +185,13 @@ GEM
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uber (0.1.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.4)
+    webmock (3.0.1)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
 
 PLATFORMS
   ruby
@@ -172,6 +204,7 @@ DEPENDENCIES
   database_cleaner
   dotenv
   dry-validation
+  factory_girl
   graphql
   mail
   pg
@@ -184,11 +217,14 @@ DEPENDENCIES
   racksh
   rake
   reform
+  rest-client
   roda
   rspec
   shoulda-matchers!
+  sidekiq
   tilt
   timecop
+  webmock
 
 RUBY VERSION
    ruby 2.3.4p301

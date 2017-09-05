@@ -17,6 +17,23 @@ QueryRoot = GraphQL::ObjectType.define do
     type types[!UserType]
     resolve -> (obj, args, ctx) { User.all }
   end
+
+  field :saltedge_provider do
+    type SaltedgeProviderType
+    argument :id, !types.ID
+    resolve -> (obj, args, ctx) { SaltedgeProvider.find(args["id"]) }
+  end
+
+  field :all_saltedge_providers do
+    type types[!SaltedgeProviderType]
+    resolve -> (obj, args, ctx) { SaltedgeProvider.all }
+  end
+
+  field :saltedge_login do
+    type SaltedgeLoginType
+    argument :id, !types.ID
+    resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_logins.find(args["id"]) }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
@@ -24,6 +41,7 @@ MutationRoot = GraphQL::ObjectType.define do
   description 'The mutation root of this schema'
 
   field :registerUser, field: Mutations::RegisterUser
+  field :createSaltedgeLogin, field: Mutations::CreateSaltedgeLogin
 end
 
 Schema = GraphQL::Schema.define do

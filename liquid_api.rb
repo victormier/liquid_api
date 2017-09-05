@@ -1,18 +1,24 @@
 require "find"
+require 'sidekiq'
+require 'tilt/erb'
+require 'bundler'
+require 'dotenv'
+
+Bundler.require
 Dotenv.load
 
 class LiquidApi < Roda
-  require 'lib/configurable'
+  require './lib/configurable'
   extend LiquidApiUtils::Configurable
 
   # Require environment config
-  environment_config_path = "config/environments/#{ENV['RACK_ENV']}"
+  environment_config_path = "./config/environments/#{ENV['RACK_ENV']}"
   require environment_config_path if File.exists?("#{environment_config_path}.rb")
 
   # Require files
   require './api/exceptions'
-  %w{config/initializers lib api/types api/mutations api/models middlewares api/forms api/services}.each do |load_path|
-    Find.find(load_path) { |f|
+  %w{config/initializers lib api/types api/mutations api/models middlewares api/forms api/services api/workers}.each do |load_path|
+    Find.find("./#{load_path}") { |f|
       require f unless f.match(/\/\..+$/) || File.directory?(f)
     }
   end
@@ -26,8 +32,10 @@ class LiquidApi < Roda
     /users/confirm_email
     /users/from_reset_password_token
     /users/:id/set_password
+    /saltedge_callbacks/success
+    /saltedge_callbacks/failure
   )
-  use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: %w(/assets /login /users /users/confirm_email), options: { algorithm: 'HS256' }}
+  use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: EXCLUDE_PATHS, options: { algorithm: 'HS256' }}
 
   plugin :environments
   self.environment = ENV['RACK_ENV'].to_sym

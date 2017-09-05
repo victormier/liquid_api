@@ -24,7 +24,15 @@ WORKDIR $INSTALL_PATH
 # drastically increase build times when your gems do not change.
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
-RUN bundle install
+
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+ENV BUNDLE_PATH=/bundle \
+    BUNDLE_BIN=/bundle/bin \
+    GEM_HOME=/bundle
+ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 # ATTENTION: Commented this out in order to use host dir as a volume for development.
 #            We'll have to do this in production (if we use Docker).
