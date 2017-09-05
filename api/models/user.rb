@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :posts
   has_many :saltedge_logins
+  has_many :saltedge_accounts
 
   def confirmation_token_valid?
     (confirmation_sent_at + 30.days) > Time.now.utc
@@ -25,5 +26,9 @@ class User < ActiveRecord::Base
 
   def is_saltedge_customer?
     !saltedge_id.nil?
+  end
+
+  def default_account
+    saltedge_accounts.first
   end
 end
