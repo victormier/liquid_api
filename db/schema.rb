@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905170010) do
+ActiveRecord::Schema.define(version: 20170906092934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,18 @@ ActiveRecord::Schema.define(version: 20170905170010) do
     t.string "country_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "saltedge_transactions", force: :cascade do |t|
+    t.integer "saltedge_account_id"
+    t.string "saltedge_id"
+    t.string "status"
+    t.date "made_on"
+    t.decimal "amount"
+    t.string "currency_code"
+    t.string "category"
+    t.text "saltedge_data"
+    t.datetime "saltedge_created_at"
   end
 
   create_table "users", force: :cascade do |t|
