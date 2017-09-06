@@ -44,6 +44,10 @@ ActiveRecord::Schema.define(version: 20170906092934) do
     t.integer "user_id"
     t.string "saltedge_id"
     t.text "saltedge_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["saltedge_login_id"], name: "index_saltedge_accounts_on_saltedge_login_id"
+    t.index ["user_id"], name: "index_saltedge_accounts_on_user_id"
   end
 
   create_table "saltedge_logins", force: :cascade do |t|
@@ -51,6 +55,8 @@ ActiveRecord::Schema.define(version: 20170906092934) do
     t.integer "saltedge_provider_id"
     t.string "saltedge_id"
     t.text "saltedge_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["saltedge_provider_id"], name: "index_saltedge_logins_on_saltedge_provider_id"
     t.index ["user_id"], name: "index_saltedge_logins_on_user_id"
   end
@@ -77,6 +83,9 @@ ActiveRecord::Schema.define(version: 20170906092934) do
     t.string "category"
     t.text "saltedge_data"
     t.datetime "saltedge_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["saltedge_account_id"], name: "index_saltedge_transactions_on_saltedge_account_id"
   end
 
   create_table "users", force: :cascade do |t|

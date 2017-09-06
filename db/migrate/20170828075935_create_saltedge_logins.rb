@@ -5,6 +5,7 @@ class CreateSaltedgeLogins < ActiveRecord::Migration[5.1]
       t.integer :saltedge_provider_id
       t.string :saltedge_id
       t.text :saltedge_data
+      t.timestamps
     end
 
     add_index :saltedge_logins, :user_id

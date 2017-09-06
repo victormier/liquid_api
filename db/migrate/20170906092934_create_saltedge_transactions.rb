@@ -10,6 +10,9 @@ class CreateSaltedgeTransactions < ActiveRecord::Migration[5.1]
       t.string :category
       t.text :saltedge_data
       t.datetime :saltedge_created_at
+      t.timestamps
     end
+
+    add_index :saltedge_transactions, :saltedge_account_id
   end
 end
