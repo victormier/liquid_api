@@ -6,4 +6,12 @@ class SaltedgeAccount < ActiveRecord::Base
   has_many :saltedge_transactions
 
   serialize :saltedge_data, Hash
+
+  def type
+    "saltedge"
+  end
+
+  def transactions
+    saltedge_transactions
+  end
 end

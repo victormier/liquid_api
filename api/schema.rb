@@ -34,6 +34,17 @@ QueryRoot = GraphQL::ObjectType.define do
     argument :id, !types.ID
     resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_logins.find(args["id"]) }
   end
+
+  field :account do
+    type AccountType
+    argument :id, !types.ID
+    resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_accounts.find(args["id"]) }
+  end
+
+  field :all_accounts do
+    type types[!AccountType]
+    resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_accounts }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
