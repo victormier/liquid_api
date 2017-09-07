@@ -42,7 +42,7 @@
     }
   ],
   "meta" : {
-    "next_id": 990,
+    "next_id": null,
     "next_page": "/api/v3/transactions/?login_id=124&account_id=225&from_id=990"
   }
 }
