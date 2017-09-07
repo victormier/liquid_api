@@ -10,7 +10,7 @@ module Services
       data = JSON.parse(response.body)
 
       @saltedge_login.update_attributes({
-        saltedge_data: data
+        saltedge_data: data["data"]
       })
     end
   end
