@@ -17,6 +17,7 @@ RSpec.describe Services::SelectSaltedgeAccount do
   it "selects an account for the user" do
     service = Services::SelectSaltedgeAccount.new(saltedge_login)
     expect { service.call }.to change{ user.saltedge_accounts.count }.by(1)
+    expect(user.saltedge_accounts.last.saltedge_data).to_not be_empty
   end
 
   it "only selects whitelisted nature accounts" do

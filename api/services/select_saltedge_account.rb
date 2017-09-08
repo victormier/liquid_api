@@ -18,7 +18,8 @@ module Services
       if account_data = accounts.first
         @saltedge_login.user.saltedge_accounts.create(
           saltedge_login: @saltedge_login,
-          saltedge_id: account_data["id"]
+          saltedge_id: account_data["id"],
+          saltedge_data: account_data
         )
       end
     end
