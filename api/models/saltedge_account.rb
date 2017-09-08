@@ -18,4 +18,12 @@ class SaltedgeAccount < ActiveRecord::Base
   def currency_code
     saltedge_data["currency_code"]
   end
+
+  def balance
+    saltedge_data["balance"] || 0.0
+  end
+
+  def name
+    saltedge_data["name"] || "Account"
+  end
 end
