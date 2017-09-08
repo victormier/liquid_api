@@ -8,8 +8,10 @@ module Services
     end
 
     def call
-      from_id = @saltedge_account.saltedge_transactions.newest_first.last.try(:saltedge_id)
+      # We first update the saltedge account
+      Services::UpdateSaltedgeAccount.new(saltedge_account).call
 
+      from_id = @saltedge_account.saltedge_transactions.newest_first.last.try(:saltedge_id)
       transactions_data, next_id = retrieve_transactions(from_id)
       store_transactions(transactions_data)
       while next_id do
