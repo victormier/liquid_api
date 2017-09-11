@@ -55,6 +55,8 @@ services:
 
   test:
     <<: *app_base
+    ports:
+      - '5000:3000'
     environment:
       DATABASE_URL: postgresql://liquid_api:password@postgres:5432/liquid_api_test
       RACK_ENV: test
