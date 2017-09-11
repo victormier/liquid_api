@@ -4,10 +4,18 @@ RSpec.describe Services::LoadSaltedgeAccountTransactions do
   let(:user) { create(:user, saltedge_id: "12345") }
   let(:saltedge_login) { create(:saltedge_login, user: user) }
   let(:saltedge_account) { create(:saltedge_account, saltedge_login: saltedge_login) }
+  let(:saltedge_accounts_list_response) { File.read('spec/support/fixtures/saltedge_accounts_list_response.json') }
   let(:saltedge_transactions_list_response) { File.read('spec/support/fixtures/saltedge_transactions_list_response.json') }
 
   before do
-    # Stub saltedge login creation
+    # Stub saltedge account listing
+    stub_request(:get, "https://www.saltedge.com/api/v3/accounts").
+      to_return(
+        body: saltedge_accounts_list_response,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+
+    # Stub saltedge transaction list
     stub_request(:get, "https://www.saltedge.com/api/v3/transactions").
       to_return(
         body: saltedge_transactions_list_response,

@@ -6,7 +6,7 @@ RSpec.describe Services::SelectSaltedgeAccount do
   let(:saltedge_accounts_list_response) { File.read('spec/support/fixtures/saltedge_accounts_list_response.json') }
 
   before do
-    # Stub saltedge login creation
+    # Stub saltedge account listing
     stub_request(:get, "https://www.saltedge.com/api/v3/accounts").
       to_return(
         body: saltedge_accounts_list_response,
