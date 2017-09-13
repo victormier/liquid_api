@@ -14,7 +14,8 @@ Mail.defaults do
       :user_name => ENV['SENDGRID_USERNAME'],
       :password => ENV['SENDGRID_PASSWORD'],
       :authentication => :plain,
-      :tls => true
+      :tls => true,
+      :domain => 'helloliquid.com'
     }
   end
 end
