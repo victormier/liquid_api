@@ -10,9 +10,7 @@ module Services
 
     def call
       response = @saltedge_client.request(:get, "/accounts", {
-        data: {
-          login_id: @saltedge_login.saltedge_id,
-        }
+        login_id: @saltedge_login.saltedge_id
       })
       data = JSON.parse(response.body)
       accounts = data["data"].select do |a|
