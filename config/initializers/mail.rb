@@ -14,8 +14,8 @@ Mail.defaults do
       :user_name => ENV['SENDGRID_USERNAME'],
       :password => ENV['SENDGRID_PASSWORD'],
       :authentication => :plain,
-      :tls => true,
-      :domain => 'sendgrid.net'
+      :domain         => 'heroku.com',
+      :enable_starttls_auto => true
     }
   end
 end
