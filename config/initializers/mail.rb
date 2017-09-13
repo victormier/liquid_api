@@ -8,6 +8,13 @@ Mail.defaults do
   when "test"
     delivery_method :test
   when "production"
-    # TO DO
+    delivery_method :smtp, {
+      :address => 'smtp.sendgrid.net',
+      :port => 587,
+      :user_name => ENV['SENDGRID_USERNAME'],
+      :password => ENV['SENDGRID_PASSWORD'],
+      :authentication => :plain,
+      :tls => true
+    }
   end
 end
