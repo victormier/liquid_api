@@ -24,4 +24,12 @@ RSpec.describe User, type: :model do
       expect(user.reset_password_token_valid?).to be false
     end
   end
+
+  it "destroys associated data when destroyed" do
+    saltedge_login = create(:saltedge_login, user: user)
+    saltedge_account = create(:saltedge_account, user: user, saltedge_login: saltedge_login)
+    user.destroy
+    expect{ saltedge_login.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+    expect{ saltedge_account.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+  end
 end
