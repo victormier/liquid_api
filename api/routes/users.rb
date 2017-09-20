@@ -1,5 +1,3 @@
-require 'pry'
-
 LiquidApi.route("users") do |r|
   r.is do
     r.post do

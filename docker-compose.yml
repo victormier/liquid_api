@@ -17,24 +17,6 @@ services:
     volumes:
       - redis-data:/var/lib/redis/data
 
-  web:
-    build: .
-    links:
-      - postgres
-      - redis
-      - mailcatcher
-    volumes:
-      - .:/liquid_api
-    ports:
-      - '3000:3000'
-    env_file:
-      - .env
-    environment:
-      - MAILCATCHER_URL=mailcatcher
-    volumes:
-      - .:/usr/src/app
-      - bundle_cache:/bundle
-
   mailcatcher:
     image: schickling/mailcatcher
     ports:
@@ -52,6 +34,32 @@ services:
       - bundle_cache:/bundle
     env_file:
       - .env
+
+  web: &app_base
+    build: .
+    links:
+      - postgres
+      - redis
+      - mailcatcher
+    volumes:
+      - .:/liquid_api
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      - MAILCATCHER_URL=mailcatcher
+    volumes:
+      - .:/usr/src/app
+      - bundle_cache:/bundle
+
+  test:
+    <<: *app_base
+    ports:
+      - '5000:3000'
+    environment:
+      DATABASE_URL: postgresql://liquid_api:password@postgres:5432/liquid_api_test
+      RACK_ENV: test
 
 volumes:
   postgres-data:

@@ -8,6 +8,11 @@ QueryRoot = GraphQL::ObjectType.define do
     resolve -> (obj, args, ctx) { Post.find(args["id"]) }
   end
 
+  field :user do
+    type UserType
+    resolve -> (obj, args, ctx) { ctx[:current_user] }
+  end
+
   field :all_posts do
     type types[!PostType]
     resolve -> (obj, args, ctx) { Post.all }
@@ -33,6 +38,17 @@ QueryRoot = GraphQL::ObjectType.define do
     type SaltedgeLoginType
     argument :id, !types.ID
     resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_logins.find(args["id"]) }
+  end
+
+  field :account do
+    type AccountType
+    argument :id, !types.ID
+    resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_accounts.find(args["id"]) }
+  end
+
+  field :all_accounts do
+    type types[!AccountType]
+    resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_accounts }
   end
 end
 

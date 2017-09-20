@@ -9,4 +9,9 @@ UserType = GraphQL::ObjectType.define do
   field :email, !types.String
   field :posts, -> { types[!PostType] }
   field :comments, -> { types[!CommentType] }
+  field :accounts, types[AccountType] do
+    resolve -> (obj, args, _ctx) do
+      obj.saltedge_accounts
+    end
+  end
 end

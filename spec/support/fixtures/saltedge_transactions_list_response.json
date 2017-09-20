@@ -1,0 +1,48 @@
+{
+  "data": [
+    {
+      "id": 987,
+      "duplicated": false,
+      "mode": "normal",
+      "status": "posted",
+      "made_on": "2013-05-03",
+      "amount": -200.0,
+      "currency_code": "USD",
+      "description": "test transaction",
+      "category": "advertising",
+      "extra": {
+        "posting_date": "2013-05-07",
+        "time": "23:56:12",
+        "original_amount": -3974.60,
+        "original_currency_code": "CZK"
+      },
+      "account_id": 100,
+      "created_at": "2017-08-15T12:06:18Z",
+      "updated_at": "2017-08-16T12:06:18Z"
+    },
+    {
+      "id": 988,
+      "duplicated": false,
+      "mode": "normal",
+      "status": "posted",
+      "made_on": "2013-05-03",
+      "amount": 50.0,
+      "currency_code": "USD",
+      "description": "business expense",
+      "category": "business_services",
+      "extra": {
+        "posting_date": "2013-05-06",
+        "time": "12:16:25",
+        "original_amount": 993.90,
+        "original_currency_code": "CZK"
+      },
+      "account_id": 100,
+      "created_at": "2017-08-15T12:06:18Z",
+      "updated_at": "2017-08-16T12:06:18Z"
+    }
+  ],
+  "meta" : {
+    "next_id": null,
+    "next_page": "/api/v3/transactions/?login_id=124&account_id=225&from_id=990"
+  }
+}

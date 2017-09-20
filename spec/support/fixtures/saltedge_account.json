@@ -1,0 +1,20 @@
+{
+    "id": 223,
+    "name": "Fake account 2",
+    "nature": "account",
+    "balance": 2012.7,
+    "currency_code": "USD",
+    "extra": {
+        "cards": [
+            "1234....5678",
+            "*8765"
+        ],
+        "transactions_count": {
+          "posted": 22,
+          "pending": 1
+        }
+    },
+    "login_id": 123,
+    "created_at": "2017-08-17T10:06:18Z",
+    "updated_at": "2017-08-17T10:06:18Z"
+}
