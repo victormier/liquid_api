@@ -20,6 +20,6 @@ class SaltedgeAccount < ActiveRecord::Base
   end
 
   def name
-    saltedge_data["extra"]["name"] || saltedge_data["name"] || "Account"
+    saltedge_data["extra"]["account_name"] || saltedge_data["name"] || "Account"
   end
 end
