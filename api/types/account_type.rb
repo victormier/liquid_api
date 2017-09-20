@@ -8,5 +8,11 @@ AccountType = GraphQL::ObjectType.define do
   field :currency_code, !types.String
   field :name, !types.String
   field :balance, !types.Float
-  field :transactions, -> { types[!TransactionType] }
+  field :transactions do
+    type types[!TransactionType]
+
+    resolve -> (obj, args, ctx) {
+      obj.saltedge_transactions.newest_first
+    }
+  end
 end

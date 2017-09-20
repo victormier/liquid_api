@@ -11,10 +11,6 @@ class SaltedgeAccount < ActiveRecord::Base
     "saltedge"
   end
 
-  def transactions
-    saltedge_transactions
-  end
-
   def currency_code
     saltedge_data["currency_code"]
   end
