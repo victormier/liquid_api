@@ -4,7 +4,7 @@ class LiquidApi
   route do |r|
     if LiquidApi.development?
       r.root do
-        data = {user_id: User.first.try(:id) || 1}
+        data = {user_id: User.first.try(:id) || 5}
         token = Rack::JWT::Token.encode(data, ENV['RACK_JWT_SECRET'], 'HS256')
         set_layout_locals token: token
         view("graphiql")
