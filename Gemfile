@@ -39,6 +39,7 @@ gem 'sidekiq'
 gem 'racksh'
 gem 'bcrypt'
 gem 'rest-client'
+gem 'money'
 
 group :test, :development do
   gem 'pry'
