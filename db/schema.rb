@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906092934) do
+ActiveRecord::Schema.define(version: 20170920110708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,13 +40,13 @@ ActiveRecord::Schema.define(version: 20170906092934) do
   end
 
   create_table "saltedge_accounts", force: :cascade do |t|
-    t.integer "saltedge_login_id"
+    t.integer "saltedge_login_id", null: false
     t.integer "user_id"
     t.string "saltedge_id"
     t.text "saltedge_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["saltedge_login_id"], name: "index_saltedge_accounts_on_saltedge_login_id"
+    t.index ["saltedge_login_id"], name: "index_saltedge_accounts_on_saltedge_login_id", unique: true
     t.index ["user_id"], name: "index_saltedge_accounts_on_user_id"
   end
 
