@@ -2,3 +2,4 @@ en:
   errors:
     unique?: "must be unique (not already taken)"
     same_password?: "doesn't match password"
+    valid_currency?: "should be a valid ISO 4217 currency code"
