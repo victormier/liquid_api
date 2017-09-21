@@ -1,6 +1,6 @@
-VirtualAccountType = GraphQL::ObjectType.define do
-  name "VirtualAccount"
-  description "A virtual account"
+SaltedgeAccountType = GraphQL::ObjectType.define do
+  name "SaltedgeAccount"
+  description "A Saltedge Account"
 
   # interfaces [AccountType]
 
@@ -12,7 +12,7 @@ VirtualAccountType = GraphQL::ObjectType.define do
     type types[!TransactionType]
 
     resolve -> (obj, args, ctx) {
-      []
+      obj.saltedge_transactions.newest_first
     }
   end
 end
