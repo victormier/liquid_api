@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :saltedge_logins, dependent: :destroy
   has_many :saltedge_accounts, dependent: :destroy
+  has_many :virtual_accounts, dependent: :destroy
 
   def confirmation_token_valid?
     (confirmation_sent_at + 30.days) > Time.now.utc

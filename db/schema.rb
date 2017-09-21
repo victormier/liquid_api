@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920110708) do
+ActiveRecord::Schema.define(version: 20170920163827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,16 @@ ActiveRecord::Schema.define(version: 20170920110708) do
     t.string "saltedge_id"
     t.string "saltedge_custom_identifier"
     t.string "saltedge_customer_secret"
+  end
+
+  create_table "virtual_accounts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name"
+    t.decimal "balance", default: "0.0"
+    t.string "currency_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_virtual_accounts_on_user_id"
   end
 
 end
