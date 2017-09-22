@@ -2,12 +2,9 @@ VirtualAccountType = GraphQL::ObjectType.define do
   name "VirtualAccount"
   description "A virtual account"
 
-  # interfaces [AccountType]
+  interfaces [AccountInterface]
 
   field :id, !types.ID
-  field :currency_code, !types.String
-  field :name, !types.String
-  field :balance, !types.Float
   field :transactions do
     type types[!TransactionType]
 

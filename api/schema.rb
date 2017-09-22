@@ -41,13 +41,13 @@ QueryRoot = GraphQL::ObjectType.define do
   end
 
   field :account do
-    type AccountType
+    type AccountInterface
     argument :id, !types.ID
     resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_accounts.find(args["id"]) }
   end
 
   field :all_accounts do
-    type types[!AccountType]
+    type types[AccountInterface]
     resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_accounts + ctx[:current_user].virtual_accounts }
   end
 end
@@ -65,8 +65,9 @@ Schema = GraphQL::Schema.define do
   query QueryRoot
   mutation MutationRoot
 
-  # resolve_type ->(obj, ctx) {
-  #   p "Resolving obj #{obj.class}#{obj.id}"
-  #   obj.respond_to?(:saltedge_id) ? SaltedgeAccountType : VirtualAccountType
-  # }
+  orphan_types [SaltedgeAccountType]
+
+  resolve_type ->(obj, ctx) {
+    Schema.types[obj.class.name]
+  }
 end
