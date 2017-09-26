@@ -28,9 +28,22 @@ class VirtualTransactionForm < TransactionForm
         return false unless virtual_account && related_virtual_account
         virtual_account.currency_code == related_virtual_account.currency_code
       end
+
+      def same_user?(attr, virtual_account_id)
+        virtual_account = VirtualAccount.where(id: form.virtual_account_id).first
+        related_virtual_account = VirtualAccount.where(id: form.send(attr)).first
+
+        return false unless virtual_account && related_virtual_account
+        virtual_account.user == related_virtual_account.user
+      end
     end
 
     required(:related_virtual_account_id).filled(is_record?: VirtualAccount)
-    required(:virtual_account_id).filled(:enough_balance?, is_record?: VirtualAccount, same_currency?: :related_virtual_account_id)
+    required(:virtual_account_id).filled(
+      :enough_balance?,
+      is_record?: VirtualAccount,
+      same_currency?: :related_virtual_account_id,
+      same_user?: :related_virtual_account_id
+    )
   end
 end

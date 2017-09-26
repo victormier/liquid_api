@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe UserForm do
   let(:origin_account) { create(:virtual_account, balance: 200.0) }
-  let(:destination_account) { create(:virtual_account) }
+  let(:destination_account) { create(:virtual_account, user: origin_account.user) }
   let(:params) {
     {
       made_on: DateTime.now,
@@ -79,7 +79,13 @@ RSpec.describe UserForm do
       expect(subject.errors[:virtual_account_id]).to include("must have the same currency as the other account")
     end
 
-    it "validates both accounts belong to the same user"
+    it "validates both accounts belong to the same user" do
+      new_account = create(:virtual_account)
+      subject.validate(params.merge({ related_virtual_account_id: new_account.id }))
+
+      expect(subject.valid?).to be false
+      expect(subject.errors[:virtual_account_id]).to include("must be owned by the same user as the other account")
+    end
 
     it "validates virtual account exists" do
       params
@@ -98,12 +104,5 @@ RSpec.describe UserForm do
       expect(subject.valid?).to be false
       expect(subject.errors[:related_virtual_account_id]).to include("doesn't exist in database")
     end
-
-    # it "validates format of currency_code" do
-    #   subject.validate(params.merge({ currency_code: "bad_code" }))
-    #
-    #   expect(subject.valid?).to be false
-    #   expect(subject.errors[:currency_code]).to include("should be a valid ISO 4217 currency code")
-    # end
   end
 end

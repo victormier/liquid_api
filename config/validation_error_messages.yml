@@ -6,3 +6,4 @@ en:
     is_record?: "doesn't exist in database"
     enough_balance?: "is more than account balance"
     same_currency?: "must have the same currency as the other account"
+    same_user?: "must be owned by the same user as the other account"
