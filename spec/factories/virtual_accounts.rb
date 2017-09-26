@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :virtual_account do
+  factory :virtual_account, aliases: [:related_virtual_account] do
     user
 
     after(:build) do |virtual_account|

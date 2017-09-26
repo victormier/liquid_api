@@ -14,4 +14,8 @@ FactoryGirl.define do
       )
     end
   end
+
+  factory :virtual_transaction, parent: :transaction, class: VirtualTransaction do
+    related_virtual_account
+  end
 end
