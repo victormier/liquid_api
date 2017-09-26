@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920163827) do
+ActiveRecord::Schema.define(version: 20170925152319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,21 @@ ActiveRecord::Schema.define(version: 20170920163827) do
     t.index ["saltedge_account_id"], name: "index_saltedge_transactions_on_saltedge_account_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.string "type"
+    t.integer "virtual_account_id"
+    t.integer "related_virtual_account_id"
+    t.integer "saltedge_transaction_id"
+    t.integer "virtual_transaction_id"
+    t.decimal "amount"
+    t.datetime "made_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["related_virtual_account_id"], name: "index_transactions_on_related_virtual_account_id"
+    t.index ["saltedge_transaction_id"], name: "index_transactions_on_saltedge_transaction_id"
+    t.index ["virtual_account_id"], name: "index_transactions_on_virtual_account_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -112,7 +127,18 @@ ActiveRecord::Schema.define(version: 20170920163827) do
     t.string "currency_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "saltedge_account_id"
+    t.index ["saltedge_account_id"], name: "index_virtual_accounts_on_saltedge_account_id", unique: true
     t.index ["user_id"], name: "index_virtual_accounts_on_user_id"
   end
 
+  add_foreign_key "saltedge_accounts", "saltedge_logins", on_delete: :cascade
+  add_foreign_key "saltedge_accounts", "users", on_delete: :cascade
+  add_foreign_key "saltedge_logins", "users", on_delete: :cascade
+  add_foreign_key "saltedge_transactions", "saltedge_accounts", on_delete: :cascade
+  add_foreign_key "transactions", "saltedge_transactions", on_delete: :cascade
+  add_foreign_key "transactions", "virtual_accounts", column: "related_virtual_account_id"
+  add_foreign_key "transactions", "virtual_accounts", on_delete: :cascade
+  add_foreign_key "virtual_accounts", "saltedge_accounts", on_delete: :cascade
+  add_foreign_key "virtual_accounts", "users", on_delete: :cascade
 end

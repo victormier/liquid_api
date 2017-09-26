@@ -3,7 +3,8 @@ class SaltedgeAccount < ActiveRecord::Base
 
   belongs_to :saltedge_login
   belongs_to :user
-  has_many :saltedge_transactions, dependent: :destroy
+  has_one :virtual_account
+  has_many :saltedge_transactions
 
   serialize :saltedge_data, Hash
 
