@@ -35,11 +35,28 @@ module Services
     def store_transactions(transactions_hash)
       transactions_hash.each do |transaction_data|
         attrs = transaction_data.select {|k,v| STOREABLE_ATTRIBUTES.include?(k) }
-        @saltedge_account.saltedge_transactions.create(attrs.merge({
-          saltedge_id: transaction_data["id"],
-          saltedge_created_at: transaction_data["created_at"],
-          saltedge_data: transaction_data
-        }))
+        SaltedgeTransaction.transaction do
+          # Create saltedge transaction
+          saltedge_transaction = @saltedge_account.saltedge_transactions.create!(attrs.merge({
+            saltedge_id: transaction_data["id"],
+            saltedge_created_at: transaction_data["created_at"],
+            saltedge_data: transaction_data
+          }))
+          # Create mirror transaction
+          mirror_transaction = MirrorTransaction.new(
+            saltedge_transaction: saltedge_transaction,
+            virtual_account: @saltedge_account.virtual_account,
+            amount: saltedge_transaction.amount,
+            made_on: saltedge_transaction.made_on.to_datetime
+          )
+          transaction_form = MirrorTransactionForm.new(mirror_transaction)
+          if transaction_form.valid?
+            transaction_form.save!
+          else
+            errors = LiquidApiUtils::Errors::ErrorObject.new(transaction_form.errors)
+            raise LiquidApi::MutationInvalid.new(nil, errors: errors)
+          end
+        end
       end
     end
   end
