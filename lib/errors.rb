@@ -6,5 +6,17 @@ module LiquidApiUtils
         v.each.map { |message| "#{k.capitalize.gsub('_', ' ')} #{message}" }
       end.flatten
     end
+
+    class ErrorObject
+      attr_reader :errors
+
+      def initialize(errors)
+        @errors = errors
+      end
+
+      def full_messages
+        LiquidApiUtils::Errors.full_messages_array(@errors)
+      end
+    end
   end
 end

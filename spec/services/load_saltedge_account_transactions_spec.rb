@@ -25,7 +25,7 @@ RSpec.describe Services::LoadSaltedgeAccountTransactions do
 
   it "downloads and stores saltedge transactions for a user account" do
     service = Services::LoadSaltedgeAccountTransactions.new(saltedge_account)
-    expect { service.call }.to change{ saltedge_account.saltedge_transactions.count }.by(2)
+    expect { service.call }.to change{ saltedge_account.saltedge_transactions.count + saltedge_account.virtual_account.transactions.count }.by(4)
   end
 
   it "loads data from last 3 months on the first pull"

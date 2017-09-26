@@ -17,11 +17,27 @@ module Services
         SaltedgeAccount::ACCOUNT_NATURE_WHITELIST.include?(a["nature"])
       end
       if account_data = accounts.first
-        @saltedge_account = @saltedge_login.user.saltedge_accounts.create(
-          saltedge_login: @saltedge_login,
-          saltedge_id: account_data["id"],
-          saltedge_data: account_data
-        )
+        SaltedgeAccount.transaction do
+          @saltedge_account = @saltedge_login.user.saltedge_accounts.create!(
+            saltedge_login: @saltedge_login,
+            saltedge_id: account_data["id"],
+            saltedge_data: account_data
+          )
+          virtual_account = VirtualAccount.new(
+            user: @saltedge_account.user,
+            name: @saltedge_account.name,
+            saltedge_account: @saltedge_account,
+            balance: @saltedge_account.balance,
+            currency_code: @saltedge_account.currency_code
+          )
+          form = VirtualAccountForm.new(virtual_account)
+          if form.valid?
+            form.save
+          else
+            errors = LiquidApiUtils::Errors::ErrorObject.new(form.errors)
+            raise ActiveRecord::RecordInvalid.new(errors)
+          end
+        end
       end
     end
   end
