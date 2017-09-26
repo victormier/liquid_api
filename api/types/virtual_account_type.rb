@@ -5,11 +5,4 @@ VirtualAccountType = GraphQL::ObjectType.define do
   interfaces [AccountInterface]
 
   field :id, !types.ID
-  field :transactions do
-    type types[!TransactionType]
-
-    resolve -> (obj, args, ctx) {
-      []
-    }
-  end
 end

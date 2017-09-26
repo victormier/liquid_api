@@ -1,5 +1,5 @@
 AccountInterface = GraphQL::InterfaceType.define do
-  name("Account Interface")
+  name("AccountInterface")
   description("An account")
 
   field :id, !types.ID

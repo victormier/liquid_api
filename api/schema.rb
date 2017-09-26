@@ -43,12 +43,12 @@ QueryRoot = GraphQL::ObjectType.define do
   field :account do
     type AccountInterface
     argument :id, !types.ID
-    resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_accounts.find(args["id"]) }
+    resolve -> (obj, args, ctx) { ctx[:current_user].virtual_accounts.find(args["id"]) }
   end
 
   field :all_accounts do
     type types[AccountInterface]
-    resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_accounts + ctx[:current_user].virtual_accounts }
+    resolve -> (obj, args, ctx) { ctx[:current_user].virtual_accounts }
   end
 end
 
