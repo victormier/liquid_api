@@ -6,15 +6,27 @@ RSpec.describe Services::CreateVirtualTransaction do
   let(:destination_account) { create(:virtual_account, user: user) }
   let(:params) {
     {
-      "amount" => "10.0",
-      "origin_account_id" => origin_account.id,
-      "destination_account_id" => destination_account.id
+      amount: 10,
+      origin_account_id: origin_account.id,
+      destination_account_id: destination_account.id
     }
   }
   subject { Services::CreateVirtualTransaction.new(user, params)  }
 
   it "creates a virtual transaction" do
     expect { subject.call }.to change{ origin_account.transactions.count + origin_account.transactions.count }.by(2)
+  end
+
+  it "updates balance for origin account" do
+    # make sure balance is right
+    origin_account.compute_balance!
+    expect { subject.call }.to change{ origin_account.reload.balance }.by(-params[:amount])
+  end
+
+  it "updates balance for destination account" do
+    # make sure balance is right
+    destination_account.compute_balance!
+    expect { subject.call }.to change{ destination_account.reload.balance }.by(params[:amount])
   end
 
   it "fails if validation fails" do

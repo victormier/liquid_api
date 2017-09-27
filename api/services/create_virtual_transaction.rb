@@ -3,15 +3,14 @@ module Services
     attr_reader :credit_tx_form, :debit_tx_form
 
     def initialize(user, params)
-      params_h = ActiveSupport::HashWithIndifferentAccess.new(params)
       @user = user
-      @amount = params_h["amount"]
+      @amount = params[:amount]
       if @amount.to_f <= 0.0
         raise LiquidApi::MutationInvalid.new(nil, { "errors" => {"amount" => "must be greater than 0"}})
       end
 
-      @origin_account = @user.virtual_accounts.find(params_h["origin_account_id"])
-      @destination_account = @user.virtual_accounts.find(params_h["destination_account_id"])
+      @origin_account = @user.virtual_accounts.find(params[:origin_account_id])
+      @destination_account = @user.virtual_accounts.find(params[:destination_account_id])
       @made_on = DateTime.now
     end
 
@@ -47,6 +46,10 @@ module Services
           errors = LiquidApiUtils::Errors::ErrorObject.new(@debit_tx_form.errors)
           raise LiquidApi::MutationInvalid.new(nil, errors: errors)
         end
+
+        # Update balances
+        @origin_account.compute_balance!
+        @destination_account.compute_balance!
       end
     end
 
