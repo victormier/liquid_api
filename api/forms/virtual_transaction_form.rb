@@ -25,7 +25,7 @@ class VirtualTransactionForm < TransactionForm
         virtual_account = VirtualAccount.where(id: form.virtual_account_id).first
         related_virtual_account = VirtualAccount.where(id: form.send(attr)).first
 
-        return false unless virtual_account && related_virtual_account
+        return false unless virtual_account.try(:currency_code) && related_virtual_account.try(:currency_code)
         virtual_account.currency_code == related_virtual_account.currency_code
       end
 
