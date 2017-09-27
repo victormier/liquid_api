@@ -93,7 +93,7 @@ RSpec.describe UserForm do
       subject.validate(params)
 
       expect(subject.valid?).to be false
-      expect(subject.errors[:virtual_account_id]).to include("doesn't exist in database")
+      expect(subject.errors[:virtual_account_id]).to include("must exist in database")
     end
 
     it "validates related virtual account exists" do
@@ -102,7 +102,7 @@ RSpec.describe UserForm do
       subject.validate(params)
 
       expect(subject.valid?).to be false
-      expect(subject.errors[:related_virtual_account_id]).to include("doesn't exist in database")
+      expect(subject.errors[:related_virtual_account_id]).to include("must exist in database")
     end
   end
 end
