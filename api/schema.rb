@@ -50,6 +50,13 @@ QueryRoot = GraphQL::ObjectType.define do
     type types[AccountInterface]
     resolve -> (obj, args, ctx) { ctx[:current_user].virtual_accounts }
   end
+
+  field :transaction do
+    type TransactionType
+    argument :id, !types.ID
+    # TO DO: ADD VALIDATION FOR CURRENT USER ONLY QUERIES
+    resolve -> (obj, args, ctx) { Transaction.find(args["id"]) }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do

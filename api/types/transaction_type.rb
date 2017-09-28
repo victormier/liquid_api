@@ -8,6 +8,7 @@ TransactionType = GraphQL::ObjectType.define do
   field :saltedge_id, types.String
   field :category, types.String
   field :description, types.String
+  field :virtual_account, VirtualAccountType
   field :made_on do
     type types.Int
 
