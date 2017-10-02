@@ -30,4 +30,8 @@ class User < ActiveRecord::Base
   def default_account
     saltedge_accounts.first
   end
+
+  def default_mirror_account
+    virtual_accounts.mirror.first
+  end
 end
