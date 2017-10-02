@@ -3,6 +3,8 @@ class VirtualAccount < ActiveRecord::Base
   belongs_to :saltedge_account
   has_many :transactions
 
+  scope :mirror, -> { where("saltedge_account_id IS NOT NULL") }
+
   def compute_balance!
     if is_mirror_account
       self.balance = saltedge_account.balance + transactions.virtual.sum(&:amount)
