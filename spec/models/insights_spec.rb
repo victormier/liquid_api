@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe InsightsSpec do
+RSpec.describe Insights do
   let(:virtual_account) { create(:virtual_account, :with_transactions) }
 
   it "TODO: add tests for insights"
