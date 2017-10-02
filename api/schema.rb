@@ -46,6 +46,18 @@ QueryRoot = GraphQL::ObjectType.define do
     # TO DO: ADD VALIDATION FOR CURRENT USER ONLY QUERIES
     resolve -> (obj, args, ctx) { Transaction.find(args["id"]) }
   end
+
+  field :insights do
+    type InsightsType
+    argument :month, !types.Int
+    argument :year, !types.Int
+
+    resolve -> (obj, args, ctx) {
+      start_date = Date.new(args[:year], args[:month], 1)
+      end_date = Date.new(args[:year], args[:month], -1)
+      Insights.new(ctx[:current_user], start_date, end_date)
+    }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
