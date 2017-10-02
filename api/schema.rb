@@ -2,20 +2,9 @@ QueryRoot = GraphQL::ObjectType.define do
   name "Query"
   description "The query root of this schema"
 
-  field :post do
-    type PostType
-    argument :id, !types.ID
-    resolve -> (obj, args, ctx) { Post.find(args["id"]) }
-  end
-
   field :user do
     type UserType
     resolve -> (obj, args, ctx) { ctx[:current_user] }
-  end
-
-  field :all_posts do
-    type types[!PostType]
-    resolve -> (obj, args, ctx) { Post.all }
   end
 
   field :all_users do
@@ -50,6 +39,25 @@ QueryRoot = GraphQL::ObjectType.define do
     type types[AccountInterface]
     resolve -> (obj, args, ctx) { ctx[:current_user].virtual_accounts }
   end
+
+  field :transaction do
+    type TransactionType
+    argument :id, !types.ID
+    # TO DO: ADD VALIDATION FOR CURRENT USER ONLY QUERIES
+    resolve -> (obj, args, ctx) { Transaction.find(args["id"]) }
+  end
+
+  field :insights do
+    type InsightsType
+    argument :month, !types.Int
+    argument :year, !types.Int
+
+    resolve -> (obj, args, ctx) {
+      start_date = Date.new(args[:year], args[:month], 1)
+      end_date = Date.new(args[:year], args[:month], -1)
+      Insights.new(ctx[:current_user], start_date, end_date)
+    }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
@@ -59,6 +67,7 @@ MutationRoot = GraphQL::ObjectType.define do
   field :registerUser, field: Mutations::RegisterUser
   field :createSaltedgeLogin, field: Mutations::CreateSaltedgeLogin
   field :createVirtualAccount, field: Mutations::CreateVirtualAccount
+  field :createVirtualTransaction, field: Mutations::CreateVirtualTransaction
 end
 
 Schema = GraphQL::Schema.define do
