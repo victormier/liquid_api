@@ -2,6 +2,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :virtual_account
 
   scope :newest_first, -> { order('made_on desc, created_at desc') }
+  scope :oldest_first, -> { order('made_on asc, created_at asc') }
   scope :virtual, -> { where(type: 'VirtualTransaction') }
   scope :mirror, -> { where(type: 'MirrorTransaction') }
   scope :credit, -> { where("amount < 0.0") }

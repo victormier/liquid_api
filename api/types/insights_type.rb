@@ -7,4 +7,18 @@ InsightsType = GraphQL::ObjectType.define do
   field :total_expense, !types.Float
   field :mirror_account, VirtualAccountType
   field :category_insights, types[CategoryInsightType]
+  field :start_date do
+    type types.Int
+
+    resolve -> (obj, args, ctx) {
+      obj.start_date.to_time.to_i
+    }
+  end
+  field :end_date do
+    type types.Int
+
+    resolve -> (obj, args, ctx) {
+      obj.end_date.to_time.to_i
+    }
+  end
 end

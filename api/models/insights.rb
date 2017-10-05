@@ -1,11 +1,28 @@
 class Insights
-  attr_reader :mirror_account
+  attr_reader :mirror_account, :start_date, :end_date
 
   def initialize(user, start_date, end_date)
     @user = user
     @start_date = start_date
     @end_date = end_date
     @mirror_account = @user.default_mirror_account
+  end
+
+  # Finds all monthly insight objects available for a user
+  def self.all_monthly(user)
+    first_transaction = user.default_mirror_account.transactions.mirror.oldest_first.first
+    return [] unless first_transaction
+
+    start_date = Date.new(first_transaction.made_on.year, first_transaction.made_on.month, 1)
+    today = Date.today
+    insights = []
+
+    while start_date.month <= today.month
+      end_date = [Date.new(start_date.year, start_date.month, -1), today].min
+      insights << self.new(user, start_date, end_date)
+      start_date = start_date >> 1
+    end
+    insights.reverse
   end
 
   def income_transactions

@@ -58,6 +58,14 @@ QueryRoot = GraphQL::ObjectType.define do
       Insights.new(ctx[:current_user], start_date, end_date)
     }
   end
+
+  field :all_insights do
+    type types[!InsightsType]
+
+    resolve -> (obj, args, ctx) {
+      Insights.all_monthly(ctx[:current_user])
+    }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
