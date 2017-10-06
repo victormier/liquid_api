@@ -29,6 +29,7 @@ class Insights
     @income_transactions ||= @mirror_account.
                               transactions.
                               debit.
+                              mirror.
                               from_date(@start_date).
                               to_date(@end_date).
                               order(amount: :desc)
