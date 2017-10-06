@@ -5,6 +5,7 @@ InsightsType = GraphQL::ObjectType.define do
   field :income_transactions, types[!TransactionType]
   field :total_income, !types.Float
   field :total_expense, !types.Float
+  field :total_balance, !types.Float
   field :mirror_account, VirtualAccountType
   field :category_insights, types[CategoryInsightType]
   field :start_date do

@@ -51,6 +51,10 @@ class Insights
     expense_transactions.sum(&:amount).abs
   end
 
+  def total_balance
+    @user.virtual_accounts.sum(:balance)
+  end
+
   def category_insights
     @category_insights ||= begin
       categories = []
@@ -61,7 +65,4 @@ class Insights
     end
   end
 
-  def total_expenses
-    0.0
-  end
 end
