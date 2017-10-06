@@ -38,6 +38,7 @@ class Insights
     @expense_transactions ||= @mirror_account.
                                 transactions.
                                 credit.
+                                mirror.
                                 from_date(@start_date).
                                 to_date(@end_date).
                                 order(amount: :desc)
