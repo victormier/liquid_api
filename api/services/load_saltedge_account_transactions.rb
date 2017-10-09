@@ -33,8 +33,12 @@ module Services
     end
 
     def store_transactions(transactions_hash)
+      rules = @saltedge_account.user.rules
+
       transactions_hash.each do |transaction_data|
         attrs = transaction_data.select {|k,v| STOREABLE_ATTRIBUTES.include?(k) }
+        mirror_transaction = nil
+
         SaltedgeTransaction.transaction do
           # Create saltedge transaction
           saltedge_transaction = @saltedge_account.saltedge_transactions.create!(attrs.merge({
@@ -56,6 +60,11 @@ module Services
             errors = LiquidApiUtils::Errors::ErrorObject.new(transaction_form.errors)
             raise LiquidApi::MutationInvalid.new(nil, errors: errors)
           end
+        end
+
+        # Create automatic transaction
+        rules.each do |rule|
+          rule.apply_rule(mirror_transaction.reload)
         end
       end
     end

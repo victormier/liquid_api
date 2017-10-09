@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe PercentageRule do
-  let(:user) {create(:user) }
+  let(:user) { create(:user, :with_mirror_account) }
   let(:virtual_account) { create(:virtual_account, :with_transactions, user: user) }
-  let(:mirror_account) { create(:virtual_account, :is_mirror_account, user: user) }
+  let(:mirror_account) { user.default_mirror_account }
   let(:subject) { build(:percentage_rule, user: user, destination_virtual_account: virtual_account ) }
   let(:rule) {
     subject.save
@@ -31,7 +31,7 @@ RSpec.describe PercentageRule do
   end
 
   describe "#apply_rule" do
-    let(:transaction) {create(:mirror_transaction, amount: 100)}
+    let(:transaction) { create(:mirror_transaction, virtual_account: mirror_account, amount: 100)}
 
     it "creates automatic transactions" do
       expect { rule.apply_rule(transaction) }.to change{ virtual_account.transactions.count }.by(1)

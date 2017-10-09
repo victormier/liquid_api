@@ -18,12 +18,13 @@ class PercentageRule < Rule
     if rule_applies?(transaction)
       # create automatic transaction
       amount = transaction.amount / 100.0 * config[:percentage]
-      Services::CreateVirtualTransaction.new(user, {
-        origin_account_id: user.default_mirror_account.id,
+      service = Services::CreateVirtualTransaction.new(user, {
+        origin_account_id: transaction.virtual_account.id,
         destination_account_id: destination_virtual_account.id,
         amount: amount,
         rule_id: self.id
-      }).call
+      })
+      service.call
     end
   end
 end
