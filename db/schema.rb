@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171002091639) do
+ActiveRecord::Schema.define(version: 20171006121432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "rules", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "virtual_account_id"
+    t.text "config"
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_rules_on_user_id"
+  end
 
   create_table "saltedge_accounts", force: :cascade do |t|
     t.integer "saltedge_login_id", null: false
@@ -74,7 +84,9 @@ ActiveRecord::Schema.define(version: 20171002091639) do
     t.datetime "made_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "rule_id"
     t.index ["related_virtual_account_id"], name: "index_transactions_on_related_virtual_account_id"
+    t.index ["rule_id"], name: "index_transactions_on_rule_id"
     t.index ["saltedge_transaction_id"], name: "index_transactions_on_saltedge_transaction_id"
     t.index ["virtual_account_id"], name: "index_transactions_on_virtual_account_id"
   end
@@ -108,6 +120,7 @@ ActiveRecord::Schema.define(version: 20171002091639) do
     t.index ["user_id"], name: "index_virtual_accounts_on_user_id"
   end
 
+  add_foreign_key "rules", "users", on_delete: :cascade
   add_foreign_key "saltedge_accounts", "saltedge_logins", on_delete: :cascade
   add_foreign_key "saltedge_accounts", "users", on_delete: :cascade
   add_foreign_key "saltedge_logins", "users", on_delete: :cascade
