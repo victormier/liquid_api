@@ -6,8 +6,24 @@ class PercentageRule < Rule
   def default_config
     {
       minimum_amount: 0.0,
-      percentage: 0
+      percentage: 0.0
     }
+  end
+
+  def minimum_amount
+    config[:minimum_amount]
+  end
+
+  def minimum_amount=(value)
+    config[:minimum_amount] = value
+  end
+
+  def percentage
+    config[:percentage]
+  end
+
+  def percentage=(value)
+    config[:percentage] = value
   end
 
   def rule_applies?(transaction)
