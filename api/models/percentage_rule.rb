@@ -11,7 +11,7 @@ class PercentageRule < Rule
   end
 
   def rule_applies?(transaction)
-    transaction.amount >= config[:minimum_amount]
+    active && transaction.amount >= config[:minimum_amount]
   end
 
   def apply_rule(transaction)

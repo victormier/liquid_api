@@ -28,6 +28,12 @@ RSpec.describe PercentageRule do
       transaction =create(:mirror_transaction, amount: 10)
       expect(rule.rule_applies?(transaction)).to be false
     end
+
+    it "returns false if rule not active" do
+      transaction = create(:mirror_transaction, amount: 100)
+      rule.update_attributes(active: false)
+      expect(rule.rule_applies?(transaction)).to be false
+    end
   end
 
   describe "#apply_rule" do

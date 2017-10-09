@@ -5,6 +5,8 @@ class Rule < ActiveRecord::Base
 
   serialize :config, Hash
 
+  scope :active, -> { where(active: true) }
+
   def default_config
     {}
   end
