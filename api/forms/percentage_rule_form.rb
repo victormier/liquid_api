@@ -1,8 +1,9 @@
-class PercentageRuleForm < BaseForm
+require 'api/forms/rule_form'
+
+class PercentageRuleForm < RuleForm
   property :minimum_amount
   property :percentage
   property :active
-  property :config
 
   validation do
     required(:minimum_amount).filled(:decimal?, gteq?: 0)

@@ -2,11 +2,13 @@ require 'spec_helper'
 
 RSpec.describe PercentageRuleForm do
   let(:user) { create(:user, :with_mirror_account) }
+  let(:virtual_account) { create(:virtual_account, user: user) }
   let(:params) {
     {
       percentage: 10.0,
       minimum_amount: 10.0,
-      active: "yes"
+      active: "yes",
+      virtual_account_id: virtual_account.id
     }
   }
 
