@@ -2,6 +2,7 @@ PercentageRuleType = GraphQL::ObjectType.define do
   name "PercentageRule"
   description "A percentage-based (taxes) rule for creating automatic transactions"
 
+  field :id, types.ID
   field :active, types.Boolean
   field :destination_virtual_account, VirtualAccountType
   field :minimum_amount do
