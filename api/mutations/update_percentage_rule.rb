@@ -10,7 +10,7 @@ module Mutations
     argument :active, !types.Boolean
 
     resolve GraphqlRescueFrom.new(LiquidApi::MutationInvalid, ->(t, args, ctx) {
-      service = Services::UpdatePercentageRule.new(ctx[:current_user], args)
+      service = Services::UpdatePercentageRule.new(ctx[:current_user], ActiveSupport::HashWithIndifferentAccess.new(args.to_h))
       service.call
       service.model
     })
