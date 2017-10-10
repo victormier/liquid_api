@@ -8,7 +8,7 @@ RSpec.describe Services::CreateVirtualAccount do
 
   it "creates a customer in saltedge" do
     expect { subject.call }.to change{ user.virtual_accounts.count }.by(1)
-    expect(subject.model.currency_code).to eq(saltedge_account.currency_code)
+    expect(subject.model.reload.currency_code).to eq(saltedge_account.currency_code)
   end
 
   it "fails if validation fails" do
@@ -17,7 +17,7 @@ RSpec.describe Services::CreateVirtualAccount do
       currency_code: "invalid_code"
     }
     service = Services::CreateVirtualAccount.new(user, params)
-    expect(service.call).to be false
+    expect{ service.call }.to raise_exception(LiquidApi::MutationInvalid)
   end
 
   it "fails if user has no saltedge_account" do
