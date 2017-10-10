@@ -56,6 +56,13 @@ RSpec.describe PercentageRuleForm do
       expect(subject.errors[:percentage]).to include("must be greater than or equal to 0")
     end
 
+    it "fails for percentage values over 100" do
+      subject.validate(params.merge({ percentage: 100.1 }))
+
+      expect(subject.valid?).to be false
+      expect(subject.errors[:percentage]).to include("must be less than or equal to 100")
+    end
+
     it "fails for negative minimum_amount values" do
       subject.validate(params.merge({ minimum_amount: -5 }))
 
