@@ -8,6 +8,6 @@ class PercentageRuleForm < RuleForm
   validation do
     required(:minimum_amount).filled(:decimal?, gteq?: 0)
     required(:percentage).filled(:decimal?, gteq?: 0, lteq?: 100)
-    optional(:active).filled(:bool?, :true?)
+    optional(:active).filled(:bool?)
   end
 end
