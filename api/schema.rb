@@ -66,6 +66,14 @@ QueryRoot = GraphQL::ObjectType.define do
       Insights.all_monthly(ctx[:current_user])
     }
   end
+
+  field :percentage_rule do
+    type PercentageRuleType
+
+    resolve -> (obj, args, ctx) {
+      PercentageRule.where(user: ctx[:current_user]).first
+    }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
