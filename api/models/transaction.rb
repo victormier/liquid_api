@@ -9,4 +9,5 @@ class Transaction < ActiveRecord::Base
   scope :debit, -> { where("amount > 0.0") }
   scope :from_date, -> (date) { where("made_on >= ?", date) }
   scope :to_date, -> (date) { where("made_on <= ?", date) }
+  scope :automatic, -> { where('rule_id IS NOT NULL') }
 end

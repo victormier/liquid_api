@@ -11,6 +11,7 @@ module Services
 
       @origin_account = @user.virtual_accounts.find(params[:origin_account_id])
       @destination_account = @user.virtual_accounts.find(params[:destination_account_id])
+      @params = params
       @made_on = DateTime.now
     end
 
@@ -22,7 +23,8 @@ module Services
           made_on: @made_on,
           amount: -@amount.to_f,
           virtual_account_id: @origin_account.id,
-          related_virtual_account_id: @destination_account.id
+          related_virtual_account_id: @destination_account.id,
+          rule_id: @params[:rule_id]
         })
         @credit_tx_form = VirtualTransactionForm.new(virtual_transaction)
         if @credit_tx_form.valid?
@@ -37,7 +39,8 @@ module Services
           made_on: @made_on,
           amount: @amount.to_f,
           virtual_account_id: @destination_account.id,
-          related_virtual_account_id: @origin_account.id
+          related_virtual_account_id: @origin_account.id,
+          rule_id: @params[:rule_id]
         })
         @debit_tx_form = VirtualTransactionForm.new(virtual_transaction)
         if @debit_tx_form.valid?

@@ -1,5 +1,6 @@
 class VirtualTransactionForm < TransactionForm
   property :related_virtual_account_id
+  property :rule_id
 
   validation do
     configure do

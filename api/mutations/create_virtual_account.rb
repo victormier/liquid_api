@@ -8,12 +8,8 @@ module Mutations
 
     resolve GraphqlRescueFrom.new(LiquidApi::MutationInvalid, ->(t, args, ctx) {
       service = Services::CreateVirtualAccount.new(ctx[:current_user], { name: args[:name] })
-
-      if service.call
-        service.model
-      else
-        raise LiquidApi::MutationInvalid.new(nil, errors: service.form.errors)
-      end
+      service.call
+      service.model
     })
   end
 end

@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :saltedge_logins
   has_many :saltedge_accounts
   has_many :virtual_accounts
+  has_many :rules
 
   def confirmation_token_valid?
     (confirmation_sent_at + 30.days) > Time.now.utc
