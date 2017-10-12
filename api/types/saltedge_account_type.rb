@@ -5,6 +5,7 @@ SaltedgeAccountType = GraphQL::ObjectType.define do
   interfaces [AccountInterface]
 
   field :id, !types.ID
+  field :selected, !types.Boolean
   field :transactions do
     type types[!TransactionType]
 
