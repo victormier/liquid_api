@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Services::CreateVirtualAccount do
   let(:user) { create(:user) }
-  let(:saltedge_account) { create(:saltedge_account, user: user) }
+  let(:saltedge_account) { create(:saltedge_account, :with_virtual_account, user: user) }
   subject { Services::CreateVirtualAccount.new(user, { name: "Test Account" })  }
   before { saltedge_account }
 
