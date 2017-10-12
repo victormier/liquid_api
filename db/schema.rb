@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20171012094043) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "selected", default: false
+    t.index ["saltedge_id"], name: "index_saltedge_accounts_on_saltedge_id", unique: true
     t.index ["saltedge_login_id"], name: "index_saltedge_accounts_on_saltedge_login_id"
     t.index ["user_id"], name: "index_saltedge_accounts_on_user_id"
   end
