@@ -1,8 +1,10 @@
 module Services
   class SelectSaltedgeAccount
-    def initialize(saltedge_account)
-      @saltedge_account = saltedge_account
-      @saltedge_client = SaltedgeClient.new
+    attr_accessor :saltedge_account
+
+    def initialize(user, saltedge_account_id)
+      @user = user
+      @saltedge_account = @user.saltedge_accounts.find(saltedge_account_id)
     end
 
     def call
@@ -13,7 +15,7 @@ module Services
           form.save
         else
           errors = LiquidApiUtils::Errors::ErrorObject.new(form.errors)
-          raise ActiveRecord::RecordInvalid.new(errors)
+          raise LiquidApi::MutationInvalid.new(nil, errors: errors)
         end
 
         virtual_account = VirtualAccount.new(
@@ -27,7 +29,8 @@ module Services
         if form.valid?
           form.save
         else
-          raise LiquidApi::MutationInvalid.new(nil, errors: form.errors)
+          errors = LiquidApiUtils::Errors::ErrorObject.new(form.errors)
+          raise LiquidApi::MutationInvalid.new(nil, errors: errors)
         end
       end
     end

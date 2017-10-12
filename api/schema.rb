@@ -85,6 +85,7 @@ MutationRoot = GraphQL::ObjectType.define do
   field :createVirtualAccount, field: Mutations::CreateVirtualAccount
   field :createVirtualTransaction, field: Mutations::CreateVirtualTransaction
   field :updatePercentageRule, field: Mutations::UpdatePercentageRule
+  field :selectSaltedgeAccount, field: Mutations::SelectSaltedgeAccount
 end
 
 Schema = GraphQL::Schema.define do
