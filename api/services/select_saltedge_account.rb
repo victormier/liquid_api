@@ -33,6 +33,9 @@ module Services
           raise LiquidApi::MutationInvalid.new(nil, errors: errors)
         end
       end
+
+      # initial transaction load
+      Services::LoadSaltedgeAccountTransactions.new(@saltedge_account).call
     end
   end
 end

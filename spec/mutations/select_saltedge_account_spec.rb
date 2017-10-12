@@ -5,6 +5,24 @@ RSpec.describe Mutations::SelectSaltedgeAccount do
   let(:saltedge_account) { create(:saltedge_account, user: user, selected: false) }
   let(:subject) { Schema.types["Mutation"].fields["selectSaltedgeAccount"] }
   let(:args) {{ "saltedge_account_id": saltedge_account.id }}
+  let(:saltedge_accounts_list_response) { File.read('spec/support/fixtures/saltedge_accounts_list_response.json') }
+  let(:saltedge_transactions_list_response) { File.read('spec/support/fixtures/saltedge_transactions_list_response.json') }
+
+  before do
+    # Stub saltedge account listing
+    stub_request(:get, "https://www.saltedge.com/api/v3/accounts").
+      to_return(
+        body: saltedge_accounts_list_response,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+
+    # Stub saltedge transaction list
+    stub_request(:get, "https://www.saltedge.com/api/v3/transactions").
+      to_return(
+        body: saltedge_transactions_list_response,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+  end
 
   it "marks a saltedge account as selected with valid data" do
     expect {
