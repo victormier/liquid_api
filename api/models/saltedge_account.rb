@@ -8,6 +8,8 @@ class SaltedgeAccount < ActiveRecord::Base
 
   serialize :saltedge_data, Hash
 
+  scope :selected, -> { where(selected: true) }
+
   def type
     "saltedge"
   end
