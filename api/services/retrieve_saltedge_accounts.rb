@@ -17,13 +17,15 @@ module Services
         SaltedgeAccount::ACCOUNT_NATURE_WHITELIST.include?(a["nature"])
       end
       accounts.each do |account_data|
-        SaltedgeAccount.transaction do
+        begin
           @saltedge_account = @saltedge_login.user.saltedge_accounts.create!(
             saltedge_login: @saltedge_login,
             saltedge_id: account_data["id"],
             saltedge_data: account_data,
             selected: false
           )
+        rescue ActiveRecord::RecordNotUnique
+          nil
         end
       end
     end

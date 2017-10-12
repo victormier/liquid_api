@@ -21,6 +21,13 @@ RSpec.describe Services::RetrieveSaltedgeAccounts do
     expect(last_saltedge_account.saltedge_data).to_not be_empty
   end
 
+  it "doesn't create new records if account exists" do
+    service = Services::RetrieveSaltedgeAccounts.new(saltedge_login)
+    expect { service.call }.to change{ user.saltedge_accounts.count }.by(2)
+    new_service = Services::RetrieveSaltedgeAccounts.new(saltedge_login)
+    expect { new_service.call }.to change{ user.saltedge_accounts.count }.by(0)
+  end
+
   it "only selects whitelisted nature accounts" do
     response_without_whitelisted_nature = begin
       account_data = JSON.parse(saltedge_accounts_list_response)
