@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Mutations::CreateVirtualAccount do
   let(:user) { create(:user) }
-  let(:saltedge_account) { create(:saltedge_account, user: user) }
+  let(:saltedge_account) { create(:saltedge_account, :with_virtual_account, user: user) }
   let(:subject) { Schema.types["Mutation"].fields["createVirtualAccount"] }
   let(:args) {{ "name": "My cool account" }}
 

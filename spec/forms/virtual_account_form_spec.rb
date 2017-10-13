@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe UserForm do
+RSpec.describe VirtualAccountForm do
   let(:params) {
     {
       name: "My Cool Account",

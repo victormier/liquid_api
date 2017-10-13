@@ -74,6 +74,14 @@ QueryRoot = GraphQL::ObjectType.define do
       PercentageRule.where(user: ctx[:current_user]).first
     }
   end
+
+  field :all_saltedge_accounts do
+    type types[!SaltedgeAccountType]
+
+    resolve -> (obj, args, ctx) {
+      ctx[:current_user].saltedge_accounts
+    }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
@@ -85,6 +93,7 @@ MutationRoot = GraphQL::ObjectType.define do
   field :createVirtualAccount, field: Mutations::CreateVirtualAccount
   field :createVirtualTransaction, field: Mutations::CreateVirtualTransaction
   field :updatePercentageRule, field: Mutations::UpdatePercentageRule
+  field :selectSaltedgeAccount, field: Mutations::SelectSaltedgeAccount
 end
 
 Schema = GraphQL::Schema.define do

@@ -7,3 +7,4 @@ en:
     enough_balance?: "must have enough balance"
     same_currency?: "must have the same currency as the other account"
     same_user?: "must be owned by the same user as the other account"
+    unique_true?: "must be unique when true"

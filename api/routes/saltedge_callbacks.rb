@@ -6,11 +6,8 @@ LiquidApi.route("saltedge_callbacks") do |r|
     if saltedge_login
       Services::UpdateSaltedgeLogin.new(saltedge_login).call
       unless saltedge_login.saltedge_accounts.any?
-        service = Services::SelectSaltedgeAccount.new(saltedge_login)
+        service = Services::RetrieveSaltedgeAccounts.new(saltedge_login)
         service.call
-        if service.saltedge_account
-          Services::LoadSaltedgeAccountTransactions.new(service.saltedge_account).call
-        end
       end
     end
     [200, '']
