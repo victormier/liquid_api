@@ -47,6 +47,14 @@ RSpec.describe Services::LoadSaltedgeAccountTransactions do
 
   it "loads data from last 3 months on the first pull"
 
+  it "computes balance after transactions are created" do
+    new_balance = 2012.7 # based on saltedge accounts' balance / what's returned by the api
+    create(:virtual_transaction, virtual_account: user.default_mirror_account, amount: -100)
+    service = Services::LoadSaltedgeAccountTransactions.new(saltedge_account)
+    service.call
+    expect(user.default_mirror_account.reload.balance).to eq (new_balance - 100.0)
+  end
+
 
   describe "when there's multiple pages" do
     before do

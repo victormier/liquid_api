@@ -60,6 +60,8 @@ module Services
             errors = LiquidApiUtils::Errors::ErrorObject.new(transaction_form.errors)
             raise LiquidApi::MutationInvalid.new(nil, errors: errors)
           end
+
+          @saltedge_account.virtual_account.compute_balance!
         end
 
         # Create automatic transaction
