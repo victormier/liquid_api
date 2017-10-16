@@ -1,4 +1,4 @@
-require 'api/models/transaction'
+require_relative 'transaction'
 
 # Represent a mirror of a real transaction
 class MirrorTransaction < Transaction
