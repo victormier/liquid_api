@@ -1,4 +1,4 @@
-require 'api/forms/rule_form'
+require_relative 'rule_form'
 
 class PercentageRuleForm < RuleForm
   property :minimum_amount

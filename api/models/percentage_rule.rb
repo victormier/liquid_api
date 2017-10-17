@@ -1,4 +1,4 @@
-require 'api/models/rule'
+require_relative 'rule'
 
 # When a credit (income) transaction reaches a certain amount,
 # move a specific percentage of the amount to destination account.

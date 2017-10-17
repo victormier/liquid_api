@@ -1,4 +1,4 @@
-require 'api/forms/transaction_form'
+require_relative 'transaction_form'
 
 class MirrorTransactionForm < TransactionForm
   property :saltedge_transaction
