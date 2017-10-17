@@ -1,8 +1,10 @@
-module AuthenticationHelpers
-  def authenticate!
-    unless current_user
+module AuthenticationHelpers  
+  def authenticated?
+    if current_user
+      true
+    else
       response.status = :unauthorized
-      response.finish_with_body({ "error": "Invalid authentication" }.to_json)
+      response.write({ "error": "Invalid authentication" }.to_json)
     end
   end
 

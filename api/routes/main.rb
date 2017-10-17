@@ -12,7 +12,10 @@ class LiquidApi
     end
 
     r.on "graphql" do
-      authenticate!
+      if !authenticated?
+        response.status = :unauthorized
+        r.halt
+      end
 
       r.post do
         params = JSON.parse(request.body.read)
