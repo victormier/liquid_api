@@ -18,6 +18,11 @@ namespace :scheduler do
 
   task :load_all_transactions do
     p "Loading transactions task..."
-    LoadTransactionsWorker.perform_async(1)
+    LoadAllTransactionsWorker.perform_async
+  end
+
+  task :update_saltedge_providers do
+    p "Updating saltedge providers task..."
+    UpdateSaltedgeProvidersWorker.perform_async
   end
 end
