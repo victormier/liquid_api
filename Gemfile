@@ -40,6 +40,7 @@ gem 'racksh'
 gem 'bcrypt'
 gem 'rest-client'
 gem 'money'
+gem 'rollbar'
 
 group :test, :development do
   gem 'pry'
