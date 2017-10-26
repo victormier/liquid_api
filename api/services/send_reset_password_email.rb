@@ -8,7 +8,9 @@ module Services
       # Reset user password
       Services::ResetUserPassword.new(@user).call
       # To Do: Use a background job for sending emails
-      LiquidApi.sendmail("/emails/users/reset_password", @user.id)
+      mail = LiquidApi.mail("/emails/users/reset_password", @user.id)
+      mail.reply_to 'noreply@helloliquid.com'
+      mail.deliver
     end
   end
 end

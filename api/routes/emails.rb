@@ -5,7 +5,7 @@ LiquidApi.route("emails") do |r|
     r.mail "email_confirmation", Integer do |user_id|
       @user = User.find(user_id)
       to @user.email
-      subject "Liquid email confirmation"
+      subject "Create your Liquid account"
       render "emails/users/confirm_email"
     end
 
