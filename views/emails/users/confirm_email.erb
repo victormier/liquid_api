@@ -1,1 +1,13 @@
-<div>Please confirm your email by <a href="<%= "https://#{LiquidApi.configuration.default_api_host}/users/confirm_email?confirmation_token=#{@user.confirmation_token}" %>">clicking here</a>.</div>
+<p>Hi, thanks for your interest in Liquid!</p>
+
+<p>Follow this link to <a href="<%= "https://#{LiquidApi.configuration.default_api_host}/users/confirm_email?confirmation_token=#{@user.confirmation_token}" %>">confirm your email</a>, create a user and connect your bank accounts. That's all you need to do to start saving money with Liquid.</p>
+
+<p>Or paste this url on your browser: <%= "https://#{LiquidApi.configuration.default_api_host}/users/confirm_email?confirmation_token=#{@user.confirmation_token}" %></p>
+
+<p>We can't wait to start working with you,</p>
+
+<p>Victor &amp; Cesar</p>
+
+<p>
+PS. You received this message because your address was signed-up on www.helloliquid.com If you didn't expect this message feel free to ignore it, we won't message you again.
+</p>
