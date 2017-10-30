@@ -16,11 +16,19 @@ module Services
 
         SaltedgeTransaction.transaction do
           # Create saltedge transaction
-          saltedge_transaction = @saltedge_account.saltedge_transactions.create!(attrs.merge({
+          saltedge_transaction = @saltedge_account.saltedge_transactions.new(attrs.merge({
             saltedge_id: @transaction_data["id"],
             saltedge_created_at: @transaction_data["created_at"],
             saltedge_data: @transaction_data
           }))
+          saltedge_transaction_form = SaltedgeTransactionForm.new(saltedge_transaction)
+          if saltedge_transaction_form.valid?
+            saltedge_transaction_form.save!
+          else
+            errors = LiquidApiUtils::Errors::ErrorObject.new(saltedge_transaction_form.errors)
+            raise LiquidApi::MutationInvalid.new(errors.full_messages.join('; '), errors: errors)
+          end
+
           # Create mirror transaction
           mirror_transaction = MirrorTransaction.new(
             saltedge_transaction: saltedge_transaction,
@@ -28,11 +36,11 @@ module Services
             amount: saltedge_transaction.amount,
             made_on: saltedge_transaction.made_on.to_datetime
           )
-          transaction_form = MirrorTransactionForm.new(mirror_transaction)
-          if transaction_form.valid?
-            transaction_form.save!
+          mirror_transaction_form = MirrorTransactionForm.new(mirror_transaction)
+          if mirror_transaction_form.valid?
+            mirror_transaction_form.save!
           else
-            errors = LiquidApiUtils::Errors::ErrorObject.new(transaction_form.errors)
+            errors = LiquidApiUtils::Errors::ErrorObject.new(mirror_transaction_form.errors)
             raise LiquidApi::MutationInvalid.new(errors.full_messages.join('; '), errors: errors)
           end
 
