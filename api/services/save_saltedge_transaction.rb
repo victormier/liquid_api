@@ -33,7 +33,7 @@ module Services
             transaction_form.save!
           else
             errors = LiquidApiUtils::Errors::ErrorObject.new(transaction_form.errors)
-            raise LiquidApi::MutationInvalid.new(nil, errors: errors)
+            raise LiquidApi::MutationInvalid.new(errors.full_messages.join('; '), errors: errors)
           end
 
           @saltedge_account.virtual_account.compute_balance!
