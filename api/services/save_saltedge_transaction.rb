@@ -44,7 +44,7 @@ module Services
           rule.apply_rule(mirror_transaction.reload)
         end
       rescue LiquidApi::MutationInvalid => e
-        if production?
+        if ENV['RACK_ENV'] == "production"
           Rollbar.error(e, transaction_data: @transaction_data, saltedge_account_id: @saltedge_account.id)
         end
         raise e
