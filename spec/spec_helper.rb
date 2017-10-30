@@ -7,6 +7,7 @@ require 'shoulda-matchers'
 require 'timecop'
 require 'webmock/rspec'
 require 'factory_girl'
+require 'sidekiq/testing'
 
 Dotenv.load
 
@@ -22,6 +23,9 @@ RSpec.configure do |config|
 
   # Make sure database has latest schema on test
   ActiveRecord::Migration.maintain_test_schema!
+
+  # Execute worker jobs inmediately
+  Sidekiq::Testing.inline!
 
   # Disable external http requests
   WebMock.disable_net_connect!(allow_localhost: true)
