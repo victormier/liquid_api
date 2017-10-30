@@ -70,13 +70,16 @@ RSpec.describe Services::LoadSaltedgeAccountTransactions do
       headers: { 'Content-Type' => 'application/json' }
       )
 
+      second_stub_response = JSON.parse(saltedge_transactions_list_response)
+      second_stub_response["data"][0]["id"] = 989
+      second_stub_response["data"][1]["id"] = 990
       stub_request(:get, "https://www.saltedge.com/api/v3/transactions").
       with(body: {
         account_id: saltedge_account.saltedge_id,
         from_id: "123"
       }.to_json).
       to_return(
-      body: saltedge_transactions_list_response,
+      body: second_stub_response.to_json,
       headers: { 'Content-Type' => 'application/json' }
       )
 
