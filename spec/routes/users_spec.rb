@@ -69,7 +69,7 @@ RSpec.describe "/users" do
         expect do
           get "/users/confirm_email?confirmation_token=#{user.confirmation_token}"
         end.to change{ Mail::TestMailer.deliveries.length }.by(1)
-        expect(Mail::TestMailer.deliveries.last.subject).to eq "Liquid email confirmation"
+        expect(Mail::TestMailer.deliveries.last.subject).to eq "Create your Liquid account"
         expect(Mail::TestMailer.deliveries.last.to).to include user.email
       end
 
