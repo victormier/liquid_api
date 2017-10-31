@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171012094043) do
+ActiveRecord::Schema.define(version: 20171031111233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20171012094043) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["saltedge_account_id"], name: "index_saltedge_transactions_on_saltedge_account_id"
+    t.index ["saltedge_id"], name: "index_saltedge_transactions_on_saltedge_id", unique: true
   end
 
   create_table "transactions", force: :cascade do |t|

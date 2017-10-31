@@ -25,7 +25,7 @@ RSpec.describe Services::RegisterUser do
 
   it "submits an email confirmation email" do
     expect{ subject.call }.to change{ Mail::TestMailer.deliveries.length }.by(1)
-    expect(Mail::TestMailer.deliveries.last.subject).to eq "Liquid email confirmation"
+    expect(Mail::TestMailer.deliveries.last.subject).to eq "Create your Liquid account"
     expect(Mail::TestMailer.deliveries.last.to).to include params[:email]
   end
 
