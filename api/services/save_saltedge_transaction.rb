@@ -34,7 +34,8 @@ module Services
             saltedge_transaction: saltedge_transaction,
             virtual_account: @saltedge_account.virtual_account,
             amount: saltedge_transaction.amount,
-            made_on: saltedge_transaction.made_on.to_datetime
+            made_on: saltedge_transaction.made_on.to_datetime,
+            saltedge_id: saltedge_transaction.saltedge_id
           )
           mirror_transaction_form = MirrorTransactionForm.new(mirror_transaction)
           if mirror_transaction_form.valid?
