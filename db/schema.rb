@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031111233) do
+ActiveRecord::Schema.define(version: 20171101120058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,8 @@ ActiveRecord::Schema.define(version: 20171031111233) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "rule_id"
+    t.string "saltedge_id"
+    t.index ["made_on", "saltedge_id"], name: "index_transactions_on_made_on_and_saltedge_id", order: { made_on: :desc, saltedge_id: :desc }
     t.index ["related_virtual_account_id"], name: "index_transactions_on_related_virtual_account_id"
     t.index ["rule_id"], name: "index_transactions_on_rule_id"
     t.index ["saltedge_transaction_id"], name: "index_transactions_on_saltedge_transaction_id"
