@@ -1,7 +1,7 @@
 class Transaction < ActiveRecord::Base
   belongs_to :virtual_account
 
-  scope :newest_first, -> { order('transactions.made_on desc, transactions.saltedge_id desc') }
+  scope :newest_first, -> { order('transactions.made_on desc, transactions.saltedge_id asc') }
   scope :oldest_first, -> { order('transactions.made_on asc, transactions.created_at asc') }
   scope :virtual, -> { where("transactions.type" => 'VirtualTransaction') }
   scope :mirror, -> { where("transactions.type" => 'MirrorTransaction') }
