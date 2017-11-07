@@ -41,6 +41,7 @@ gem 'bcrypt'
 gem 'rest-client'
 gem 'money'
 gem 'rollbar'
+gem 'mixpanel-ruby'
 
 group :test, :development do
   gem 'pry'
