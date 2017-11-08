@@ -12,6 +12,7 @@ class MixpanelClient
     select_bank: 'Select bank',
     connect_bank_first_step: 'Connect bank first step',
     connect_bank_interactive: 'Connect bank interactive',
+    connect_bank: 'Connect bank',
     view_accounts: 'View accounts',
     view_account_transactions: 'View account transactions',
     view_transaction_details: 'View transaction details',
