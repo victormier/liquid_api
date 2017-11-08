@@ -74,4 +74,10 @@ RSpec.configure do |config|
   def json_response
     JSON.parse(last_response.body)
   end
+
+  # Disable mixpanel tracking
+  config.before(:each) do
+    MixpanelClient.stub(:track)
+    MixpanelClient.stub(:set_people_properties)
+  end
 end
