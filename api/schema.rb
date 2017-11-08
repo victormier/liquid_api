@@ -20,7 +20,9 @@ QueryRoot = GraphQL::ObjectType.define do
 
   field :all_saltedge_providers do
     type types[!SaltedgeProviderType]
-    resolve -> (obj, args, ctx) { SaltedgeProvider.automatically_fetchable }
+    resolve -> (obj, args, ctx) {
+      SaltedgeProvider.selectable
+    }
   end
 
   field :saltedge_login do
