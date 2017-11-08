@@ -24,6 +24,15 @@ LiquidApi.route("users") do |r|
     if @user
       if @user.confirmation_token_valid?
         @user.mark_as_confirmed!
+
+        MixpanelClient.track(@user.email, MixpanelClient::EVENTS[:click_signup_email])
+        MixpanelClient.set_people_properties(@user.email, {
+          'Last Click sign-up email' => DateTime.now,
+          'Previous Event Name' => MixpanelClient::EVENTS[:click_signup_email],
+          '$email' => @user.email,
+          '$created' => @user.created_at
+        })
+
         Services::ResetUserPassword.new(@user).call
         url = "https://#{LiquidApi.configuration.default_client_host}/users/reset_password?reset_password_token=#{@user.reload.reset_password_token}"
         response.redirect(url)

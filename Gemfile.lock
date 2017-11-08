@@ -110,6 +110,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.2)
+    mixpanel-ruby (2.2.0)
     money (6.9.0)
       i18n (>= 0.6.4, < 0.9)
     multi_json (1.12.2)
@@ -212,6 +213,7 @@ DEPENDENCIES
   factory_girl
   graphql
   mail
+  mixpanel-ruby
   money
   pg
   pry
