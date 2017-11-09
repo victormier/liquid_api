@@ -18,7 +18,11 @@ module Services
         })
       end
 
-      @saltedge_account.virtual_account.try(:compute_balance!)
+      if @saltedge_account.virtual_account.present?
+        LoadTransactionsWorker.perform_async(@saltedge_account.id)
+        @saltedge_account.virtual_account.compute_balance!
+      end
+
     end
   end
 end
