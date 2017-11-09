@@ -11,6 +11,9 @@ class LiquidApi < Roda
   require './lib/configurable'
   extend LiquidApiUtils::Configurable
 
+  # Require active support blank extension
+  require 'active_support/core_ext/object/blank'
+
   # Require environment config
   environment_config_path = "./config/environments/#{ENV['RACK_ENV']}"
   require environment_config_path if File.exists?("#{environment_config_path}.rb")
