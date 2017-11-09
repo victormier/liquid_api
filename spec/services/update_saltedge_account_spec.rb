@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe Services::UpdateSaltedgeAccount do
-  Sidekiq::Testing.fake!
-
   let(:user) { create(:user, saltedge_id: "12345") }
   let(:saltedge_account) { create(:saltedge_account, user: user) }
   let(:saltedge_accounts_list_response) {
@@ -32,32 +30,38 @@ RSpec.describe Services::UpdateSaltedgeAccount do
     let(:saltedge_account) { create(:saltedge_account, :with_virtual_account, user: user)}
 
     it "creates a job for retrieving all transactions of that account" do
-      service = Services::UpdateSaltedgeAccount.new(saltedge_account)
-      expect {
-        service.call
-      }.to change(LoadTransactionsWorker.jobs, :size).by(1)
+      Sidekiq::Testing.fake! do
+        service = Services::UpdateSaltedgeAccount.new(saltedge_account)
+        expect {
+          service.call
+        }.to change(LoadTransactionsWorker.jobs, :size).by(1)
+      end
     end
 
     it "recalculates balance of virtual account" do
-      service = Services::UpdateSaltedgeAccount.new(saltedge_account)
-      service.call
-      expect(saltedge_account.virtual_account.balance).to eq(3000)
+      Sidekiq::Testing.fake! do
+        service = Services::UpdateSaltedgeAccount.new(saltedge_account)
+        service.call
+        expect(saltedge_account.virtual_account.balance).to eq(3000)
+      end
     end
   end
 
   describe "when there's no related virtual account" do
     it "doesn't create any job" do
-      service = Services::UpdateSaltedgeAccount.new(saltedge_account)
-      expect {
-        service.call
-      }.to change(LoadTransactionsWorker.jobs, :size).by(0)
+      Sidekiq::Testing.fake! do
+        service = Services::UpdateSaltedgeAccount.new(saltedge_account)
+        expect {
+          service.call
+        }.to change(LoadTransactionsWorker.jobs, :size).by(0)
+      end
     end
   end
 
   it "stores account_data paramater if it is passed" do
     account_data = JSON.parse(saltedge_accounts_list_response)["data"][0]
     account_data["balance"] = 1234.5
-    Services::UpdateSaltedgeAccount.new(saltedge_account, account_data).call
+    Services::UpdateSaltedgeAccount.new(saltedge_account, account_data: account_data).call
     expect(saltedge_account.balance).to eq 1234.5
   end
 end

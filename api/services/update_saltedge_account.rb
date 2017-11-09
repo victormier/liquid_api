@@ -1,9 +1,10 @@
 module Services
   class UpdateSaltedgeAccount
-    def initialize(saltedge_account, account_data = {})
+    def initialize(saltedge_account, opts = {})
       @saltedge_account = saltedge_account
       @saltedge_client = SaltedgeClient.new
-      @account_data = account_data
+      @account_data = opts[:account_data] || {}
+      @skip_load_transactions = opts[:skip_load_transactions] || false
     end
 
     def call
@@ -22,7 +23,7 @@ module Services
       end
 
       if @saltedge_account.virtual_account.present?
-        LoadTransactionsWorker.perform_async(@saltedge_account.id)
+        LoadTransactionsWorker.perform_async(@saltedge_account.id) unless @skip_load_transactions
         @saltedge_account.virtual_account.compute_balance!
       end
 

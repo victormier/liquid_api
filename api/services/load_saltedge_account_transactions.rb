@@ -6,7 +6,7 @@ module Services
     end
 
     def call
-      Services::UpdateSaltedgeAccount.new(@saltedge_account).call
+      Services::UpdateSaltedgeAccount.new(@saltedge_account, skip_load_transactions: true).call
       from_id = @saltedge_account.saltedge_transactions.newest_first.last.try(:saltedge_id)
 
       transactions_data, next_id = retrieve_transactions(from_id)
