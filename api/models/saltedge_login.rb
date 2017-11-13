@@ -9,6 +9,11 @@ class SaltedgeLogin < ActiveRecord::Base
     saltedge_data["status"] == "active"
   end
 
+  def kill
+    self.update_attributes(killed: true)
+    DestroySaltedgeLoginWorker.perform_in(1.day, id)
+  end
+
   def finished_connecting
     saltedge_data["status"] == "active" ||
     (saltedge_data["last_attempt"] && saltedge_data["last_attempt"]["finished"])
@@ -16,5 +21,11 @@ class SaltedgeLogin < ActiveRecord::Base
 
   def error
     saltedge_data["last_attempt"].try(["error_message"])
+  end
+
+  def new_login_and_invalid?
+    finished_connecting &&
+      saltedge_data["last_attempt"]["error_class"] == "InvalidCredentials" &&
+      saltedge_accounts.none?
   end
 end
