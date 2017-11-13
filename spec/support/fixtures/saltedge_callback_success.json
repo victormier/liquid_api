@@ -1,0 +1,11 @@
+{
+  "data": {
+    "login_id": 123,
+    "customer_id": 34445,
+    "custom_fields": { "key": "value" }
+  },
+  "meta": {
+    "version": "3",
+    "time": "2017-10-31T09:08:49.853Z"
+  }
+}
