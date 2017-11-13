@@ -26,6 +26,12 @@ LiquidApi.route("saltedge_callbacks") do |r|
     saltedge_login = SaltedgeLogin.find_by(saltedge_id: login_id)
     if saltedge_login
       Services::UpdateSaltedgeLogin.new(saltedge_login).call
+
+      if saltedge_login.new_login_and_invalid?
+        # Kills local saltedge_login (destroyed in 1 day) and
+        # destroys remote login (saltedge reference)
+        Services::RemoveSaltedgeLogin.new(saltedge_login).call
+      end
     end
     [200, '']
   end
