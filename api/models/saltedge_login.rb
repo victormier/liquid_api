@@ -13,4 +13,8 @@ class SaltedgeLogin < ActiveRecord::Base
     saltedge_data["status"] == "active" ||
     (saltedge_data["last_attempt"] && saltedge_data["last_attempt"]["finished"])
   end
+
+  def error
+    saltedge_data["last_attempt"].try(["error_message"])
+  end
 end
