@@ -62,7 +62,7 @@ GEM
       uber (< 0.2.0)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
-    dotenv (2.1.1)
+    dotenv (2.2.1)
     dry-configurable (0.7.0)
       concurrent-ruby (~> 1.0)
     dry-container (0.6.0)
