@@ -5,9 +5,8 @@ class SaltedgeClient
   BASE_URL = "https://www.saltedge.com/api/v3"
 
   def initialize
-    @client_id        = ENV["SALTEDGE_CLIENT_ID"]
-    @service_secret   = ENV["SALTEDGE_SERVICE_SECRET"]
-    # @private_pem_path = File.open(Rails.root.join('config', 'certs', 'private.pem'))
+    @client_id          = ENV["SALTEDGE_CLIENT_ID"]
+    @service_secret     = ENV["SALTEDGE_SERVICE_SECRET"]
   end
 
   def request(method, path, params={})
@@ -27,20 +26,23 @@ class SaltedgeClient
         "Content-type"   => "application/json",
         "Expires-at"     => hash[:expires_at],
         "Client-id"      => client_id,
-        "Service-secret" => service_secret
+        "Service-secret" => service_secret,
+        "Signature"      => signature(hash)
       }
     )
-    # "Signature"      => signature(hash),
   end
 
 private
 
   def signature(hash)
-    Base64.encode64(rsa_key.sign(digest, "#{hash[:expires_at]}|#{hash[:method]}|#{hash[:url]}|#{hash[:params]}")).delete("\n")
+    Base64.encode64(rsa_key.sign(digest, "#{hash[:expires_at]}|#{hash[:method].to_s.upcase}|#{hash[:url]}|#{hash[:params]}")).delete("\n")
   end
 
   def rsa_key
-    @rsa_key ||= OpenSSL::PKey::RSA.new(@private_pem_path)
+    @rsa_key ||= begin
+      private_key = ENV["RACK_ENV"] == "production" ? ENV["RSA_PRIVATE_KEY"] : File.open('config/private-staging.pem')
+      OpenSSL::PKey::RSA.new(private_key)
+    end
   end
 
   def digest
