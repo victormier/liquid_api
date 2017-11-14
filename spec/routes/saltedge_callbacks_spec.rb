@@ -11,19 +11,19 @@ RSpec.describe "/saltedge_callbacks" do
   }
   let(:saltedge_success_callback_body) {
     response = JSON.parse(File.read('spec/support/fixtures/saltedge_callback_success.json'))
-    response["data"]["login_id"] = saltedge_login.id
+    response["data"]["login_id"] = saltedge_login.saltedge_id
     response.to_json
   }
   let(:saltedge_failure_callback_body) {
     response = JSON.parse(File.read('spec/support/fixtures/saltedge_callback_failure.json'))
-    response["data"]["login_id"] = saltedge_login.id
+    response["data"]["login_id"] = saltedge_login.saltedge_id
     response.to_json
   }
   let(:saltedge_accounts_list_response) { File.read('spec/support/fixtures/saltedge_accounts_list_response.json') }
 
   before do
     # Stub saltedge login creation
-    stub_request(:get, "https://www.saltedge.com/api/v3/logins/#{saltedge_login.id}").
+    stub_request(:get, "https://www.saltedge.com/api/v3/logins/#{saltedge_login.saltedge_id}").
     to_return(
       body: saltedge_login_response,
       headers: { 'Content-Type' => 'application/json' }
