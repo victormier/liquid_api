@@ -20,12 +20,14 @@ class SaltedgeLogin < ActiveRecord::Base
   end
 
   def error
-    saltedge_data["last_attempt"].try(["fail_message"])
+    saltedge_data["last_attempt"].try(:[], "fail_error_class")
+  end
+
+  def error_message
+    saltedge_data["last_attempt"].try(:[], "fail_message")
   end
 
   def new_login_and_invalid?
-    finished_connecting &&
-      saltedge_data["last_attempt"]["fail_error_class"] == "InvalidCredentials" &&
-      saltedge_accounts.none?
+    finished_connecting && error && saltedge_accounts.none?
   end
 end
