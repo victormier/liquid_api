@@ -28,6 +28,20 @@ RSpec.describe Services::RetrieveSaltedgeAccounts do
     expect { new_service.call }.to change{ user.saltedge_accounts.count }.by(0)
   end
 
+  it "updates account if account exists" do
+    saltedge_account = create(:saltedge_account)
+    service = Services::RetrieveSaltedgeAccounts.new(saltedge_login)
+    new_response = JSON.parse(saltedge_accounts_list_response)
+    new_response["data"][1]["id"] = saltedge_account.saltedge_id
+    new_response["data"][1]["balance"] = 4000
+    stub_request(:get, "https://www.saltedge.com/api/v3/accounts").
+      to_return(
+        body: new_response.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+    expect { service.call }.to change{ saltedge_account.reload.balance }.from(2012.7).to(4000)
+  end
+
   it "only selects whitelisted nature accounts" do
     response_without_whitelisted_nature = begin
       account_data = JSON.parse(saltedge_accounts_list_response)

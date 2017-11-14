@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101120058) do
+ActiveRecord::Schema.define(version: 20171113161908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20171101120058) do
     t.text "saltedge_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "killed", default: false
     t.index ["saltedge_provider_id"], name: "index_saltedge_logins_on_saltedge_provider_id"
     t.index ["user_id"], name: "index_saltedge_logins_on_user_id"
   end

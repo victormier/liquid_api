@@ -3,7 +3,6 @@ module Services
     def initialize(saltedge_login)
       @saltedge_login = saltedge_login
       @saltedge_client = SaltedgeClient.new
-      @saltedge_account = nil
     end
 
     attr_reader :saltedge_account
@@ -17,15 +16,19 @@ module Services
         SaltedgeAccount::ACCOUNT_NATURE_WHITELIST.include?(a["nature"])
       end
       accounts.each do |account_data|
-        begin
-          @saltedge_account = @saltedge_login.user.saltedge_accounts.create!(
-            saltedge_login: @saltedge_login,
-            saltedge_id: account_data["id"],
-            saltedge_data: account_data,
-            selected: false
-          )
-        rescue ActiveRecord::RecordNotUnique
-          nil
+        if saltedge_account = SaltedgeAccount.find_by(saltedge_id: account_data["id"])
+          Services::UpdateSaltedgeAccount.new(saltedge_account, account_data: account_data).call
+        else
+          begin
+            @saltedge_login.user.saltedge_accounts.create!(
+              saltedge_login: @saltedge_login,
+              saltedge_id: account_data["id"],
+              saltedge_data: account_data,
+              selected: false
+            )
+          rescue ActiveRecord::RecordNotUnique
+            nil
+          end
         end
       end
     end

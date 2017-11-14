@@ -1,0 +1,13 @@
+{
+  "data": {
+    "login_id": 123,
+    "customer_id": 34445,
+    "custom_fields": { "key": "value" },
+    "error_class": "InvalidCredentials",
+    "error_message": "Invalid credentials."
+  },
+  "meta": {
+    "version": "3",
+    "time": "2017-10-31T09:08:49.856Z"
+  }
+}
