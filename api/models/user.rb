@@ -6,6 +6,14 @@ class User < ActiveRecord::Base
   has_many :virtual_accounts
   has_many :rules
 
+  CONNECTION_PHASES = {
+    new_login: "new_login",
+    login_failed: "login_failed",
+    login_pending: "login_pending",
+    select_account: "select_account",
+    connected: "connected"
+  }
+
   def confirmation_token_valid?
     (confirmation_sent_at + 30.days) > Time.now.utc
   end
@@ -35,4 +43,23 @@ class User < ActiveRecord::Base
   def default_mirror_account
     virtual_accounts.mirror.first
   end
+
+  def bank_connection_phase
+    if default_mirror_account
+      User::CONNECTION_PHASES[:connected]
+    elsif saltedge_logins.any?
+      saltedge_login = saltedge_logins.last
+
+      if saltedge_login.active
+        User::CONNECTION_PHASES[:select_account]
+      elsif !saltedge_login.finished_connecting
+        User::CONNECTION_PHASES[:login_pending]
+      elsif saltedge_login.new_login_and_invalid?
+        User::CONNECTION_PHASES[:login_failed]
+      end
+    else
+      User::CONNECTION_PHASES[:new_login]
+    end
+  end
+
 end
