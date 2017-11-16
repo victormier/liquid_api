@@ -45,17 +45,21 @@ class User < ActiveRecord::Base
     virtual_accounts.mirror.first
   end
 
-  def bank_connection_phase
-    if default_mirror_account
-      User::CONNECTION_PHASES[:connected]
-    elsif saltedge_logins.any?
-      saltedge_login = saltedge_logins.last
+  def default_saltedge_login
+    saltedge_logins.last
+  end
 
-      if saltedge_login.active
+  def bank_connection_phase
+    if default_saltedge_login
+      if default_saltedge_login.needs_reconnection
+        User::CONNECTION_PHASES[:needs_reconnection]
+      elsif default_mirror_account
+        User::CONNECTION_PHASES[:connected]
+      elsif default_saltedge_login.active
         User::CONNECTION_PHASES[:select_account]
-      elsif !saltedge_login.finished_connecting
+      elsif !default_saltedge_login.finished_connecting
         User::CONNECTION_PHASES[:login_pending]
-      elsif saltedge_login.new_login_and_invalid?
+      elsif default_saltedge_login.new_login_and_invalid?
         User::CONNECTION_PHASES[:login_failed]
       end
     else
