@@ -31,6 +31,11 @@ QueryRoot = GraphQL::ObjectType.define do
     resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_logins.find(args["id"]) }
   end
 
+  field :all_saltedge_logins do
+    type types[!SaltedgeLoginType]
+    resolve -> (obj, args, ctx) { ctx[:current_user].saltedge_logins }
+  end
+
   field :account do
     type AccountInterface
     argument :id, !types.ID
