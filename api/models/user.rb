@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
     login_failed: "login_failed",
     login_pending: "login_pending",
     select_account: "select_account",
-    connected: "connected"
+    connected: "connected",
+    needs_reconnection: "needs_reconnection"
   }
 
   def confirmation_token_valid?

@@ -11,4 +11,5 @@ SaltedgeLoginType = GraphQL::ObjectType.define do
   field :error, types.String
   field :killed, !types.Boolean
   field :error_message, types.String
+  field :needs_reconnection, !types.Boolean
 end
