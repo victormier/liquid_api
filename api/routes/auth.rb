@@ -14,7 +14,7 @@ LiquidApi.route("login") do |r|
       response_data.to_json
     elsif @user && !@user.confirmed?
       response.status = :unauthorized
-      { errors: ['Email is not confirmed'] }.to_json
+      { errors: ["Couldn't find that user. Is the email confirmed?"] }.to_json
     elsif login_form.errors.present?
       response.status = :unauthorized
       { errors: login_form.full_error_messages }.to_json

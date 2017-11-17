@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def confirmed?
-    !confirmed_at.nil?
+    !killed? && !confirmed_at.nil?
   end
 
   def is_saltedge_customer?
@@ -34,5 +34,9 @@ class User < ActiveRecord::Base
 
   def default_mirror_account
     virtual_accounts.mirror.first
+  end
+
+  def killed?
+    will_be_removed_at.present?
   end
 end
