@@ -30,19 +30,23 @@ class User < ActiveRecord::Base
   end
 
   def confirmed?
-    !confirmed_at.nil?
+    !killed? && !confirmed_at.nil?
   end
 
   def is_saltedge_customer?
     !saltedge_id.nil?
   end
 
-  def default_account
+  def default_saltedge_account
     saltedge_accounts.first
   end
 
   def default_mirror_account
     virtual_accounts.mirror.first
+  end
+
+  def killed?
+    will_be_removed_at.present?
   end
 
   def default_saltedge_login
@@ -66,5 +70,4 @@ class User < ActiveRecord::Base
       User::CONNECTION_PHASES[:new_login]
     end
   end
-
 end

@@ -10,7 +10,8 @@ FactoryGirl.define do
       saltedge_transaction.mirror_transaction ||= FactoryGirl.build(
         :mirror_transaction,
         saltedge_transaction: saltedge_transaction,
-        amount: mirror_transaction.amount
+        amount: saltedge_transaction.amount,
+        virtual_account: saltedge_transaction.saltedge_account.virtual_account || FactoryGirl.build(:virtual_account, user: saltedge_transaction.saltedge_account.user, saltedge_account: saltedge_transaction.saltedge_account)
       )
     end
   end

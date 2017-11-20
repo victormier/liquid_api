@@ -80,7 +80,25 @@ RSpec.describe "/login" do
 
     expected_body = {
       'errors' => [
-        'Email is not confirmed',
+        "Couldn't find that user. Is the email confirmed?",
+      ]
+    }
+    expect(last_response.status).to eq Rack::Utils.status_code(:unauthorized)
+    expect(JSON.parse(last_response.body)).to eq expected_body
+  end
+
+  it "returns :unauthorized if user is killed" do
+    allow_any_instance_of(User).to receive(:killed?).and_return(true)
+
+    params = {
+      email: "johndoe@example.com",
+      password: "password"
+    }
+    post "/login", params.to_json
+
+    expected_body = {
+      'errors' => [
+        "Couldn't find that user. Is the email confirmed?",
       ]
     }
     expect(last_response.status).to eq Rack::Utils.status_code(:unauthorized)
