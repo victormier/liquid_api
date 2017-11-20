@@ -12,4 +12,6 @@ UserType = GraphQL::ObjectType.define do
       obj.saltedge_accounts
     end
   end
+  field :bank_connection_phase, !types.String
+  field :saltedge_logins, types[SaltedgeLoginType]
 end
