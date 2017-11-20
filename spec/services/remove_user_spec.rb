@@ -9,29 +9,8 @@ RSpec.describe Services::RemoveUser do
     end
   }
   let(:subject) {Services::RemoveUser.new(user) }
-  # saltedge account
-  # mirror account
-  # saltedge login
-  # rules
-  # saltedge transactions
-  # virtual transactions
-
-  # let(:saltedge_login_create_response) { File.read('spec/support/fixtures/saltedge_login_create_response.json') }
 
   before do
-    # # Stub saltedge customer creation
-    # stub_request(:post, "https://www.saltedge.com/api/v3/customers").
-    #  to_return(
-    #    body: {
-    #       "data": {
-    #         "id":         18892,
-    #         "identifier": "12rv1212f1efxchsdhbgv",
-    #         "secret":     "AtQX6Q8vRyMrPjUVtW7J_O1n06qYQ25bvUJ8CIC80-8"
-    #       }
-    #     }.to_json,
-    #     headers: { 'Content-Type' => 'application/json' }
-    #   )
-
     # Stub saltedge customer delete
     stub_request(:delete, "https://www.saltedge.com/api/v3/customers/#{user.saltedge_id}").
       to_return(status: 200)
