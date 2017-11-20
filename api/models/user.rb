@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     !saltedge_id.nil?
   end
 
-  def default_account
+  def default_saltedge_account
     saltedge_accounts.first
   end
 
