@@ -16,7 +16,10 @@ module Services
         }
       }
       response = @saltedge_client.request(:put, "/logins/#{@saltedge_login.saltedge_id}/reconnect", params)
-      response.ok?
+      data = JSON.parse(response.body)
+      @saltedge_login.update_attributes({
+        saltedge_data: data["data"]
+      })
     end
   end
 end

@@ -6,6 +6,15 @@ class User < ActiveRecord::Base
   has_many :virtual_accounts
   has_many :rules
 
+  CONNECTION_PHASES = {
+    new_login: "new_login",
+    login_failed: "login_failed",
+    login_pending: "login_pending",
+    select_account: "select_account",
+    connected: "connected",
+    needs_reconnection: "needs_reconnection"
+  }
+
   def confirmation_token_valid?
     (confirmation_sent_at + 30.days) > Time.now.utc
   end
@@ -38,5 +47,27 @@ class User < ActiveRecord::Base
 
   def killed?
     will_be_removed_at.present?
+  end
+
+  def default_saltedge_login
+    saltedge_logins.last
+  end
+
+  def bank_connection_phase
+    if default_saltedge_login
+      if default_saltedge_login.needs_reconnection
+        User::CONNECTION_PHASES[:needs_reconnection]
+      elsif default_mirror_account
+        User::CONNECTION_PHASES[:connected]
+      elsif default_saltedge_login.active
+        User::CONNECTION_PHASES[:select_account]
+      elsif !default_saltedge_login.finished_connecting
+        User::CONNECTION_PHASES[:login_pending]
+      elsif default_saltedge_login.new_login_and_invalid?
+        User::CONNECTION_PHASES[:login_failed]
+      end
+    else
+      User::CONNECTION_PHASES[:new_login]
+    end
   end
 end
