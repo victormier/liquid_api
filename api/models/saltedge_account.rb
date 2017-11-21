@@ -10,6 +10,8 @@ class SaltedgeAccount < ActiveRecord::Base
 
   scope :selected, -> { where(selected: true) }
 
+  delegate :can_be_refreshed?, to: :saltedge_login
+
   def type
     "saltedge"
   end
