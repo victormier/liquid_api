@@ -37,13 +37,13 @@ QueryRoot = GraphQL::ObjectType.define do
   end
 
   field :account do
-    type AccountInterface
+    type VirtualAccountType
     argument :id, !types.ID
     resolve -> (obj, args, ctx) { ctx[:current_user].virtual_accounts.find(args["id"]) }
   end
 
   field :all_accounts do
-    type types[AccountInterface]
+    type types[VirtualAccountType]
     resolve -> (obj, args, ctx) { ctx[:current_user].virtual_accounts }
   end
 
@@ -103,6 +103,7 @@ MutationRoot = GraphQL::ObjectType.define do
   field :updatePercentageRule, field: Mutations::UpdatePercentageRule
   field :selectSaltedgeAccount, field: Mutations::SelectSaltedgeAccount
   field :killUser, field: Mutations::KillUser
+  field :UpdateMirrorAccount, field: Mutations::UpdateMirrorAccount
 end
 
 Schema = GraphQL::Schema.define do

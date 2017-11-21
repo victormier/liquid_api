@@ -5,4 +5,6 @@ VirtualAccountType = GraphQL::ObjectType.define do
   interfaces [AccountInterface]
 
   field :id, !types.ID
+  field :is_mirror_account, !types.Boolean
+  field :saltedge_account, -> { SaltedgeAccountType }
 end

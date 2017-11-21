@@ -13,4 +13,5 @@ SaltedgeAccountType = GraphQL::ObjectType.define do
       obj.saltedge_transactions.newest_first
     }
   end
+  field :saltedge_login, -> { SaltedgeLoginType }
 end

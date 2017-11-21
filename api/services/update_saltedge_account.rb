@@ -26,7 +26,10 @@ module Services
         LoadTransactionsWorker.perform_async(@saltedge_account.id) unless @skip_load_transactions
         @saltedge_account.virtual_account.compute_balance!
       end
+    end
 
+    def model
+      @saltedge_account
     end
   end
 end
