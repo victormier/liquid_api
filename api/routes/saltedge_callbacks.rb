@@ -12,9 +12,13 @@ LiquidApi.route("saltedge_callbacks") do |r|
     saltedge_login = SaltedgeLogin.find_by(saltedge_id: login_id)
     if saltedge_login
       Services::UpdateSaltedgeLogin.new(saltedge_login).call
-      unless saltedge_login.saltedge_accounts.any?
-        service = Services::RetrieveSaltedgeAccounts.new(saltedge_login)
-        service.call
+
+      if saltedge_login.saltedge_accounts.any?
+        saltedge_login.saltedge_accounts.each do |saltedge_account|
+          UpdateSaltedgeAccountWorker.perform_async(saltedge_account.id)
+        end
+      else
+        Services::RetrieveSaltedgeAccounts.new(saltedge_login).call
       end
     end
     [200, '']
