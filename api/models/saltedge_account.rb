@@ -27,4 +27,8 @@ class SaltedgeAccount < ActiveRecord::Base
   def name
     saltedge_data["extra"]["account_name"] || saltedge_data["name"] || "Account"
   end
+
+  def last_updated
+    saltedge_login.last_success_at
+  end
 end

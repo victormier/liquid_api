@@ -17,4 +17,9 @@ class VirtualAccount < ActiveRecord::Base
   def is_mirror_account
     !saltedge_account.nil?
   end
+
+  def last_updated
+    return nil unless is_mirror_account
+    saltedge_account.last_updated
+  end
 end
