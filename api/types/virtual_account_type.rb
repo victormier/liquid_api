@@ -6,6 +6,7 @@ VirtualAccountType = GraphQL::ObjectType.define do
 
   field :id, !types.ID
   field :is_mirror_account, !types.Boolean
+  field :is_refreshing, types.Boolean
   field :last_updated do
     type types.Int
 

@@ -22,4 +22,9 @@ class VirtualAccount < ActiveRecord::Base
     return nil unless is_mirror_account
     saltedge_account.last_updated
   end
+
+  def is_refreshing
+    return false unless is_mirror_account
+    saltedge_account.is_refreshing
+  end
 end
