@@ -22,7 +22,7 @@ module Mutations
       # available after the refresh, callbacks will update the data
       service = Services::UpdateSaltedgeAccount.new(mirror_account.saltedge_account)
       service.call
-      service.model.reload
+      mirror_account.reload
     })
   end
 end
