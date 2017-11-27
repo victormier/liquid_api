@@ -13,8 +13,16 @@ module Mutations
       mirror_account = ctx[:current_user].virtual_accounts.mirror.find(args[:mirror_account_id])
 
       if mirror_account.saltedge_account.can_be_refreshed?
-        # Request a data refresh on saltedge side
-        Services::RefreshSaltedgeLogin.new(mirror_account.saltedge_account.saltedge_login).call
+        saltedge_login = mirror_account.saltedge_account.saltedge_login
+        begin
+          # Request a data refresh on saltedge side
+          Services::RefreshSaltedgeLogin.new(saltedge_login).call
+        rescue RestClient::NotAcceptable => e
+          # refresh probably can't be accepted
+          Services::UpdateSaltedgeLogin.new(saltedge_login).call
+          # raise if the NotAcceptable is not caused because it couldn't be refreshed
+          raise e if saltedge_login.reload.can_be_refreshed?
+        end
       end
 
       # Update account anyway with latest saltedge data
