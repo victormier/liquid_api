@@ -41,12 +41,12 @@ class SaltedgeLogin < ActiveRecord::Base
 
   def next_refresh_possible_at
     return unless saltedge_data["next_refresh_possible_at"]
-    DateTime.iso8601(saltedge_data["next_refresh_possible_at"])
+    DateTime.iso8601(saltedge_data["next_refresh_possible_at"]).utc
   end
 
   def last_success_at
     return unless saltedge_data["last_success_at"]
-    DateTime.iso8601(saltedge_data["last_success_at"])
+    DateTime.iso8601(saltedge_data["last_success_at"]).utc
   end
 
   def can_be_refreshed?
