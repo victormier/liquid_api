@@ -11,4 +11,8 @@ class SaltedgeProvider < ActiveRecord::Base
       all
     end
   end
+
+  def instruction
+    saltedge_data["instruction"]
+  end
 end

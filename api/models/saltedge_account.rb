@@ -10,6 +10,8 @@ class SaltedgeAccount < ActiveRecord::Base
 
   scope :selected, -> { where(selected: true) }
 
+  delegate :can_be_refreshed?, :is_refreshing, to: :saltedge_login
+
   def type
     "saltedge"
   end
@@ -24,5 +26,9 @@ class SaltedgeAccount < ActiveRecord::Base
 
   def name
     saltedge_data["extra"]["account_name"] || saltedge_data["name"] || "Account"
+  end
+
+  def last_updated
+    saltedge_login.last_success_at
   end
 end

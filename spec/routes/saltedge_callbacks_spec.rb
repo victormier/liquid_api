@@ -46,7 +46,14 @@ RSpec.describe "/saltedge_callbacks" do
       expect(saltedge_login.reload.saltedge_data["last_success_at"]).to eq time_string
     end
 
-    it "updates saltedge_accounts that belong to the login"
+    it "updates saltedge_accounts that belong to the login" do
+      saltedge_account
+      Sidekiq::Testing.fake! do
+        expect {
+          post "saltedge_callbacks/success", saltedge_success_callback_body
+        }.to change{ UpdateSaltedgeAccountWorker.jobs.size }.by(1)
+      end
+    end
 
     it "loads transactions for each saltedge_account that belong to the login"
 
