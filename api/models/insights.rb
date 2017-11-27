@@ -63,7 +63,7 @@ class Insights
       expense_transactions.group_by(&:category).each do |category, transactions|
         categories << CategoryInsight.new(category, transactions, total_expense)
       end
-      categories
+      categories.sort_by! { |c| c.amount }.reverse!
     end
   end
 
