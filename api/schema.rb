@@ -89,6 +89,14 @@ QueryRoot = GraphQL::ObjectType.define do
       ctx[:current_user].saltedge_accounts
     }
   end
+
+  field :all_saltedge_categories do
+    type types[!SaltedgeCategoryType]
+
+    resolve -> (obj, args, ctx) {
+      SaltedgeCategory.all
+    }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
