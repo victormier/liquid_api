@@ -22,6 +22,7 @@ RSpec.describe Services::UpdateSaltedgeTransaction do
   it "updates the data about a saltedge transaction" do
     service = Services::UpdateSaltedgeTransaction.new(saltedge_transaction)
     service.call
-    expect(saltedge_transaction.saltedge_data).to eq JSON.parse(saltedge_trasactions_list_response)["data"][0]
+    expect(saltedge_transaction.reload.saltedge_data).to eq JSON.parse(saltedge_trasactions_list_response)["data"][0]
+    expect(saltedge_transaction.category).to eq "test_category"
   end
 end
