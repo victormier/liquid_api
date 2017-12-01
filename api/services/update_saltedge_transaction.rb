@@ -13,7 +13,13 @@ module Services
       response = @saltedge_client.request(:get, "/transactions", params)
       parsed_response = JSON.parse(response.body)
       transaction_data = parsed_response["data"].find{|t| t["id"].to_s == @saltedge_transaction.saltedge_id}
-      @saltedge_transaction.update_attributes(saltedge_data: transaction_data)
+      if transaction_data
+        form = SaltedgeTransactionForm.new(@saltedge_transaction)
+        form.validate({saltedge_data: transaction_data})
+        if form.valid?
+          form.save
+        end
+      end
     end
   end
 end

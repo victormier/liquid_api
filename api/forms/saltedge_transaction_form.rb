@@ -1,4 +1,6 @@
 class SaltedgeTransactionForm < BaseForm
+  SALTEDGE_DATA_STOREABLE_ATTRS = %w(saltedge_id status made_on amount currency_code category)
+
   property :saltedge_data
   property :saltedge_created_at
   property :saltedge_id
@@ -30,6 +32,14 @@ class SaltedgeTransactionForm < BaseForm
     required(:made_on).filled(:date?)
     required(:amount).filled(:decimal?)
     required(:currency_code).filled(:valid_currency?)
-    optional(:category).filled(:str?)
+    optional(:category).filled(:str?)  
+  end
+
+  def saltedge_data=(value)
+    super(value)
+    attrs = value.select {|k,v| SALTEDGE_DATA_STOREABLE_ATTRS.include?(k) }
+    attrs.keys.each do |key|
+      self.send("#{key}=", attrs[key])
+    end
   end
 end
