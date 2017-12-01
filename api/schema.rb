@@ -112,6 +112,7 @@ MutationRoot = GraphQL::ObjectType.define do
   field :selectSaltedgeAccount, field: Mutations::SelectSaltedgeAccount
   field :killUser, field: Mutations::KillUser
   field :updateMirrorAccount, field: Mutations::UpdateMirrorAccount
+  field :updateMirrorTransactionCategory, field: Mutations::UpdateMirrorTransactionCategory
 end
 
 Schema = GraphQL::Schema.define do
