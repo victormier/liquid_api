@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :transaction do
     virtual_account
     amount 10.0
+    made_on 3.days.ago
   end
 
   factory :mirror_transaction, parent: :transaction, class: MirrorTransaction do
