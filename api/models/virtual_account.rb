@@ -4,6 +4,7 @@ class VirtualAccount < ActiveRecord::Base
   has_many :transactions
 
   scope :mirror, -> { where("saltedge_account_id IS NOT NULL") }
+  scope :mirror_first, -> { order(:saltedge_account_id) }
 
   def compute_balance!
     if is_mirror_account
