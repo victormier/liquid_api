@@ -49,5 +49,12 @@ RSpec.describe UserForm do
       expect(subject.valid?).to be false
       expect(subject.errors[:email]).to include("must be unique (not already taken)")
     end
+
+    it "strips leading and trailing spaces from email string" do
+      subject.validate(params.merge({ email: "  test@example.com " }))
+
+      expect(subject.valid?).to be true
+      expect(subject.email).to eq "test@example.com"
+    end
   end
 end

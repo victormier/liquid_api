@@ -18,6 +18,6 @@ class UserForm < BaseForm
   end
 
   def email=(value)
-    super(value.try(:downcase))
+    super(value.try(:downcase).try(:strip))
   end
 end
