@@ -1,8 +1,8 @@
 class CategoryInsight
-  attr_reader :name, :transactions
+  attr_reader :code, :transactions
 
-  def initialize(name, transactions, total_income)
-    @name = name
+  def initialize(code, transactions, total_income)
+    @code = code
     @transactions = transactions
     @total_income = total_income
   end
@@ -13,5 +13,9 @@ class CategoryInsight
 
   def percentage
     @percentage ||= (@amount / @total_income * 100.0).round
+  end
+
+  def name
+    @code.humanize
   end
 end
