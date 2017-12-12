@@ -10,4 +10,8 @@ class Transaction < ActiveRecord::Base
   scope :from_date, -> (date) { where("transactions.made_on >= ?", date) }
   scope :to_date, -> (date) { where("transactions.made_on <= ?", date) }
   scope :automatic, -> { where('transactions.rule_id IS NOT NULL') }
+
+  def category_name
+    category.humanize
+  end
 end

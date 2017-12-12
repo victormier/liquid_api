@@ -5,6 +5,7 @@ FactoryGirl.define do
     sequence(:saltedge_id) { |n| n }
     status "posted"
     currency_code "USD"
+    saltedge_created_at 5.days.ago
 
     after(:build) do |saltedge_transaction|
       saltedge_transaction.mirror_transaction ||= FactoryGirl.build(

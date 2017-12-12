@@ -1,7 +1,5 @@
 module Services
   class SaveSaltedgeTransaction
-    STOREABLE_ATTRIBUTES = %w(saltedge_id saltedge_data status made_on amount currency_code category)
-
     def initialize(saltedge_account_id, transaction_data)
       @saltedge_account = SaltedgeAccount.find(saltedge_account_id)
       @transaction_data = transaction_data
@@ -11,23 +9,23 @@ module Services
       rules = @saltedge_account.user.rules
 
       begin
-        attrs = @transaction_data.select {|k,v| STOREABLE_ATTRIBUTES.include?(k) }
         mirror_transaction = nil
 
         SaltedgeTransaction.transaction do
           # Create saltedge transaction
-          saltedge_transaction = @saltedge_account.saltedge_transactions.new(attrs.merge({
+          saltedge_transaction_form = SaltedgeTransactionForm.new(@saltedge_account.saltedge_transactions.new)
+          saltedge_transaction_form.validate({
             saltedge_id: @transaction_data["id"],
             saltedge_created_at: @transaction_data["created_at"],
             saltedge_data: @transaction_data
-          }))
-          saltedge_transaction_form = SaltedgeTransactionForm.new(saltedge_transaction)
+          })
           if saltedge_transaction_form.valid?
-            saltedge_transaction_form.save!
+            saltedge_transaction_form.save
           else
             errors = LiquidApiUtils::Errors::ErrorObject.new(saltedge_transaction_form.errors)
             raise LiquidApi::MutationInvalid.new(errors.full_messages.join('; '), errors: errors)
           end
+          saltedge_transaction = saltedge_transaction_form.model
 
           # Create mirror transaction
           mirror_transaction = MirrorTransaction.new(

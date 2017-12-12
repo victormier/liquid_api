@@ -17,7 +17,7 @@ class Insights
     today = Date.today
     insights = []
 
-    while start_date.month <= today.month
+    while start_date.end_of_month <= today
       end_date = [Date.new(start_date.year, start_date.month, -1), today].min
       insights << self.new(user, start_date, end_date)
       start_date = start_date >> 1

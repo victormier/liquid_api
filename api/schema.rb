@@ -44,7 +44,7 @@ QueryRoot = GraphQL::ObjectType.define do
 
   field :all_accounts do
     type types[VirtualAccountType]
-    resolve -> (obj, args, ctx) { ctx[:current_user].virtual_accounts }
+    resolve -> (obj, args, ctx) { ctx[:current_user].virtual_accounts.mirror_first }
   end
 
   field :transaction do
@@ -89,6 +89,14 @@ QueryRoot = GraphQL::ObjectType.define do
       ctx[:current_user].saltedge_accounts
     }
   end
+
+  field :all_saltedge_categories do
+    type types[!SaltedgeCategoryType]
+
+    resolve -> (obj, args, ctx) {
+      SaltedgeCategory.all
+    }
+  end
 end
 
 MutationRoot = GraphQL::ObjectType.define do
@@ -104,6 +112,7 @@ MutationRoot = GraphQL::ObjectType.define do
   field :selectSaltedgeAccount, field: Mutations::SelectSaltedgeAccount
   field :killUser, field: Mutations::KillUser
   field :updateMirrorAccount, field: Mutations::UpdateMirrorAccount
+  field :updateMirrorTransactionCategory, field: Mutations::UpdateMirrorTransactionCategory
 end
 
 Schema = GraphQL::Schema.define do

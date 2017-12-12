@@ -2,6 +2,7 @@ require_relative 'transaction_form'
 
 class MirrorTransactionForm < TransactionForm
   property :saltedge_transaction
+  property :custom_category
 
   validation do
     required(:saltedge_transaction).filled
