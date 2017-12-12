@@ -49,4 +49,11 @@ RSpec.describe Services::RemoveUser do
     subject.call
     expect{ user.reload }.to raise_exception(ActiveRecord::RecordNotFound)
   end
+
+  it "destroys virtual accounts with transactions" do
+    virtual_accounts = user.virtual_accounts
+    create(:virtual_account, user: user)
+    create(:virtual_transaction, virtual_account: user.default_mirror_account, related_virtual_account: user.virtual_accounts.first)
+    expect{ subject.call }.to change { virtual_accounts.count }.from(2).to(0)
+  end
 end
