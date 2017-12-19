@@ -17,6 +17,11 @@ SaltedgeProviderFieldDescriptionType = GraphQL::ObjectType.define do
   name "SaltedgeProviderFieldDescriptionType"
   description "Input field description for saltedge provider specific fields"
 
+  field :id, !types.ID do
+    resolve -> (obj, args, _ctx) do
+      "#{obj["name"]}_#{obj["position"]}"
+    end
+  end
   field :nature, !types.String, hash_key: 'nature'
   field :name, !types.String, hash_key: 'name'
   field :position, types.Int, hash_key: 'position'
@@ -33,6 +38,11 @@ SaltedgeFieldOptionsType = GraphQL::ObjectType.define do
   name "SaltedgeFieldOptionsType"
   description "Options for select fields in saltedge provider specific fields"
 
+  field :id, !types.ID do
+    resolve -> (obj, args, _ctx) do
+      "#{obj["name"]}_#{obj["option_value"]}"
+    end
+  end
   field :name, !types.String, hash_key: 'name'
   field :english_name, types.String, hash_key: 'english_name'
   field :localized_name, types.String, hash_key: 'localized_name'

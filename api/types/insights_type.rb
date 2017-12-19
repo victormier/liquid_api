@@ -2,6 +2,11 @@ InsightsType = GraphQL::ObjectType.define do
   name "Insights"
   description "An insights object"
 
+  field :id, !types.ID do
+    resolve -> (obj, args, _ctx) do
+      "#{obj.mirror_account.id}_#{obj.start_date.to_i}_#{obj.end_date.to_i}"
+    end
+  end
   field :income_transactions, types[!TransactionType]
   field :total_income, !types.Float
   field :total_expense, !types.Float
