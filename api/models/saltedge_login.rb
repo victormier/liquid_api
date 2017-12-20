@@ -63,8 +63,11 @@ class SaltedgeLogin < ActiveRecord::Base
     saltedge_data["last_attempt"].try(:[], "finished") != true
   end
 
-
   def is_refreshing
     has_unfinished_attempt
+  end
+
+  def provider_name
+    saltedge_data["provider_name"]
   end
 end

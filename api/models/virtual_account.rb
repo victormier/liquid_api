@@ -28,4 +28,9 @@ class VirtualAccount < ActiveRecord::Base
     return false unless is_mirror_account
     saltedge_account.is_refreshing
   end
+
+  def provider_name
+    return unless is_mirror_account
+    saltedge_account.saltedge_login.provider_name
+  end
 end
