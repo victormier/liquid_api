@@ -7,6 +7,6 @@ class VirtualTransaction < Transaction
   end
 
   def category
-    "virtual transaction"
+    "virtual_transaction"
   end
 end
