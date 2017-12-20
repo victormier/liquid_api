@@ -4,7 +4,7 @@ InsightsType = GraphQL::ObjectType.define do
 
   field :id, !types.ID do
     resolve -> (obj, args, _ctx) do
-      "#{obj.mirror_account.id}_#{obj.start_date.to_i}_#{obj.end_date.to_i}"
+      "#{obj.mirror_account.id}_#{obj.start_date.to_time.to_i}_#{obj.end_date.to_time.to_i}"
     end
   end
   field :income_transactions, types[!TransactionType]
