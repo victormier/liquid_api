@@ -70,4 +70,16 @@ class User < ActiveRecord::Base
       User::CONNECTION_PHASES[:new_login]
     end
   end
+
+  def total_balance
+    virtual_accounts.sum(:balance)
+  end
+
+  def currency_code
+    default_mirror_account.currency_code
+  end
+
+  def last_updated
+    default_mirror_account.last_updated
+  end
 end

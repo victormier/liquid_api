@@ -54,7 +54,7 @@ class Insights
   end
 
   def total_balance
-    @user.virtual_accounts.sum(:balance)
+    @user.total_balance
   end
 
   def category_insights
