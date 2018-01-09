@@ -78,8 +78,4 @@ class User < ActiveRecord::Base
   def currency_code
     default_mirror_account.currency_code
   end
-
-  def last_updated
-    default_mirror_account.last_updated
-  end
 end

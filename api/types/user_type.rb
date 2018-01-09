@@ -16,11 +16,4 @@ UserType = GraphQL::ObjectType.define do
   field :saltedge_logins, types[SaltedgeLoginType]
   field :total_balance, !types.Float
   field :currency_code, !types.String
-  field :last_updated do
-    type types.Int
-
-    resolve -> (obj, args, ctx) {
-      obj.last_updated.try(:to_time).try(:to_i)
-    }
-  end
 end
