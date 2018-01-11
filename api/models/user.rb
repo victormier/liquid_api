@@ -76,6 +76,6 @@ class User < ActiveRecord::Base
   end
 
   def currency_code
-    default_mirror_account.currency_code
+    default_mirror_account.try(:currency_code)
   end
 end
