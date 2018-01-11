@@ -15,5 +15,5 @@ UserType = GraphQL::ObjectType.define do
   field :bank_connection_phase, !types.String
   field :saltedge_logins, types[SaltedgeLoginType]
   field :total_balance, !types.Float
-  field :currency_code, !types.String
+  field :currency_code, types.String
 end
