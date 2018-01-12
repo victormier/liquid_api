@@ -10,7 +10,8 @@ class Insights
 
   # Finds all monthly insight objects available for a user
   def self.all_monthly(user)
-    first_transaction = user.default_mirror_account.transactions.mirror.oldest_first.first
+    return [] unless @mirror_account
+    first_transaction = @mirror_account.transactions.mirror.oldest_first.first
     return [] unless first_transaction
 
     start_date = Date.new(first_transaction.made_on.year, first_transaction.made_on.month, 1)
@@ -26,6 +27,7 @@ class Insights
   end
 
   def income_transactions
+    return [] unless @mirror_account
     @income_transactions ||= @mirror_account.
                               transactions.
                               debit.
@@ -36,6 +38,7 @@ class Insights
   end
 
   def expense_transactions
+    return [] unless @mirror_account
     @expense_transactions ||= @mirror_account.
                                 transactions.
                                 credit.
@@ -46,10 +49,12 @@ class Insights
   end
 
   def total_income
+    return 0.0 unless @mirror_account
     income_transactions.sum(&:amount)
   end
 
   def total_expense
+    return 0.0 unless @mirror_account
     expense_transactions.sum(&:amount).abs
   end
 
