@@ -1,5 +1,5 @@
 LiquidApi.route("emails") do |r|
-  from "hello@helloliquid.com"
+  from "Liquid <hello@helloliquid.com>"
 
   r.on "users" do
     r.mail "email_confirmation", Integer do |user_id|
