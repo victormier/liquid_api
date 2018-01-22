@@ -6,6 +6,7 @@ SaltedgeProviderType = GraphQL::ObjectType.define do
   field :name, !types.String
   field :country_code, !types.String
   field :instruction, !types.String
+  field :interactive, !types.Boolean
   field :required_fields, types[SaltedgeProviderFieldDescriptionType] do
     resolve -> (obj, args, _ctx) do
       obj.saltedge_data['required_fields']

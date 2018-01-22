@@ -1,6 +1,6 @@
 module Services
   class UpdateSaltedgeProviders
-    STOREABLE_ATTRIBUTES = %w(saltedge_id saltedge_data name status mode automatic_fetch country_code)
+    STOREABLE_ATTRIBUTES = %w(saltedge_id saltedge_data name status mode automatic_fetch country_code interactive)
 
     def initialize(page = nil)
       @saltedge_client = SaltedgeClient.new
