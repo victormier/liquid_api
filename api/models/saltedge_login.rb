@@ -4,6 +4,7 @@ class SaltedgeLogin < ActiveRecord::Base
   has_many :saltedge_accounts
 
   serialize :saltedge_data, Hash
+  serialize :interactive_data, Hash
 
   def active
     saltedge_data["status"] == "active"
@@ -69,5 +70,10 @@ class SaltedgeLogin < ActiveRecord::Base
 
   def provider_name
     saltedge_data["provider_name"]
+  end
+
+  def interactive_data_is_valid?
+    return false unless interactive_data["session_expires_at"]
+    DateTime.iso8601(interactive_data["session_expires_at"]).utc > DateTime.now
   end
 end
