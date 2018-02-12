@@ -39,4 +39,14 @@ LiquidApi.route("saltedge_callbacks") do |r|
     end
     [200, '']
   end
+
+  r.post "interactive" do
+    data = JSON.parse(request.body.read)
+    login_id = data["data"]["login_id"]
+    saltedge_login = SaltedgeLogin.find_by(saltedge_id: login_id)
+    if saltedge_login
+      saltedge_login.update_attributes(interactive_data: data["data"])
+    end
+    [200, '']
+  end
 end

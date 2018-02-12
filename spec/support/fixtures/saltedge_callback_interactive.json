@@ -1,0 +1,15 @@
+{
+  "data": {
+    "login_id": "123",
+    "customer_id": "34445",
+    "custom_fields": { "key": "value" },
+    "stage": "interactive",
+    "html": "<div id='interactive'><img src='https://docs.saltedge.com/images/saltedge_captcha.png' width='10' height='10' alt='some description' title='some description'></div>",
+    "session_expires_at": "2018-02-08T13:00:23Z",
+    "interactive_fields_names": ["image"]
+  },
+  "meta": {
+    "version": "4",
+    "time": "2018-02-08T12:00:23Z"
+  }
+}

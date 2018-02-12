@@ -19,6 +19,12 @@ RSpec.describe "/saltedge_callbacks" do
     response["data"]["login_id"] = saltedge_login.saltedge_id
     response.to_json
   }
+  let(:saltedge_interactive_callback_body) {
+    response = JSON.parse(File.read('spec/support/fixtures/saltedge_callback_interactive.json'))
+    response["data"]["login_id"] = saltedge_login.saltedge_id
+    response["data"]["session_expires_at"] = 1.hour.from_now.iso8601
+    response.to_json
+  }
   let(:saltedge_accounts_list_response) { File.read('spec/support/fixtures/saltedge_accounts_list_response.json') }
 
   before do
@@ -68,7 +74,13 @@ RSpec.describe "/saltedge_callbacks" do
       post "saltedge_callbacks/failure", saltedge_failure_callback_body
       expect(saltedge_login.reload.saltedge_data["last_success_at"]).to eq time_string
     end
+  end
 
-    it ""
+  context "/interactive" do
+    it "updates login with interactive data" do
+      post "saltedge_callbacks/interactive", saltedge_interactive_callback_body
+      expect(saltedge_login.reload.interactive_data).to eq JSON.parse(saltedge_interactive_callback_body)["data"]
+      expect(saltedge_login.interactive_data_is_valid?).to be true
+    end
   end
 end

@@ -38,6 +38,7 @@ class LiquidApi < Roda
     /users/:id/set_password
     /saltedge_callbacks/success
     /saltedge_callbacks/failure
+    /saltedge_callbacks/interactive
   )
   use Rack::JWT::Auth, {secret: ENV['RACK_JWT_SECRET'], exclude: EXCLUDE_PATHS, options: { algorithm: 'HS256' }}
 
