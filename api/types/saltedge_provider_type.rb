@@ -12,6 +12,11 @@ SaltedgeProviderType = GraphQL::ObjectType.define do
       obj.saltedge_data['required_fields']
     end
   end
+  field :interactive_fields, types[SaltedgeProviderFieldDescriptionType] do
+    resolve -> (obj, args, _ctx) do
+      obj.saltedge_data['interactive_fields']
+    end
+  end
 end
 
 SaltedgeProviderFieldDescriptionType = GraphQL::ObjectType.define do
