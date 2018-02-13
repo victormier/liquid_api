@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   CONNECTION_PHASES = {
     new_login: "new_login",
     login_failed: "login_failed",
+    interactive: "interactive",
     login_pending: "login_pending",
     select_account: "select_account",
     connected: "connected",
@@ -62,7 +63,11 @@ class User < ActiveRecord::Base
       elsif default_saltedge_login.active
         User::CONNECTION_PHASES[:select_account]
       elsif !default_saltedge_login.finished_connecting
-        User::CONNECTION_PHASES[:login_pending]
+        if default_saltedge_login.interactive_session_active?
+          User::CONNECTION_PHASES[:interactive]
+        else
+          User::CONNECTION_PHASES[:login_pending]
+        end
       elsif default_saltedge_login.new_login_and_invalid?
         User::CONNECTION_PHASES[:login_failed]
       end
