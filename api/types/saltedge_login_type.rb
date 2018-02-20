@@ -13,4 +13,14 @@ SaltedgeLoginType = GraphQL::ObjectType.define do
   field :error_message, types.String
   field :needs_reconnection, !types.Boolean
   field :is_refreshing, !types.Boolean
+  field :interactive_session_active, !types.Boolean do
+    resolve -> (obj, args, _ctx) do
+      obj.interactive_session_active?
+    end
+  end
+  field :interactive_html, types.String do
+    resolve -> (obj, args, _ctx) do
+      obj.interactive_data["html"]
+    end
+  end
 end
