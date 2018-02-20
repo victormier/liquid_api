@@ -9,7 +9,7 @@ class SaltedgeLogin < ActiveRecord::Base
   delegate :interactive, to: :saltedge_provider
 
   def active
-    saltedge_data["status"] == "active"
+    saltedge_data["status"] == "active" && !saltedge_data["last_success_at"].blank?
   end
 
   def inactive
