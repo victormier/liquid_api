@@ -7,6 +7,7 @@ module Services
 
     def call
       rules = @saltedge_account.user.rules
+      return if @saltedge_account.saltedge_transactions.find_by(saltedge_id: @transaction_data["id"]).present?
 
       begin
         mirror_transaction = nil
