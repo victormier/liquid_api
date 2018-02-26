@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180122101740) do
+ActiveRecord::Schema.define(version: 20180226123415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20180122101740) do
     t.datetime "updated_at", null: false
     t.boolean "killed", default: false
     t.datetime "last_refresh_requested_at"
+    t.text "interactive_data"
     t.index ["saltedge_provider_id"], name: "index_saltedge_logins_on_saltedge_provider_id"
     t.index ["user_id"], name: "index_saltedge_logins_on_user_id"
   end
@@ -78,7 +79,6 @@ ActiveRecord::Schema.define(version: 20180122101740) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["saltedge_account_id"], name: "index_saltedge_transactions_on_saltedge_account_id"
-    t.index ["saltedge_id"], name: "index_saltedge_transactions_on_saltedge_id", unique: true
   end
 
   create_table "transactions", force: :cascade do |t|
