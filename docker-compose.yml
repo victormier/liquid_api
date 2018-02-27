@@ -55,6 +55,8 @@ services:
     volumes:
       - .:/usr/src/app
       - bundle_cache:/bundle
+    tty: true
+    stdin_open: true
 
   test:
     <<: *app_base

@@ -51,6 +51,9 @@ We use the [active_record_migrations](https://github.com/rosenfeld/active_record
 docker-compose run web rake "db:new_migration[CreateUser, name birth:date]"
 ```
 
+### Debugging with pry
+
+[Check this guide](https://gist.github.com/briankung/ebfb567d149209d2d308576a6a34e5d8)
 
 
 # Features

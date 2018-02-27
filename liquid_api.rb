@@ -3,6 +3,7 @@ require 'sidekiq'
 require 'tilt/erb'
 require 'bundler'
 require 'dotenv'
+require 'pry' if ENV['RACK_ENV']
 
 Bundler.require
 Dotenv.load
