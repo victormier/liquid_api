@@ -23,4 +23,9 @@ SaltedgeLoginType = GraphQL::ObjectType.define do
       obj.interactive_data["html"]
     end
   end
+  field :interactive_fields, types[types.String] do
+    resolve -> (obj, args, _ctx) do
+      obj.interactive_data["interactive_fields_names"]
+    end
+  end
 end
