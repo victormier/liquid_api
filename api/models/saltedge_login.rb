@@ -27,7 +27,8 @@ class SaltedgeLogin < ActiveRecord::Base
   end
 
   def needs_reconnection
-    inactive && saltedge_data["last_success_at"].present? && error.present?
+    (inactive && saltedge_data["last_success_at"].present? && error.present?) ||
+    (saltedge_data["last_success_at"].blank? && interactive_session_expired?)
   end
 
   def error
@@ -74,8 +75,17 @@ class SaltedgeLogin < ActiveRecord::Base
     saltedge_data["provider_name"]
   end
 
+  def waiting_interactive_connection?
+    interactive_session_active? && saltedge_data["last_attempt"].try(:[], "last_stage").try(:[], "name") == "connect"
+  end
+
   def interactive_session_active?
     return false unless interactive_data["session_expires_at"]
     DateTime.iso8601(interactive_data["session_expires_at"]).utc > DateTime.now
+  end
+
+  def interactive_session_expired?
+    return false unless interactive_data["session_expires_at"]
+    !interactive_session_active?
   end
 end

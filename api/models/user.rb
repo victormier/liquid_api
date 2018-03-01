@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
       elsif default_saltedge_login.active
         User::CONNECTION_PHASES[:select_account]
       elsif !default_saltedge_login.finished_connecting
-        if default_saltedge_login.interactive_session_active?
+        if default_saltedge_login.interactive_session_active? && !default_saltedge_login.waiting_interactive_connection?
           User::CONNECTION_PHASES[:interactive]
         else
           User::CONNECTION_PHASES[:login_pending]
