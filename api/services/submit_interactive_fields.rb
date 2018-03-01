@@ -15,7 +15,7 @@ module Services
           credentials: @credentials
         }
       }
-      response = @saltedge_client.request(:post, "/logins/#{@saltedge_login.saltedge_id}/interactive", params)
+      response = @saltedge_client.request(:put, "/logins/#{@saltedge_login.saltedge_id}/interactive", params)
       data = JSON.parse(response.body)
       @saltedge_login.update_attributes(
         saltedge_data: data["data"]
